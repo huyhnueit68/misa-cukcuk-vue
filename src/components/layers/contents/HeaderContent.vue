@@ -2,7 +2,7 @@
     <div class="header-content">
         <div class="title">Danh sách nhân viên</div>
         <!-- button add record -->
-        <ButtonAdd/>
+        <ButtonAdd v-bind:titleBtn="customTitle" @enableDialog="$emit('enableDialog')" />
     </div>
 </template>
 
@@ -11,7 +11,12 @@ import ButtonAdd from './ButtonFeature/BtnAdd'
 
 export default({
     components: {
-        ButtonAdd,
+        ButtonAdd, 
+    },
+    data(){
+        return {
+            customTitle: "Thêm nhân viên"
+        }
     }
 })
 </script>

@@ -1,33 +1,3 @@
-<template>
-    <div class="grid grid-employee el-table el-table--fit el-table--scrollable-y el-table--enable-row-hover el-table--enable-row-transition" 
-        id="gridEmployee" Url="v1/Employees" ToolBar="toolBarEmployee" ItemId="EmployeeId" ToolBox = "toolBoxEmployee">
-        <!-- table content -->
-        <table class="table" cellspacing="0" cellpadding="15" border="0">
-         <!-- header table  -->
-          <HeaderTable/>
-         <!-- content table -->
-          <ContentTable/>
-        </table>
-    </div>
-    
-</template>
-
-<script>
-import HeaderTable from "./table/HeaderTable"
-import ContentTable from "./table/ContentTable"
-
-export default {
-  setup() {
-    
-  },
-  components: {
-    HeaderTable,
-    ContentTable
-  }
-}
-</script>
-
-<style>
 /* Grid */
 .grid {
   width: 100%;
@@ -101,11 +71,6 @@ table > thead > tr > th {
   height: calc(100% - 25px);
 }
 
-.grid-employee {
-  margin-top: 10px;
-  height: calc(100vh - 234px);
-}
-
 .custom-tbody {
   overflow: auto;
 }
@@ -139,6 +104,3 @@ table > thead > tr > th {
 .hidden-delete {
   display: none;
 }
-
-</style>
-

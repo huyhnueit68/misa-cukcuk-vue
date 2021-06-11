@@ -2,14 +2,16 @@
     <!-- content chính -->
     <div class="content">
         <!-- header content -->
-        <HeaderContent/>
+        <HeaderContent @enableDialog="showDialog" />
         <!-- filter tool bar-->
         <ToolBarContent/>
         <!-- table content -->
         <TableContent/>
         <!-- padding bar show list  -->
         <PagingContent/>
-    </div>
+        <!-- dialog detail -->
+        <DialogDetail v-if="isShowDialog"/>
+    </div> 
 </template>
 
 <script>
@@ -17,6 +19,7 @@ import HeaderContent from './HeaderContent.vue'
 import ToolBarContent from './ToolBarContent.vue'
 import PagingContent from './PaddingContent.vue'
 import TableContent from './TableContent.vue'
+import DialogDetail from '../../../components/dialog/dialogDetail.vue'
 
 
 export default({
@@ -25,7 +28,18 @@ export default({
         ToolBarContent,
         TableContent,
         PagingContent,
+        DialogDetail
     },
+    data(){
+      return{
+        isShowDialog: false
+      }
+    },
+    methods: {
+      showDialog(){
+        this.isShowDialog = true;
+      }
+    }
 })
 </script>
 

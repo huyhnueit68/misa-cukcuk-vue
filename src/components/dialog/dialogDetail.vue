@@ -176,7 +176,7 @@
   outline: none;
   cursor: pointer;
   background-color: #ffffff;
-  background-image: url("../../content/icon/x.svg");
+  background-image: url("../../../public/content/icon/x.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px;
@@ -240,7 +240,7 @@
 }
 
 .cancel-content .content-body .icon-notification {
-  background-image: url(../../content/img/warning.png);
+  background-image: url(../../../public/content/img/warning.png);
   width: 35px;
   height: 35px;
   background-repeat: no-repeat;
@@ -318,7 +318,7 @@
 }
 
 .delete-content .content-body .icon-notification {
-  background-image: url(../../content/img/icons8-error-64.png);
+  background-image: url(../../../public/content/img/icons8-error-64.png);
   width: 35px;
   height: 35px;
   background-repeat: no-repeat;
@@ -373,6 +373,17 @@
   align-items: center;
   justify-content: flex-end;
   box-sizing: border-box;
+}
+
+/* confix dialog*/
+
+.m-dialog {
+  position: fixed;
+  position: fixed;
+    top: 50%;
+    border: 2px solid red;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 </style>
