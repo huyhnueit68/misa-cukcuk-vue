@@ -2,7 +2,7 @@
     <div class="content-feature btn-name" id="toolBarEmployee">
         <button id="btnAdd" CommandType="Add" class="m-btn m-btn-default" data-toggle="tooltip" data-placement="top" title="Thêm thông tin">
             <div class="m-btn-icon icon-add"></div>
-            <div class="btn-text" @click="showDialogDetail">{{ titleBtn }}</div>
+            <div class="btn-text" @click="enableShowDialog">{{ titleBtn }}</div>
         </button>
     </div>
 </template>
@@ -12,12 +12,9 @@ export default {
   props: {
     titleBtn: String
   },
-  setup() {
-    
-  },
   methods: {
-    showDialogDetail(){
-      this.$emit('enableDialog')
+    enableShowDialog(){
+      this.$emit('showDialog')
     }
   }
 }

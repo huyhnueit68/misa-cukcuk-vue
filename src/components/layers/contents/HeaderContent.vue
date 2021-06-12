@@ -2,7 +2,7 @@
     <div class="header-content">
         <div class="title">Danh sách nhân viên</div>
         <!-- button add record -->
-        <ButtonAdd v-bind:titleBtn="customTitle" @enableDialog="$emit('enableDialog')" />
+        <ButtonAdd v-bind:titleBtn="customTitle" @showDialog="$emit('isShowDialog')"/>
     </div>
 </template>
 

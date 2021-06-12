@@ -2,7 +2,7 @@
     <!-- content chính -->
     <div class="content">
         <!-- header content -->
-        <HeaderContent @enableDialog="showDialog" />
+        <HeaderContent @isShowDialog="showDialog"/>
         <!-- filter tool bar-->
         <ToolBarContent/>
         <!-- table content -->
@@ -10,7 +10,7 @@
         <!-- padding bar show list  -->
         <PagingContent/>
         <!-- dialog detail -->
-        <DialogDetail v-if="isShowDialog"/>
+        <DialogDetail v-if="enableShowDialog" @disableDialog = "isDialog"/>
     </div> 
 </template>
 
@@ -31,13 +31,16 @@ export default({
         DialogDetail
     },
     data(){
-      return{
-        isShowDialog: false
+      return  {
+        enableShowDialog: false
       }
     },
     methods: {
       showDialog(){
-        this.isShowDialog = true;
+        this.enableShowDialog = true;
+      },
+      isDialog(){
+        this.enableShowDialog = false;
       }
     }
 })

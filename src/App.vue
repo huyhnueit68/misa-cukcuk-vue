@@ -257,6 +257,8 @@ input.border-red {
   margin-top: 10px;
   font-weight: bold;
   text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 5px;
 }
 
 .hr-group-label {

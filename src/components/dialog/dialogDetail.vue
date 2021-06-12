@@ -1,8 +1,13 @@
 <template>
     <!-- pop up detail -->
+    <div class="box-dialog">
+      <!-- pop up detail -->
     <div class="m-dialog dialog-detail" title="Thông tin nhân viên" id="modalAction">
         <div class="dialog-content" ShowForm="true">
             <div class="dialog-body">
+              <div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle custom-header-dialog">
+                <span id="ui-id-1" class="ui-dialog-title custom-title">THÔNG TIN NHÂN VIÊN</span>
+              </div>
                 <div class="m-row m-flex">
                     <div class="m-col el-avatar-employee m-flex-1">
                         <div class="el-avatar"></div>
@@ -28,14 +33,13 @@
                             </div>
                         </div>
                         <div class="m-row m-flex">
-                            <!-- create date picker -->
                             <div class="m-flex-1">
                                 <div class="m-label">Ngày sinh</div>
                                 <input type="date" id="DateOfBirth" name="birthday" fieldName="DateOfBirth" DataType="Date">
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Giới tính</div>
-                                <select id="cbxGender" FieldName="Gender" DataType="Enum" EnumName="Gender" >
+                                <select id="cbxGender" FieldName="Gender" DataType="Enum" EnumName="Gender">
                                     <option value="0">Nữ</option>
                                     <option value="1">Nam</option>
                                     <option value="2">Khác</option>
@@ -119,9 +123,8 @@
                     </div>
                 </div>
             </div>
-            <!-- button action form -->
             <div class="dialog-footer">
-                <button id="btnCancel" class="m-btn m-btn-default m-btn-cancel action-form" Command="Cancel" data-toggle="tooltip" data-placement="top" title="Hủy tiến trình">Hủy</button>
+                <button id="btnCancel" @click="disableClickDialog" class="m-btn m-btn-default m-btn-cancel action-form" Command="Cancel" data-toggle="tooltip" data-placement="top" title="Hủy tiến trình">Hủy</button>
                 <button id="btnDelete" class="m-btn-del m-btn-delete action-form" Command="Delete" data-toggle="tooltip" data-placement="top" title="Xóa thông tin bản ghi này"><i class="fa fa-minus-circle"></i><span
                         class="btn-text">Xóa</span></button>
                 <button id="btnSave" class="m-btn m-btn-default action-form" Command="Save" data-toggle="tooltip" data-placement="top" title="Lưu lại thông tin"><i class="far fa-save"></i><span class="btn-text">Lưu</span></button>
@@ -130,10 +133,47 @@
         <div class="field-import" hidden="hidden">
             <input id="fileImportInput" type="file" />
         </div>
+      </div>
     </div>
 </template>
 
+<script>
+export default {
+  setup() {
+    
+  },
+  methods: {
+    disableClickDialog(){
+      this.$emit('disableDialog')
+    }
+  },
+}
+</script>
+
 <style>
+
+.custom-title{
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.custom-header-dialog{
+  padding: 24px 24px 0 24px;
+  text-align: left;
+}
+
+.box-dialog {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(104 102 102 / 63%);
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  left: 0;
+}
+#modalAction {
+  width: 800px;
+}
 .m-dialog .dialog-modal {
   /* quy định độ trong suốt của nền màu nào đó. */
   opacity: 0.5;
@@ -246,6 +286,14 @@
   background-repeat: no-repeat;
   background-size: contain;
   margin: 0 10px 0 24px;
+}
+
+.m-label{
+  text-align: left;
+}
+
+.hr-group-label{
+  margin-bottom: 12px;
 }
 
 .cancel-content .content-body .body-info {
@@ -380,10 +428,351 @@
 .m-dialog {
   position: fixed;
   position: fixed;
-    top: 50%;
-    border: 2px solid red;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
+
+
+.el-avatar-employee {
+    padding-top: 16px;
+    padding-right: 16px;
+}
+
+.el-left {
+    width: calc(100% - 180px);
+}
+
+.el-avatar-employee .el-avatar {
+    border: 1px solid #ccc;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 50%;
+    cursor: pointer;
+    background-image: url("../../../public/content/img/default-avatar.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.el-avatar-note {
+    font-size: 12px;
+}
+
+.filter-left {
+    display: flex;
+}
+
+.filter-left select {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.currency-for-input {
+    position: absolute;
+    right: 40px;
+    line-height: 40px;
+    font-style: italic;
+}
+
+#txtSearchEmployee {
+    min-width: 300px;
+}
+
+
+/*
+  custom combobox
+*/
+
+.pn-demo {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.container .m-cbo {
+    width: 240px;
+    border: 1px solid #bbbbbb;
+    outline: none;
+    text-overflow: ellipsis;
+}
+
+.container .input-field {
+    position: relative;
+}
+
+.container .input-field .arrow {
+    position: absolute;
+    height: 38px;
+    top: 1px;
+    width: 10px;
+    right: 1px;
+    padding-left: 12px;
+    padding-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.container .input-field .h-line {
+    border-left: 1px #bbbbbb solid;
+    position: absolute;
+    top: 0px;
+    right: 34px;
+    bottom: 1px;
+    width: 1px;
+    height: 40px;
+}
+
+
+/* item clear text */
+
+.container .input-field .btn-clear {
+    position: absolute;
+    top: 13px;
+    right: 50px;
+    cursor: pointer;
+    color: #bbbbbb;
+    display: none;
+}
+
+.container .input-field .btn-clear:hover {
+    color: #000000;
+}
+
+
+/* Drop down */
+
+.container .drop-down {
+    position: absolute;
+    top: 40px;
+    width: 239px;
+    left: 0px;
+    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 16px -9px #000000;
+    display: none;
+}
+
+.container .drop-down .dr-item {
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+}
+
+.container .input-field .down {
+    transform: rotate(180deg);
+}
+
+.drop-down .dr-item .icon {
+    align-items: center;
+    justify-content: center;
+    padding: 12px 10px 12px 10px;
+}
+
+.drop-down .dr-item .text {
+    align-items: center;
+    padding-top: 12px;
+}
+
+.container .drop-down .dr-item:hover {
+    background-color: #e9ebee;
+}
+
+.container .drop-down .dr-item.active {
+    background-color: #019160;
+    color: #ffffff;
+}
+
+.container .drop-down .dr-item .icon {
+    padding: 12px 15px;
+    color: transparent;
+}
+
+.container .drop-down .dr-item.active .icon {
+    color: #ffffff;
+}
+
+.container .drop-down .dr-item .text {
+    flex: 1;
+}
+
+input::placeholder {
+    font-size: 11px !important;
+    color: #bbbbbb;
+}
+
+.m-btn {
+  display: flex;
+  align-items: center;
+  background-color: #019160;
+  border-radius: 4px;
+  height: 40px;
+  font-size: 13px;
+  color: #ffffff;
+  font-family: GoogleSans-Regular;
+  padding-left: 16px;
+  padding-right: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+  justify-content: center;
+}
+
+.m-btn-del {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  height: 40px;
+  font-size: 13px;
+  color: #ffffff;
+  font-family: GoogleSans-Regular;
+  padding-left: 16px;
+  padding-right: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+  justify-content: center;
+}
+
+.m-btn-delete {
+  background-color: #f04a4a;
+}
+
+.m-btn:hover,
+.m-btn:focus {
+  background-color: #2fbe8e;
+}
+
+.m-btn .m-btn-icon {
+  background-position: center;
+}
+
+.m-btn .btn-text {
+  margin-left: 8px;
+}
+
+.m-second-button {
+  border: 1px solid #bbbbbb;
+  background-color: #ffffff;
+  border-radius: 4px;
+  height: 40px;
+  color: #000000;
+  padding-left: 24px;
+  padding-right: 24px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+}
+
+.m-second-button:hover {
+  background-color: #e9ebee;
+}
+
+.m-btn-refresh {
+  background-image: url("../../../public/content/icon/refresh.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  background-position: center;
+  margin: 0 5px 0 5px;
+}
+
+.m-mass-delete {
+  background-image: url("../../../public/content/icon/delete.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  background-position: center;
+  background-size: center;
+}
+
+.m-btn-import {
+  background-image: url("../../../public/content/icon/import.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  background-position: center;
+  background-size: 20px;
+}
+
+.m-btn-cancel {
+  color: #000000;
+  background-color: transparent;
+}
+
+.m-btn-cancel:hover,
+.m-btn-cancel:focus {
+  background-color: #bbbbbb;
+}
+
+.m-btn-delete:hover {
+  background-color: rgb(243, 127, 127);
+}
+
+.btn-pagenumber {
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  background-color: #e9ebee;
+  cursor: pointer !important;
+}
+
+.btn-pagenumber:hover {
+  background-color: #ffffff;
+}
+
+.btn-pagenumber.btn-pagenumber-selected,
+.btn-pagenumber-selected:hover {
+  background-color: #019160;
+  color: #ffffff;
+}
+
+.btn-select-page {
+  opacity: 0.7;
+  margin: 0 4px;
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+.btn-select-page:hover {
+  opacity: 1;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+}
+
+.m-btn-firstpage {
+  background-image: url("../../../public/content/icon/btn-firstpage.svg");
+}
+
+.m-btn-prev-page {
+  background-image: url("../../../public/content/icon/btn-prev-page.svg");
+}
+
+.m-btn-next-page {
+  background-image: url("../../../public/content/icon/btn-next-page.svg");
+}
+
+.m-btn-lastpage {
+  background-image: url("../../../public/content/icon/btn-lastpage.svg");
+}
+
+
+@import "../../assets/css/grid.css";
+
 
 </style>
