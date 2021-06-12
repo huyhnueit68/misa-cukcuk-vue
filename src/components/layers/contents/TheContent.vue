@@ -6,11 +6,14 @@
         <!-- filter tool bar-->
         <ToolBarContent/>
         <!-- table content -->
-        <TableContent/>
+        <TableContent @showDialogEdit="showDialogEdit" ref="tableContent"/>
         <!-- padding bar show list  -->
         <PagingContent/>
         <!-- dialog detail -->
-        <DialogDetail v-if="enableShowDialog" @disableDialog = "isDialog"/>
+        <DialogDetail @reloadData="getData" 
+                      v-if="enableShowDialog" 
+                      @disableDialog = "isDialog" 
+                      :employeeId="employeeId"/>
     </div> 
 </template>
 
@@ -32,15 +35,23 @@ export default({
     },
     data(){
       return  {
-        enableShowDialog: false
+        enableShowDialog: false,
+        employeeId: null
       }
     },
     methods: {
+      getData(){
+        this.$refs.tableContent.getData();
+      },
       showDialog(){
         this.enableShowDialog = true;
       },
       isDialog(){
         this.enableShowDialog = false;
+      },
+      showDialogEdit(employeeId){
+        this.enableShowDialog = true;
+        this.employeeId = employeeId;
       }
     }
 })

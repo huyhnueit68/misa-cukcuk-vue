@@ -23,23 +23,23 @@
                         <div class="m-row mg-top-0 m-flex">
                             <div class="m-col m-flex-1">
                                 <div class="m-label">Mã nhân viên (<span class="label-required">*</span>)</div>
-                                <div class="m-control"><input id="txtEmployeeCode" fieldName="EmployeeCode" required class="input-required" type="text" /></div>
+                                <div class="m-control"><input v-model="employee.EmployeeCode" id="txtEmployeeCode" required class="input-required" type="text" /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Họ và tên (<span class="label-required">*</span>)</div>
                                 <div class="m-control">
-                                    <input id="txtFullName" fieldName="FullName" class="input-required" type="text" required />
+                                    <input id="txtFullName" v-model="employee.FullName" fieldName="FullName" class="input-required" type="text" required />
                                 </div>
                             </div>
                         </div>
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Ngày sinh</div>
-                                <input type="date" id="DateOfBirth" name="birthday" fieldName="DateOfBirth" DataType="Date">
+                                <input type="date" id="DateOfBirth" v-model="employee.DateOfBirth" name="birthday" fieldName="DateOfBirth" DataType="Date">
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Giới tính</div>
-                                <select id="cbxGender" FieldName="Gender" DataType="Enum" EnumName="Gender">
+                                <select id="cbxGender" FieldName="Gender" DataType="Enum" EnumName="Gender" v-model="employee.Gender">
                                     <option value="0">Nữ</option>
                                     <option value="1">Nam</option>
                                     <option value="2">Khác</option>
@@ -49,17 +49,17 @@
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label" title="Số chứng minh thư nhân dân hoặc căn cước công dân">Số CMTND/ Căn cước (<span class="label-required">*</span>)</div>
-                                <div class="m-control"><input id="txtIdentityNumber" fieldName="IdentityNumber" type="text" required /></div>
+                                <div class="m-control"><input v-model="employee.IdentityNumber" id="txtIdentityNumber" fieldName="IdentityNumber" type="text" required /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Ngày cấp</div>
-                                <input type="date" id="dateOfIndentity" name="indentityDate" fieldName="IdentityDate" DataType="Date">
+                                <input type="date" id="dateOfIndentity" v-model="employee.IdentityDate" name="indentityDate" fieldName="IdentityDate" DataType="Date">
                             </div>
                         </div>
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Nơi cấp</div>
-                                <div class="m-control"><input id="txtIdentityPlace" fieldName="IdentityPlace" class="input-required" type="text" /></div>
+                                <div class="m-control"><input v-model="employee.IdentityPlace"  id="txtIdentityPlace" fieldName="IdentityPlace" class="input-required" type="text" /></div>
                             </div>
                             <div class="m-flex-1">
                             </div>
@@ -67,12 +67,12 @@
                         <div class="m-row m-flex">
                             <div class="m-col m-flex-1">
                                 <div class="m-label">Email (<span class="label-required">*</span>)</div>
-                                <div class="m-control"><input id="txtEmail" fieldName="Email" DataType="Email" type="email" required placeholder="example@domain.com" /></div>
+                                <div class="m-control"><input v-model="employee.Email" id="txtEmail" fieldName="Email" DataType="Email" type="email" required placeholder="example@domain.com" /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Số điện thoại (<span class="label-required">*</span>)</div>
                                 <div class="m-control">
-                                    <input id="txtPhoneNumber" fieldName="PhoneNumber" DataType="PhoneNumber" maxlength="100" class="input-required" type="text" required />
+                                    <input v-model="employee.PhoneNumber" id="txtPhoneNumber" fieldName="PhoneNumber" DataType="PhoneNumber" maxlength="100" class="input-required" type="text" required />
                                 </div>
                             </div>
                         </div>
@@ -83,14 +83,14 @@
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Vị trí</div>
-                                <select id="cbxPosition" fieldName="PositionCode" fieldValue="CustomerGroupId" api="" class="m-control">
+                                <select v-model="employee.PositionCode" id="cbxPosition" fieldName="PositionCode" fieldValue="CustomerGroupId" api="" class="m-control">
                                     <option value="0">Giám đốc</option>
                                     <option value="1">Nhân viên</option>
                                 </select>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Phòng ban</div>
-                                <select id="cbnDepartment" fieldName="DepartmentCode" fieldValue="CustomerGroupId" api="" class="m-control">
+                                <select v-model="employee.DepartmentId" id="cbnDepartment" fieldName="DepartmentCode" fieldValue="CustomerGroupId" api="" class="m-control">
                                     <option value="0">Phòng nhân sự</option>
                                     <option value="1">Phòng đào tạo</option>
                                 </select>
@@ -99,21 +99,21 @@
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Mã số thuế cá nhân</div>
-                                <div class="m-control"><input id="txtAddress" fieldName="Address" type="text" /></div>
+                                <div class="m-control"><input v-model="employee.IdentityId" id="txtAddress" fieldName="Address" type="text" /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Mức lương cơ bản</div>
-                                <div class="m-control"><input id="txtSalary" fieldName="Salary" DataType="Number" type="text" style="text-align:right; padding-right: 56px" /><span class="currency-for-input">(VNĐ)</span></div>
+                                <div class="m-control"><input v-model="employee.Salary"  id="txtSalary" fieldName="Salary" DataType="Number" type="text" style="text-align:right; padding-right: 56px" /><span class="currency-for-input">(VNĐ)</span></div>
                             </div>
                         </div>
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Ngày gia nhập</div>
-                                <input type="date" id="dtDateJoin" name="birthdaytime" DataType="Date" fieldName="CreatedDate">
+                                <input v-model="employee.CreatedDate"  type="date" id="dtDateJoin" name="birthdaytime" DataType="Date" fieldName="CreatedDate">
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Tình trạng công việc</div>
-                                <select id="cboWorkStatus" fieldName="WorkStatus" fieldValue="CustomerGroupId" api="" class="m-control">
+                                <select  v-model="employee.WorkStatus" id="cboWorkStatus" fieldName="WorkStatus" fieldValue="CustomerGroupId" api="" class="m-control">
                                     <option value="1">Đang làm việc</option>
                                     <option value="0">Đang thử việc</option>
                                     <option value="2">Nghỉ việc</option>
@@ -127,7 +127,7 @@
                 <button id="btnCancel" @click="disableClickDialog" class="m-btn m-btn-default m-btn-cancel action-form" Command="Cancel" data-toggle="tooltip" data-placement="top" title="Hủy tiến trình">Hủy</button>
                 <button id="btnDelete" class="m-btn-del m-btn-delete action-form" Command="Delete" data-toggle="tooltip" data-placement="top" title="Xóa thông tin bản ghi này"><i class="fa fa-minus-circle"></i><span
                         class="btn-text">Xóa</span></button>
-                <button id="btnSave" class="m-btn m-btn-default action-form" Command="Save" data-toggle="tooltip" data-placement="top" title="Lưu lại thông tin"><i class="far fa-save"></i><span class="btn-text">Lưu</span></button>
+                <button @click="save" id="btnSave" class="m-btn m-btn-default action-form" Command="Save" data-toggle="tooltip" data-placement="top" title="Lưu lại thông tin"><i class="far fa-save"></i><span class="btn-text">Lưu</span></button>
             </div>
         </div>
         <div class="field-import" hidden="hidden">
@@ -139,12 +139,79 @@
 
 <script>
 export default {
-  setup() {
-    
+  props:
+  {
+     employeeId: String
+  },
+  created() {
+    this.getEmployeeById(this.employeeId)
+  },
+  data(){
+    return{
+      employee: {}
+    }
   },
   methods: {
     disableClickDialog(){
       this.$emit('disableDialog')
+    },
+    getEmployeeById(){
+      /**
+       * get by id
+       */
+      this.employee = {
+        "EmployeeId": "1ec2f9e3-c9c5-11eb-94eb-42010a8c0002",
+        "EmployeeCode": "2",
+        "FirstName": null,
+        "LastName": null,
+        "FullName": "VIET NAM VO DICH",
+        "Gender": 2,
+        "DateOfBirth": "2021-06-17T00:00:00",
+        "PhoneNumber": "12323132",
+        "Email": "55@gmail.com",
+        "Address": "",
+        "IdentityNumber": "7777",
+        "IdentityDate": "2021-06-15T00:00:00",
+        "IdentityPlace": "Tỉnh Bắc Giang",
+        "JoinDate": null,
+        "MartialStatus": null,
+        "EducationalBackground": null,
+        "QualificationId": null,
+        "DepartmentId": 1,
+        "PositionId": 1,
+        "WorkStatus": 1,
+        "PersonalTaxCode": null,
+        "Salary": 1000000,
+        "PositionCode": null,
+        "PositionName": null,
+        "DepartmentCode": null,
+        "DepartmentName": null,
+        "QualificationName": null,
+        "GenderName": "Không xác định",
+        "EducationalBackgroundName": null,
+        "MartialStatusName": null,
+        "CreatedDate": "2021-06-10T08:23:22",
+        "CreatedBy": null,
+        "ModifiedDate": null,
+        "ModifiedBy": null
+      }
+      
+    },
+    save(){
+
+      /**
+       * save data to file json
+       */
+
+      /**
+       * close form
+       */
+      this.disableClickDialog();
+
+      /**
+       * reload data
+       */
+      this.$emit('reloadData')
     }
   },
 }

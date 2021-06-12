@@ -6,7 +6,7 @@
          <!-- header table  -->
           <HeaderTable/>
          <!-- content table -->
-          <ContentTable/>
+          <ContentTable @showDialogEdit="showDialogEdit" ref="contentTable"/>
         </table>
     </div>
     
@@ -17,12 +17,17 @@ import HeaderTable from "./table/HeaderTable"
 import ContentTable from "./table/ContentTable"
 
 export default {
-  setup() {
-    
-  },
   components: {
     HeaderTable,
     ContentTable
+  },
+  methods: {
+    showDialogEdit(employeeId){
+      this.$emit('showDialogEdit', employeeId)
+    },
+    getData(){
+      this.$refs.contentTable.getData();
+    }
   }
 }
 </script>
