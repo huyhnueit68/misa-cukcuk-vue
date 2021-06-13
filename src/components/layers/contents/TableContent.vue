@@ -20,13 +20,13 @@ export default {
   components: {
     HeaderTable,
     ContentTable
-  },
+  }, 
   methods: {
     showDialogEdit(employeeId){
       this.$emit('showDialogEdit', employeeId)
     },
     getData(){
-      this.$refs.contentTable.getData();
+      this.$refs.contentTable.getData;
     }
   }
 }
@@ -55,6 +55,7 @@ export default {
 table {
   width: 100%;
   position: relative;
+  text-align: left;
 }
 
 table > tbody > tr > td,

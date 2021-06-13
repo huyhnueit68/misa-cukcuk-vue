@@ -3,6 +3,7 @@
     <NavBar/>
     <Header/>
     <Content/>
+    
   </div>
 </template>
  
@@ -274,5 +275,6 @@ input.border-red {
 }
 
 @import "assets/css/grid.css";
+@import "assets/css/dialog.css";
 
 </style>

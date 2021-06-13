@@ -3,7 +3,7 @@
         <div class="logo-site">
             <div class="logo-box">
                 <div class="toggle-icon"></div>
-                <div class="amis-logo"></div>
+                <router-link to="/" class="custom-router"><div class="amis-logo"></div></router-link>
             </div>
         </div>
         <div class="navbar-content">
@@ -21,11 +21,11 @@
             </a>
             <a class="nav-item">
                 <div class="nav-item-icon nav-item-dic"></div>
-                <div class="nav-item-text">Danh mục nhân viên</div>
+                <div class="nav-item-text"><router-link to="/employee">Danh mục nhân viên</router-link></div> 
             </a>
             <a class="nav-item">
                 <div class="nav-item-icon nav-item-dic"></div>
-                <div class="nav-item-text">Danh mục nhân viên</div>
+                <div class="nav-item-text">Danh mục khách hàng</div>
             </a>
             <a class="nav-item">
                 <div class="nav-item-icon nav-item-setting"></div>
@@ -112,6 +112,10 @@ export default defineComponent({
     .m-navbar .navbar-content .nav-item:active {
     background-color: #019160;
     color: #ffffff;
+    }
+
+    .custom-router{
+        width: 100%;
     }
 
     .nav-item .nav-item-icon {
