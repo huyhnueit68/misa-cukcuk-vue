@@ -29,7 +29,7 @@
                                     applyInputStyle(employee.EmployeeCode)
                                   ]" 
                                   id="txtEmployeeCode" required 
-                                  class="input-required" 
+                                  class="input-required"
                                   ref="employeeCodeRequest"
                                   tabindex="0"
                                   type="text" />
@@ -41,6 +41,7 @@
                                     <input id="txtFullName" 
                                     v-model="employee.FullName" 
                                     fieldName="FullName" 
+                                    @keyup="capitalizeFirstLetter"
                                     :class="applyInputStyle(employee.FullName)" 
                                     ref="employeeNameRequest"
                                     class="input-required"
@@ -54,6 +55,7 @@
                                 <input type="date" 
                                 id="DateOfBirth" 
                                 class="success-input"
+                                :formatter="momentFormat"
                                 v-model="employee.DateOfBirth" 
                                 name="birthday"
                                 fieldName="DateOfBirth" DataType="Date">
@@ -171,7 +173,8 @@
                                 <div class="m-label">Mức lương cơ bản</div>
                                 <div class="m-control"><input v-model="employee.Salary"  
                                 id="txtSalary" 
-                                fieldName="Salary" 
+                                fieldName="Salary"
+                                @keyup="formatMoney"
                                 class="success-input"
                                 ref="employeeSalaryRequest"
                                 DataType="Number"
@@ -251,7 +254,7 @@
 <script>
 import DialogCancel from './dialogCancel.vue'
 import DialogDelete from './dialogDelete.vue'
-
+import moment from "moment";
 
 export default {
   components: {
@@ -264,18 +267,64 @@ export default {
   },
   created() {
     this.getEmployeeById(this.employeeId)
+    this.formatDate()
   },
   data(){
     return{
       employee: {},
       showDialogCancel: false,
-      showDialogDelete: false
+      showDialogDelete: false,
+      momentFormat: {
+        // Date to String
+        stringify: (date) => {
+          return date ? moment(String(date)).format("YYYY/MM/DD") : ''
+        },
+        //[optional]  String to Date
+        parse: (value) => {
+          return value ? moment(value, 'LL').toDate() : null
+        },
+      }
     }
   },
   mounted() {
     this.forcusInput()
   },
   methods: {
+    formatMoney() {
+      let valueMoney = this.$refs.employeeSalaryRequest.value
+      this.$refs.employeeSalaryRequest.value = valueMoney.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+    },
+    capitalizeFirstLetter() {
+      let words = this.$refs.employeeNameRequest.value.split(' ');  
+      let CapitalizedWords = [];  
+      words.forEach(element => {  
+          CapitalizedWords.push(element[0].toUpperCase() + element.slice(1, element.length));  
+      });
+      this.$refs.employeeNameRequest.value = CapitalizedWords.join(' ');
+    },
+    formatDate(){
+      /**
+       * format date of birthday
+       */
+      let value = this.employee.DateOfBirth;
+      if(value) {
+        this.employee.DateOfBirth = value ? moment(String(value)).format("YYYY-MM-DD") : '';
+      }
+      /**
+       * format Identity Date
+       */
+      value = this.employee.IdentityDate;
+      if(value) {
+        this.employee.IdentityDate = value ? moment(String(value)).format("YYYY-MM-DD") : '';
+      }
+      /**
+       * format Created Date
+       */
+      value = this.employee.CreatedDate;
+      if(value) {
+        this.employee.CreatedDate = value ? moment(String(value)).format("YYYY-MM-DD") : '';
+      }
+    },
     deleteRecord(){
       this.showDialogDelete = true;
     },
@@ -324,7 +373,6 @@ export default {
       this.showDialogCancel = true;
     },
     getEmployeeById(employeeId){
-      console.log(employeeId);
       if(employeeId) {
         /**
          * get by id
@@ -352,7 +400,7 @@ export default {
           "WorkStatus": 1,
           "PersonalTaxCode": null,
           "Salary": 1000000,
-          "PositionCode": null,
+          "PositionCode": 1,
           "PositionName": null,
           "DepartmentCode": null,
           "DepartmentName": null,
@@ -377,7 +425,7 @@ export default {
      * save function
      * PQ Huy 13.06.2021
      */
-    save(e){
+    save(){
 
       /**
        * save data to file json
@@ -393,7 +441,8 @@ export default {
          */
         this.$emit('reloadData')
       } else {
-          
+          // show log error
+          alert("Error");
       }
     },
     /**
@@ -874,7 +923,6 @@ export default {
 
 .container .input-field .arrow {
     position: absolute;
-    height: 38px;
     top: 1px;
     width: 10px;
     right: 1px;
@@ -884,6 +932,14 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background-image: url("../../../public/content/icon/arrow-down.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 10px;
+    height: 10px;
+    margin-top: 14px;
+
 }
 
 .container .input-field .h-line {
@@ -905,7 +961,7 @@ export default {
     right: 50px;
     cursor: pointer;
     color: #bbbbbb;
-    display: none;
+    /* display: none; */
 }
 
 .container .input-field .btn-clear:hover {
@@ -923,7 +979,6 @@ export default {
     z-index: 1000;
     background-color: #ffffff;
     box-shadow: 0px 2px 16px -9px #000000;
-    display: none;
 }
 
 .container .drop-down .dr-item {
@@ -945,6 +1000,8 @@ export default {
 .drop-down .dr-item .text {
     align-items: center;
     padding-top: 12px;
+    padding-left: 10px;
+    text-align: left;
 }
 
 .container .drop-down .dr-item:hover {

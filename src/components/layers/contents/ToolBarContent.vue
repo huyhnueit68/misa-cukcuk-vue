@@ -8,12 +8,8 @@
                 <option value="">Phong đào tạo công nghệ</option>
                 <option value="">Phòng Nhân sự</option>
             </select>
-            <select id="cbxPosition" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="" class="m-control">
-                <option value="">Tất cả vị trí</option>
-                <option value="">Giám đốc</option>
-                <option value="">Trưởng phòng</option>
-                <option value="">Nhân viên</option>
-            </select>
+            <!-- btn cutom combobox -->
+          <CustomCbo :listSelectPosition="listSelectPosition"/>
         </div>
         <!-- sub tool bar in content huy-->
         <BtnToolBarContent/>
@@ -22,10 +18,22 @@
 
 <script>
 import BtnToolBarContent from './ButtonFeature/BtnToolBar.vue'
+import CustomCbo from '../../customBox/cboSelect'
+
 
 export default({
     components: {
-        BtnToolBarContent
+        BtnToolBarContent,
+        CustomCbo
+    },
+    data(){
+      return{
+        listSelectPosition: {
+          1: "Tất cả vị trí",
+          2: "Giám  Đốc",
+          3: "Trưởng phòng",
+        },
+      }
     }
 })
 
