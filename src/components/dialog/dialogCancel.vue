@@ -5,6 +5,11 @@
             <div class="cancel-content">
                 <div class="titel-dialog-cancel">
                     <span id="ui-id-3" class="ui-dialog-title">Đóng Form thông tin chung</span>
+                    <div class="box-cancel-btn">
+                        <button type="button" class="btn-cancel" title="Close">
+                            <div class="btn-cancelForm"></div>
+                        </button>
+                    </div> 
                 </div>
                 <div class="content-body">
                     <div class="icon-notification"></div>
@@ -52,6 +57,29 @@ export default defineComponent({
 
 
 <style>
+.titel-dialog-cancel{
+    display: flex;
+}
+    .titel-dialog-cancel .box-cancel-btn{
+        width: 32px;
+        height: 32px;
+        align-items: center;
+        position: absolute;
+        right: 0px;
+        top: 0;
+    }
+    .titel-dialog-cancel .box-cancel-btn .btn-cancel{
+        width: 24px;
+        height: 24px;
+        background-image: url("../../../public/content/icon/cancelBtn.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    .titel-dialog-cancel .box-cancel-btn:hover{
+        background-color: #e9ebee;
+        cursor: pointer;
+    }
     .box-diaglog-cancel{
         width: 100%;
         height: 100%;

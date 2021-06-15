@@ -59,11 +59,9 @@
                                 v-model="employee.DateOfBirth" 
                                 name="birthday"
                                 fieldName="DateOfBirth" DataType="Date">
+                                <!-- date time picker -->
+                                <!-- <date-picker v-model="employee.DateOfBirth" :formatter="momentFormat" ref="dateOfBirth"></date-picker> -->
                             </div>
-                            <!-- date time picker -->
-                            <datepicker :formatter="momentFormat"
-                                v-model="employee.DateOfBirth" name="uniquename">
-                            </datepicker>
 
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Giới tính</div>
@@ -89,8 +87,8 @@
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Ngày cấp</div>
-                                <input type="date" 
-                                id="dateOfIndentity" 
+                                <input type="date"
+                                id="dateOfIndentity"
                                 class="success-input"
                                 v-model="employee.IdentityDate"
                                 name="indentityDate" 
@@ -253,6 +251,7 @@
       <DialogCancel v-if="showDialogCancel" @closeForm="closeForm" @closeAllForm="closeAllForm"/>
       <!-- dialog delete -->
       <DialogDelete v-if="showDialogDelete" @closeDeleteForm="closeDeleteForm" @accessDeleteRecord="accessDeleteRecord"/>
+      <!-- dialog question -->
     </div>
 </template>
 
@@ -260,8 +259,6 @@
 import DialogCancel from './dialogCancel.vue'
 import DialogDelete from './dialogDelete.vue'
 import moment from "moment";
-import Datepicker from 'vuejs-datepicker';
-
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 
@@ -270,7 +267,7 @@ export default {
   components: {
     DialogCancel,
     DialogDelete,
-    Datepicker
+    DatePicker
   },
   props:
   {
@@ -291,7 +288,8 @@ export default {
       momentFormat: {
         // Date to String
         stringify: (date) => {
-          return date ? moment(String(date)).format("YYYY/MM/DD") : ''
+          let value = moment(String(date)).format("DD/MM/YYYY");
+          return date ? moment(String(date)).format("DD/MM/YYYY") : ''
         },
         //[optional]  String to Date
         parse: (value) => {
@@ -302,15 +300,20 @@ export default {
   },
   mounted() {
     this.forcusInput()
+    this.formatMoneyBefore()
   },
   methods: {
+    formatMoneyBefore(){
+      this.$refs.employeeSalaryRequest.value = this.$refs.employeeSalaryRequest.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    },
     formatMoney() {
-      let valueMoney = this.$refs.employeeSalaryRequest.value
-      this.$refs.employeeSalaryRequest.value = valueMoney.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+        let valueMoney = this.$refs.employeeSalaryRequest.value;
+        valueMoney = valueMoney.replaceAll(".", "").replaceAll(",", "").trim();
+        this.$refs.employeeSalaryRequest.value = valueMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
     capitalizeFirstLetter() {
       let words = this.$refs.employeeNameRequest.value.split(' ');  
-      let CapitalizedWords = [];  
+      let CapitalizedWords = [];
       words.forEach(element => {  
           CapitalizedWords.push(element[0].toUpperCase() + element.slice(1, element.length));  
       });
@@ -440,11 +443,16 @@ export default {
      * PQ Huy 13.06.2021
      */
     save(){
-
-      /**
-       * save data to file json
-       */
+      
       if(this.validateData()){
+        /**
+         * save data by api
+         * convert data salary 
+         */
+        // format salary
+        let salary = this.$refs.employeeSalaryRequest.value;
+        salary ? this.employee.salary = salary.replaceAll(".", "") : ""
+        
         /**
          * close form
          */
@@ -547,7 +555,6 @@ export default {
         if(!checked) {
           alert("Điền đẩy đủ thông tin");
         }
-
         return checked;
     },
     validateNumber(){
@@ -556,7 +563,9 @@ export default {
         alert("Vui lòng điền đúng số điện thoại");
         return false;
       }
-      if(!/^[0-9,.]*$/.test(this.employee.Salary)) {
+      let salary =  this.$refs.employeeSalaryRequest.value;
+      salary = salary.replaceAll(".", "")
+      if(!/^[0-9,.]*$/.test(salary)) {
         this.$refs.employeeSalaryRequest.className = this.$refs.employeeSalaryRequest.className + " error-warning";
         alert("Vùi lòng nhận đúng số lương");
         return false;
@@ -1207,6 +1216,4 @@ input::placeholder {
 
 
 @import "../../assets/css/grid.css";
-
-
 </style>
