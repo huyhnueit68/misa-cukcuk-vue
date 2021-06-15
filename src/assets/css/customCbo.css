@@ -3,150 +3,149 @@
 */
 
 .pn-demo {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .container .m-cbo {
-    width: 240px;
-    border: 1px solid #bbbbbb;
-    outline: none;
-    text-overflow: ellipsis;
+  width: 240px;
+  border: 1px solid #bbbbbb;
+  outline: none;
+  text-overflow: ellipsis;
 }
 
 .m-control:focus,
 .input-search:focus,
 .container .m-cbo:focus {
-    border: 1px solid #019160;
+  border: 1px solid #019160;
 }
 
 .container .input-field {
-    position: relative;
+  position: relative;
 }
 
 .container .input-field .arrow {
-    position: absolute;
-    height: 38px;
-    top: 1px;
-    width: 10px;
-    right: 1px;
-    padding-left: 12px;
-    padding-right: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  position: absolute;
+  height: 38px;
+  top: 1px;
+  width: 10px;
+  right: 1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .container .input-field .h-line {
-    border-left: 1px #bbbbbb solid;
-    position: absolute;
-    top: 0px;
-    right: 34px;
-    bottom: 1px;
-    width: 1px;
-    height: 40px;
+  border-left: 1px #bbbbbb solid;
+  position: absolute;
+  top: 0px;
+  right: 34px;
+  bottom: 1px;
+  width: 1px;
+  height: 40px;
 }
-
 
 /* item clear text */
 
 .container .input-field .btn-clear {
-    position: absolute;
-    top: 14px;
-    width: 12px;
-    height: 12px;
-    background-image: url("../../../public/content/icon/cancel.png");
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    color: #bbbbbb;
+  position: absolute;
+  top: 14px;
+  opacity: 0.5;
+  width: 12px;
+  height: 12px;
+  background-image: url("../../../public/content/icon/cancel.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  color: #bbbbbb;
 }
 
 .container .input-field .btn-clear:hover {
-    color: #000000;
-    opacity: 0.5;
+  color: #000000;
+  opacity: 1;
 }
-
 
 /* Drop down */
 
 .container .drop-down {
-    position: absolute;
-    top: 40px;
-    width: 239px;
-    left: 0px;
-    z-index: 1000;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 16px -9px #000000;
+  position: absolute;
+  top: 40px;
+  width: 239px;
+  left: 0px;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 16px -9px #000000;
 }
 
 .container .drop-down .dr-item {
-    height: 40px;
-    display: flex;
-    cursor: pointer;
+  height: 40px;
+  display: flex;
+  cursor: pointer;
 }
 
 .container .input-field .down {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .drop-down .dr-item .icon-selected {
-    align-items: center;
-    justify-content: center;
-    background-image: url(../../../public/content/icon/confirm.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    margin-left: 10px;
-    padding: 12px 8px 12px 8px;
-    opacity: 0;
+  align-items: center;
+  justify-content: center;
+  background-image: url(../../../public/content/icon/confirm.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin-left: 10px;
+  padding: 12px 8px 12px 8px;
+  opacity: 0;
 }
 
 .activeOpacity {
-    opacity: 1 !important;
+  opacity: 1 !important;
 }
 
 .drop-down .dr-item .text {
-    align-items: center;
-    padding-top: 12px;
+  align-items: center;
+  padding-top: 12px;
 }
 
 .container .drop-down .dr-item:hover {
-    background-color: #e9ebee;
+  background-color: #e9ebee;
 }
 
 .container .drop-down .dr-item.active {
-    background-color: #019160;
-    color: #ffffff;
+  background-color: #019160;
+  color: #ffffff;
 }
 
 .active {
-    background-color: #019160;
-    color: #ffffff;
+  background-color: #019160;
+  color: #ffffff;
 }
 
 .container .drop-down .dr-item .icon {
-    padding: 12px 15px;
-    color: transparent;
+  padding: 12px 15px;
+  color: transparent;
 }
 
 .container .drop-down .dr-item.active .icon {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .container .drop-down .dr-item .text {
-    flex: 1;
+  flex: 1;
 }
 
 input::placeholder {
-    font-size: 11px !important;
-    color: #bbbbbb;
+  font-size: 11px !important;
+  color: #bbbbbb;
 }

@@ -60,6 +60,11 @@
                                 name="birthday"
                                 fieldName="DateOfBirth" DataType="Date">
                             </div>
+                            <!-- date time picker -->
+                            <datepicker :formatter="momentFormat"
+                                v-model="employee.DateOfBirth" name="uniquename">
+                            </datepicker>
+
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Giới tính</div>
                                 <select id="cbxGender"
@@ -255,11 +260,17 @@
 import DialogCancel from './dialogCancel.vue'
 import DialogDelete from './dialogDelete.vue'
 import moment from "moment";
+import Datepicker from 'vuejs-datepicker';
+
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+
 
 export default {
   components: {
     DialogCancel,
-    DialogDelete
+    DialogDelete,
+    Datepicker
   },
   props:
   {
@@ -270,6 +281,9 @@ export default {
     this.formatDate()
   },
   data(){
+    components: {
+      
+    }
     return{
       employee: {},
       showDialogCancel: false,
@@ -961,7 +975,6 @@ export default {
     right: 50px;
     cursor: pointer;
     color: #bbbbbb;
-    /* display: none; */
 }
 
 .container .input-field .btn-clear:hover {
