@@ -12,7 +12,8 @@
         <!-- dialog detail -->
         <DialogDetail @reloadData="getData" 
                       v-if="enableShowDialog" 
-                      @disableDialog = "isDialog" 
+                      @disableDialog = "isDialog"
+                      @reloadDataTable = "reloadDataTable"
                       :employeeId="employeeId"/>
     </div>
 </template>
@@ -40,6 +41,9 @@ export default({
       }
     },
     methods: {
+      reloadDataTable(){
+        this.getData();
+      },
       getData(){
         this.$refs.tableContent.getData();
       },
