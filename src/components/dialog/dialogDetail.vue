@@ -250,7 +250,7 @@
       <!-- dialog cancel -->
       <DialogCancel v-if="showDialogCancel" @closeForm="closeForm" @closeAllForm="closeAllForm"/>
       <!-- dialog delete -->
-      <DialogDelete v-if="showDialogDelete" @closeDeleteForm="closeDeleteForm" @accessDeleteRecord="accessDeleteRecord"/>
+      <DialogDelete v-if="showDialogDelete" @closeDeleteForm="closeDeleteForm" @accessDeleteRecord="accessDeleteRecord" :employeeId="employeeId"/>
       <!-- dialog question -->
     </div>
 </template>
@@ -275,7 +275,7 @@ export default {
   },
   created() {
     this.getEmployeeById(this.employeeId)
-    this.formatDate()
+
   },
   data(){
     components: {
@@ -299,8 +299,7 @@ export default {
     }
   },
   mounted() {
-    this.forcusInput()
-    this.formatMoneyBefore()
+    
   },
   methods: {
     formatMoneyBefore(){
@@ -326,6 +325,7 @@ export default {
       let value = this.employee.DateOfBirth;
       if(value) {
         this.employee.DateOfBirth = value ? moment(String(value)).format("YYYY-MM-DD") : '';
+        console.log(this.employee.DateOfBirth)
       }
       /**
        * format Identity Date
@@ -343,7 +343,7 @@ export default {
       }
     },
     deleteRecord(){
-      this.showDialogDelete = true;
+      this.showDialogDelete = true; 
     },
     accessDeleteRecord(){
       this.closeDeleteForm();
@@ -394,42 +394,13 @@ export default {
         /**
          * get by id
          */
-        this.employee = {
-          "EmployeeId": "1ec2f9e3-c9c5-11eb-94eb-42010a8c0002",
-          "EmployeeCode": "2",
-          "FirstName": null,
-          "LastName": null,
-          "FullName": "VIET NAM VO DICH",
-          "Gender": 2,
-          "DateOfBirth": "2021-06-17T00:00:00",
-          "PhoneNumber": "12323132",
-          "Email": "55@gmail.com",
-          "Address": "",
-          "IdentityNumber": "7777",
-          "IdentityDate": "2021-06-15T00:00:00",
-          "IdentityPlace": "Tỉnh Bắc Giang",
-          "JoinDate": null,
-          "MartialStatus": null,
-          "EducationalBackground": null,
-          "QualificationId": null,
-          "DepartmentId": 1,
-          "PositionId": 1,
-          "WorkStatus": 1,
-          "PersonalTaxCode": null,
-          "Salary": 1000000,
-          "PositionCode": 1,
-          "PositionName": null,
-          "DepartmentCode": null,
-          "DepartmentName": null,
-          "QualificationName": null,
-          "GenderName": "Không xác định",
-          "EducationalBackgroundName": null,
-          "MartialStatusName": null,
-          "CreatedDate": "2021-06-10T08:23:22",
-          "CreatedBy": null,
-          "ModifiedDate": null,
-          "ModifiedBy": null
-        }
+        var me = this;
+        this.axios.get('http://cukcuk.manhnv.net/v1/employees/'+employeeId).then((response) => {
+          me.employee = response.data;
+          this.forcusInput();
+          this.formatMoneyBefore();
+          this.formatDate();
+        })
 
       } else {
         this.employee = {}
@@ -442,8 +413,7 @@ export default {
      * save function
      * PQ Huy 13.06.2021
      */
-    save(){
-      
+    save(){ 
       if(this.validateData()){
         /**
          * save data by api
@@ -617,7 +587,9 @@ export default {
 }
 #modalAction {
   width: 800px;
+  height: 600px;
 }
+
 .m-dialog .dialog-modal {
   /* quy định độ trong suốt của nền màu nào đó. */
   opacity: 0.5;
@@ -681,6 +653,8 @@ export default {
 
 .dialog-content .dialog-body {
   padding: 0px 24px 24px;
+  overflow: auto;
+  height: 500px;
 }
 
 .dialog-footer {

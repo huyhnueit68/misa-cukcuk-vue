@@ -30,20 +30,26 @@ export default({
             employeeData: employeeData
         }
     },
-    create() {
-        this.getData();
+    created() {
+        this.getData(); 
     },
     methods: {
         selectedItem(items) {
             let employeeId = items.EmployeeId;
             this.$emit('showDialogEdit', employeeId);
+        },
+        getData() {
+            /**
+             * get data form api
+             */
+            // debugger  // eslint-disable-line no-debugger
+            var me = this;
+            this.axios.get('http://cukcuk.manhnv.net/v1/employees').then((response) => {
+                me.employeeData = response.data
+            })
         }
     },
-    getData(){
-        /**
-         * get data form api
-         */
-    }
+    
 })
 </script>
 

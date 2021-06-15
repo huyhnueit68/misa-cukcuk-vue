@@ -39,13 +39,16 @@ export default {
     setup() {
         
     },
+    props:['employeeId'],
     methods: {
         closeDeleteForm(){
             this.$emit('closeDeleteForm')
         },
         accessDelete(){
-            this.$emit('accessDeleteRecord')
-        }
+            this.axios.delete('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId).then((response) => {
+                this.$emit('accessDeleteRecord')
+            })
+        }, 
     }
 }
 </script>
