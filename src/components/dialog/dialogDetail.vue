@@ -4,11 +4,11 @@
       <!-- pop up detail -->
       <div class="m-dialog dialog-detail" title="" id="modalAction">
         <div class="dialog-content" ShowForm="true">
+            <div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle custom-header-dialog">
+              <span id="ui-id-1" class="ui-dialog-title custom-title">THÔNG TIN NHÂN VIÊN</span>
+            </div>
             <div class="dialog-body">
-              <div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle custom-header-dialog">
-                <span id="ui-id-1" class="ui-dialog-title custom-title">THÔNG TIN NHÂN VIÊN</span>
-              </div>
-                <div class="m-row m-flex">
+                <div class="m-row m-flex content-form-detail">
                     <div class="m-col el-avatar-employee m-flex-1">
                         <div class="el-avatar"></div>
                         <div class="el-avatar-note text-align-center">
@@ -218,19 +218,10 @@
                   class="m-btn m-btn-default m-btn-cancel action-form" 
                   Command="Cancel" 
                   data-toggle="tooltip"  
-                  data-placement="top" 
+                  data-placement="top"
                   title="Hủy tiến trình">Hủy
                 </button>
-                <button id="btnDelete" 
-                  class="m-btn-del m-btn-delete action-form" 
-                  Command="Delete" 
-                  data-toggle="tooltip" 
-                  data-placement="top"
-                  @click="deleteRecord"
-                  title="Xóa thông tin bản ghi này">
-                  <i class="fa fa-minus-circle"></i>
-                  <span class="btn-text">Xóa</span>
-                </button>
+                <BtnDelete v-if="showBtnDelete" @deleteRecord = "deleteRecord"/>
                 <button @click="save"
                   id="btnSave"
                   class="m-btn m-btn-default action-form"
@@ -238,7 +229,7 @@
                   data-toggle="tooltip" 
                   data-placement="top" 
                   title="Lưu lại thông tin">
-                  <i class="far fa-save"></i>
+                  <i class="save-icon-form"></i>
                   <span class="btn-text">Lưu</span>
                 </button>
             </div>
@@ -258,16 +249,18 @@
 <script>
 import DialogCancel from './dialogCancel.vue'
 import DialogDelete from './dialogDelete.vue'
+import BtnDelete from '../layers/contents/ButtonFeature/BtnDelete.vue'
 import moment from "moment";
 import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
-
+// import 'vue2-datepicker/index.css';
+// import Vue from 'vue'
 
 export default {
   components: {
     DialogCancel,
     DialogDelete,
-    DatePicker
+    DatePicker,
+    BtnDelete
   },
   props:
   {
@@ -275,16 +268,15 @@ export default {
   },
   created() {
     this.getEmployeeById(this.employeeId)
-
+    this.enableBtnDelete();
   },
   data(){
-    components: {
-      
-    }
     return{
       employee: {},
       showDialogCancel: false,
       showDialogDelete: false,
+      showBtnDelete: false,
+      formMode: null,
       momentFormat: {
         // Date to String
         stringify: (date) => {
@@ -298,10 +290,10 @@ export default {
       }
     }
   },
-  mounted() {
-    
-  },
   methods: {
+    enableBtnDelete(){
+      this.getFormMode() ? this.showBtnDelete = true : this.showBtnDelete = false 
+    },
     formatMoneyBefore(){
       this.$refs.employeeSalaryRequest.value = this.$refs.employeeSalaryRequest.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
@@ -346,16 +338,25 @@ export default {
       this.showDialogDelete = true; 
     },
     accessDeleteRecord(){
+      /**
+       * close form
+       */
       this.closeDeleteForm();
+      /**
+       * close form
+       */
+      this.$emit('disableDialog');
+
+      /**
+       * reload data
+       */
+      this.$emit('reloadData')
     },
     closeDeleteForm(){
       /**
        * close form required
        */
       this.showDialogDelete = false;
-      /**
-       * action delete record
-       */
     },
     closeAllForm(){
       this.closeForm();
@@ -409,11 +410,14 @@ export default {
     forcusInput(){
       this.$refs.employeeCodeRequest.focus()
     },
+    getFormMode(){
+      return this.formMode = this.$store.state.formMode;
+    },
     /**
      * save function
      * PQ Huy 13.06.2021
      */
-    save(){ 
+    async save(){
       if(this.validateData()){
         /**
          * save data by api
@@ -422,7 +426,20 @@ export default {
         // format salary
         let salary = this.$refs.employeeSalaryRequest.value;
         salary ? this.employee.salary = salary.replaceAll(".", "") : ""
+
+        // check form mode
+        let isUpdate = this.getFormMode();
         
+        if(isUpdate) {
+          await this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
+            
+          })
+        } else {
+          await this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
+                        
+          })
+        }
+
         /**
          * close form
          */
@@ -550,10 +567,44 @@ export default {
 
 <style>
 
+@media screen and (max-height: 855px) {
+  .dialog-content .dialog-body {
+    height: 600px;
+  }
+  @media screen and (max-height: 850px) {
+    .dialog-content .dialog-body {
+      height: 550px;
+    }
+    @media screen and (max-height: 768px) {
+      .dialog-content .dialog-body {
+        height: 500px;
+      }
+      @media screen and (max-height: 700px) {
+        .dialog-content .dialog-body {
+          height: 400px;
+        }
+        @media screen and (max-height: 600px) {
+          .dialog-content .dialog-body {
+            height: 300px;
+          }
+        }
+      }
+    }
+  }
+}
 
 .error-warning{
   outline: none;
   border: 1px solid #F65454;
+}
+
+.save-icon-form {
+  background-image: url("../../../public/content/icon/save-icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: content;
+  width: 16px;
+  height: 16px;
 }
 
 .error-input:focus{
@@ -574,6 +625,9 @@ export default {
 .custom-header-dialog{
   padding: 24px 24px 0 24px;
   text-align: left;
+  margin-bottom: 24px;
+  margin-top: 24px;
+
 }
 
 .box-dialog {
@@ -587,7 +641,6 @@ export default {
 }
 #modalAction {
   width: 800px;
-  height: 600px;
 }
 
 .m-dialog .dialog-modal {
@@ -654,7 +707,6 @@ export default {
 .dialog-content .dialog-body {
   padding: 0px 24px 24px;
   overflow: auto;
-  height: 500px;
 }
 
 .dialog-footer {

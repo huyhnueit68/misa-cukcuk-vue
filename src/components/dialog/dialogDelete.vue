@@ -44,8 +44,8 @@ export default {
         closeDeleteForm(){
             this.$emit('closeDeleteForm')
         },
-        accessDelete(){
-            this.axios.delete('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId).then((response) => {
+        async accessDelete(){
+            await this.axios.delete('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId).then((response) => {
                 this.$emit('accessDeleteRecord')
             })
         }, 

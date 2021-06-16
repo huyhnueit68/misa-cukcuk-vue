@@ -78,7 +78,6 @@ body {
   top: 0;
   left: 0;
   background-color: rgb(255 251 251 / 52%);
-  display: none;
 }
 
 .icon-loader .loader {

@@ -3,12 +3,34 @@
         <button id="btnMassDelete" class="m-second-button tool-box" CommandType="MassDelete" data-toggle="tooltip"
             data-placement="top" title="Xóa thông tin bản ghi này"><i class="fa fa-minus-circle"></i><span
                 class="btn-text">Xóa</span></button>
-        <button id="btnRefresh" CommandType="Refresh" class="m-second-button m-btn-refresh tool-box" data-toggle="tooltip" data-placement="top" title="Làm mới thông tin">
+        <button id="btnRefresh" 
+        class="m-second-button m-btn-refresh tool-box" 
+        data-toggle="tooltip" 
+        data-placement="top" 
+        title="Làm mới thông tin" 
+        @click="reloadData">
         </button>
         <button id="btnImport" class="m-second-button m-btn-import" CommandType="Import" data-toggle="tooltip tool-box" data-placement="top" title="Nhập khẩu dữ liệu">
         </button>
     </div>
 </template>
+
+<script>
+import { defineComponent } from '@vue/composition-api'
+
+export default defineComponent({
+  setup() {
+    
+  },
+  methods: {
+    reloadData(){
+      this.$store.commit('EnableReloading');
+      this.$emit('setReloadData');
+    }
+  }
+})
+</script>
+
 
 <style>
     

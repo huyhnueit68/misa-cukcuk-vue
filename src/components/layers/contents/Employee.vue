@@ -4,16 +4,17 @@
         <!-- header content -->
         <HeaderContent @isShowDialog="showDialog"/>
         <!-- filter tool bar-->
-        <ToolBarContent/>
+        <ToolBarContent @setReloadData="setReloadData"/>
         <!-- table content -->
         <TableContent @showDialogEdit="showDialogEdit" ref="tableContent"/>
         <!-- padding bar show list  -->
         <PagingContent/>
         <!-- dialog detail -->
-        <DialogDetail @reloadData="getData" 
+        <DialogDetail @reloadData="setReloadData" 
                       v-if="enableShowDialog" 
                       @disableDialog = "isDialog" 
                       :employeeId="employeeId"/>
+        <LoaderEffect v-if="this.$store.state.isLoading"/>
     </div>
 </template>
 
@@ -23,7 +24,7 @@ import ToolBarContent from './ToolBarContent.vue'
 import PagingContent from './PaddingContent.vue'
 import TableContent from './TableContent.vue'
 import DialogDetail from '../../../components/dialog/dialogDetail.vue'
-
+import LoaderEffect from './ButtonFeature/loaderEffect.vue'
 
 export default({
     components: {
@@ -31,17 +32,22 @@ export default({
         ToolBarContent,
         TableContent,
         PagingContent,
-        DialogDetail
+        DialogDetail,
+        LoaderEffect
     },
     data(){
       return  {
         enableShowDialog: false,
+        isShowLoader: false,
         employeeId: null
       }
     },
     methods: {
       getData(){
-        this.$refs.tableContent.getData();
+        this.$refs.tableContent.getDataTableContent();
+      },
+      setReloadData(){
+        this.getData();
       },
       showDialog(){
         this.enableShowDialog = true;

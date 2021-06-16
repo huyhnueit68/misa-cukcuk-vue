@@ -14,6 +14,7 @@ export default {
   },
   methods: {
     enableShowDialog(){
+      this.$store.commit('FormStateAdd');
       this.$emit('showDialog')
     }
   }

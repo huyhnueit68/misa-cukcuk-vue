@@ -2,7 +2,6 @@
  * create file resource
  * PQ Huy 02.06.2021
  */
-
 var resource = resource || {};
 
 // Data type in grid
@@ -29,8 +28,8 @@ resource.Grender = {
 
 // Position
 resource.Position = {
-    Manager: "Giám đốc",  
-    Cashier: "Thu ngân",    
+    Manager: "Giám đốc",
+    Cashier: "Thu ngân",
     Marketer: "Nhân viên marketing",
     ITer: "Nhân viên IT",
 }
@@ -58,3 +57,5 @@ resource.CommandForm = {
     Cancel: "Cancel",
     Delete: "Delete",
 }
+
+export default resource;

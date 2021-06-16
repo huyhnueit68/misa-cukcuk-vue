@@ -25,8 +25,8 @@ export default {
     showDialogEdit(employeeId){
       this.$emit('showDialogEdit', employeeId)
     },
-    getData(){
-      this.$refs.contentTable.getData;
+    getDataTableContent(){
+      this.$refs.contentTable.getDataContentTable();
     }
   }
 }

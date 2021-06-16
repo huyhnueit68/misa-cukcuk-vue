@@ -6,7 +6,7 @@ class BaseGrid {
 
     constructor(gridId) {
         let me = this;
-        
+
         //save parent grid
         me.grid = $(gridId);
 
@@ -32,7 +32,7 @@ class BaseGrid {
         let me = this;
 
         me.formDetail = new baseForm(formId);
-        
+
     }
 
     /**
@@ -50,25 +50,24 @@ class BaseGrid {
 
         // set background color when on click
         me.eventClickRow(this);
-        
+
     }
 
 
     /**
      * function action tool box (refresh, import and export)
      */
-    intiActionToolBox(){    
+    intiActionToolBox() {
         let me = this,
             toolBoxId = me.grid.attr("ToolBox"),
             toolBox = $(`#${toolBoxId}`);
-        
-            if(toolBox.length > 0) {
-                toolBox.find('.tool-box').on('click', function(){
-                    debugger
-                    let commandType = $(this).attr('CommandType');
-                    me.setCommandEvent(commandType);
-                })
-            }
+
+        if (toolBox.length > 0) {
+            toolBox.find('.tool-box').on('click', function() {
+                let commandType = $(this).attr('CommandType');
+                me.setCommandEvent(commandType);
+            })
+        }
     }
 
     /**
@@ -76,19 +75,19 @@ class BaseGrid {
      * CreatedBy: PQ Huy 02.06.2021
      */
     initEventToolBar() {
-        let me = this, 
+        let me = this,
             toolBarId = me.grid.attr("ToolBar"),
             toolBar = $(`#${toolBarId}`);
-    
+
         if (toolBar.length > 0) {
-            toolBar.find('#btnAdd').on('click', function () {
+            toolBar.find('#btnAdd').on('click', function() {
                 let commandType = $(this).attr("CommandType");
                 me.setCommandEvent(commandType);
                 $('#btnDelete').addClass('hidden-delete');
             });
 
             // catch event click on row show detail in table
-            me.grid.on("dblclick", "tbody tr", function () {
+            me.grid.on("dblclick", "tbody tr", function() {
                 let commandType = resource.CommandType.Edit;
                 $('#btnDelete').removeClass('hidden-delete');
                 me.setCommandEvent(commandType);
@@ -104,13 +103,13 @@ class BaseGrid {
     setCommandEvent(commandType) {
         let me = this,
             fireEvent = null;
-        
+
         fireEvent = me.setEventList(commandType);
 
         /**
          * check type of function
          */
-        if (typeof (fireEvent) === 'function') {
+        if (typeof(fireEvent) === 'function') {
             fireEvent = fireEvent.bind(me);
             fireEvent();
         }
@@ -124,7 +123,7 @@ class BaseGrid {
      */
     setEventList(commandType) {
         let me = this,
-             fireEvent = null;
+            fireEvent = null;
         switch (commandType) {
             case resource.CommandType.Add: //add new 
                 fireEvent = me.addFunction;
@@ -136,8 +135,8 @@ class BaseGrid {
                 fireEvent = me.deleteFunction;
                 break;
             case resource.CommandType.MassDelete: // mass delete item
-            fireEvent = me.massDeleteFunction;
-            break;
+                fireEvent = me.massDeleteFunction;
+                break;
             case resource.CommandType.Refresh: //refresh item 
                 fireEvent = me.refresh;
                 break;
@@ -155,11 +154,11 @@ class BaseGrid {
      * function export data to csv, excel, ...
      * CreatedBy: PQ Huy 08.06.2021
      */
-    export(){
+    export () {
 
     }
 
-    import(){
+    import () {
 
     }
 
@@ -167,7 +166,7 @@ class BaseGrid {
      * function mass delete item
      * CreatedBy: PQ Huy 08.06.2021
      */
-    massDeleteFunction(){
+    massDeleteFunction() {
 
     }
 
@@ -179,7 +178,7 @@ class BaseGrid {
         let me = this,
             data = {},
             selected = me.grid.find(".selected-row");
-        
+
         if (selected.length > 0) {
             data = selected.eq(0).data("value");
         }
@@ -196,7 +195,7 @@ class BaseGrid {
             url = me.grid.attr("Url"),
             urlFull = `${constant.UrlPrefix}${url}`;
         //call ajax function get data
-        commonFn.Ajax(urlFull, resource.Method.Get, {}, function (response) {
+        commonFn.Ajax(urlFull, resource.Method.Get, {}, function(response) {
             if (response) {
                 me.dataGrid = response;
                 me.loadDataGrid(response);
@@ -204,7 +203,7 @@ class BaseGrid {
                 console.log("Something went wrong!!!");
             }
         })
-        $('.icon-loader').fadeIn("fast", function(){        
+        $('.icon-loader').fadeIn("fast", function() {
             $(".icon-loader").fadeOut(1000);
         });
     }
@@ -215,9 +214,9 @@ class BaseGrid {
      * @param {*} me 
      */
     eventClickRow(me) {
-        me.grid.on("click", "tbody tr", function () {
+        me.grid.on("click", "tbody tr", function() {
             me.grid.find(".selected-row").removeClass("selected-row");
-            
+
             $(this).addClass("selected-row");
         });
     }
@@ -231,7 +230,7 @@ class BaseGrid {
             tableRender = $("<table class='table' cellspacing='0' cellpadding='15' border='0'></table>"),
             theadRender = me.renderHeader(),
             tbodyRender = me.renderTbody(propertyData);
-            
+
         // append html after render html from data
         tableRender.append(theadRender);
         tableRender.append(tbodyRender);
@@ -244,7 +243,7 @@ class BaseGrid {
         me.afterBinding();
     }
 
-    afterBinding(){
+    afterBinding() {
         let me = this;
 
         // set id for each record
@@ -267,13 +266,13 @@ class BaseGrid {
         let stt = `<th><input type="checkbox" id="checkall" class="custom-input" name="checkall" value="checkall" onchange="setCheckedAll()"></th><th>STT</th>`;
         rowRender.append(stt);
         // foreach row for build header
-        me.grid.find(".col").each(function () {
+        me.grid.find(".col").each(function() {
             //get text header
             let textHeader = $(this).text(),
                 dataType = $(this).attr("DataType"),
                 className = me.getClassFormat(dataType),
                 th = $("<th></th>");
-            
+
             //set text header for tag th
             th.text(textHeader);
             th.addClass(className);
@@ -296,16 +295,16 @@ class BaseGrid {
         var count = 0;
         let me = this,
             tbodyRender = $("<tbody class='custom-tbody' id='employeeTable'></tbody>");
-        
+
         /* check data nan */
-        if(dataForm && dataForm.length > 0){
-            dataForm.filter(function(item){
+        if (dataForm && dataForm.length > 0) {
+            dataForm.filter(function(item) {
                 let row = $("<tr class='btn-name'></tr>");
                 let checkbox = `<td><input type="checkbox" id="" name="" class="checkedValue" value="${item.EmployeeId}"></td><td>${++count}</td>`;
                 row.append(checkbox);
-                
+
                 /* for loop each row and set to each field name */
-                me.grid.find(".col").each(function(){
+                me.grid.find(".col").each(function() {
                     let column = $(this),
                         fieldName = column.attr("FieldName"),
                         dataType = column.attr("DataType"),
@@ -339,7 +338,7 @@ class BaseGrid {
     getClassFormat(dataType) {
         let me = this,
             className = "";
-        
+
         switch (dataType) {
             case resource.DataTypeColumn.Number:
                 className = "align-right";
@@ -373,7 +372,7 @@ class BaseGrid {
                 data = commonFn.getValueEnum(data, enumName);
                 break;
         }
-        
+
         return data;
     }
 
@@ -387,12 +386,12 @@ class BaseGrid {
                 Parent: me,
                 FormMode: enumeration.FormModel.Delete,
                 DataGrid: me.dataGrid,
-                Record: { ...me.getSelectedRecord() },
+                Record: {...me.getSelectedRecord() },
                 ItemId: me.ItemId
             };
-        
+
         if (me.formDetail) {
-            me.formDetail.form.find("[ShowForm]").each(function () {
+            me.formDetail.form.find("[ShowForm]").each(function() {
                 $(this).addClass("disabled-text");
             })
             $(".form-delete").show();
@@ -412,9 +411,9 @@ class BaseGrid {
                 DataGrid: me.dataGrid,
                 Record: {}
             };
-        
+
         if (me.formDetail) {
-            me.formDetail.form.find("[ShowForm]").each(function () {
+            me.formDetail.form.find("[ShowForm]").each(function() {
                 $(this).removeClass("disabled-text");
             })
             $(".form-delete").hide();
@@ -427,18 +426,18 @@ class BaseGrid {
      * CreatedBy: PQ Huy 03.06.2021
      */
     editFunction() {
-    
+
         let me = this,
             param = {
                 Parent: me,
                 FormMode: enumeration.FormModel.Edit,
                 DataGrid: me.dataGrid,
-                Record: { ...me.getSelectedRecord() },
+                Record: {...me.getSelectedRecord() },
                 ItemId: me.ItemId
             };
-        
+
         if (me.formDetail) {
-            me.formDetail.form.find("[ShowForm]").each(function () {
+            me.formDetail.form.find("[ShowForm]").each(function() {
                 $(this).removeClass("disabled-text");
             })
             $(".form-delete").hide();

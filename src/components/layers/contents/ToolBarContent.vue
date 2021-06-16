@@ -12,7 +12,7 @@
           <CustomCbo :listSelectPosition="listSelectPosition"/>
         </div>
         <!-- sub tool bar in content huy-->
-        <BtnToolBarContent/>
+        <BtnToolBarContent @setReloadData="setReloadData"/>
     </div>
 </template>
 
@@ -33,6 +33,11 @@ export default({
           2: "Giám  Đốc",
           3: "Trưởng phòng",
         },
+      }
+    },
+    methods: {
+      setReloadData(){
+        this.$emit('setReloadData');
       }
     }
 })

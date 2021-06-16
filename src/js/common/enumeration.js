@@ -6,17 +6,17 @@ var enumeration = enumeration || {};
 
 // create enumeration for grender
 enumeration.Grender = {
-    Female: 0,  
-    Male: 1,    
-    Other: 2,   
+    Female: 0,
+    Male: 1,
+    Other: 2,
 }
 
 // create enumeration for Position
 enumeration.Position = {
-    Manager: 0,  
-    Cashier: 1,    
+    Manager: 0,
+    Cashier: 1,
     Marketer: 2,
-    ITer: 3,   
+    ITer: 3,
 }
 
 // create enumeration for work status
@@ -33,3 +33,4 @@ enumeration.FormModel = {
     Delete: 3,
 }
 
+export default enumeration;

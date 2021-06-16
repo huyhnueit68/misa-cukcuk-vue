@@ -7,9 +7,9 @@
  * @returns 
  */
 commonFn.formatMoney = money => {
-    if(money &&!isNaN(money)){
+    if (money && !isNaN(money)) {
         return money.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.");
-    }else{
+    } else {
         return money;
     }
 }
@@ -25,7 +25,7 @@ commonFn.formatDate = dateSrc => {
         year = date.getFullYear().toString(),
         month = (date.getMonth() + 1).toString().padStart(2, '0'),
         day = (date.getDate()).toString().padStart(2, '0');
-    
+
     return `${day}/${month}/${year}`;
 }
 
@@ -37,7 +37,7 @@ commonFn.formatDate = dateSrc => {
  */
 commonFn.isDateFormat = (date) => {
     let regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
-    
+
     return regex.test(date);
 }
 
@@ -65,7 +65,7 @@ commonFn.convertDate = dateSrc => {
 commonFn.getValueEnum = (data, enumName) => {
     let enumGetData = enumeration[enumName], //get the corresonding enum in the enum File, return array
         resourceData = resource[enumName];
-    
+
     for (value in enumGetData) {
         if (enumGetData[value] == data) {
             data = resourceData[value];
@@ -89,7 +89,7 @@ commonFn.Ajax = (url, method, data, fnCallback, async = true) => {
     $.ajax({
         url: url,
         method: method,
-        async:async,
+        async: async,
         data: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
@@ -97,10 +97,10 @@ commonFn.Ajax = (url, method, data, fnCallback, async = true) => {
         crossDomain: true, //connect frontend and backend and pass to server,
         connectType: "application/json;charset=utf-8",
         dataType: "json",
-        success: function (response) {
+        success: function(response) {
             fnCallback(response);
         },
-        error: function (errormessage) {
+        error: function(errormessage) {
             console.log("Lỗi nè " + errormessage.responseText);
         }
     })
@@ -112,17 +112,17 @@ commonFn.Ajax = (url, method, data, fnCallback, async = true) => {
  * PQ Huy 31.5.2021
  */
 function setCheckedAll() {
-    $('.custom-header').find('th').each(function () {
-        $(this).find('input[type="checkbox"]').each(function () {
+    $('.custom-header').find('th').each(function() {
+        $(this).find('input[type="checkbox"]').each(function() {
             if (this.checked) {
-                $('tbody').find('td').each(function () {
-                    $(this).find('input[type="checkbox"]').each(function () {
+                $('tbody').find('td').each(function() {
+                    $(this).find('input[type="checkbox"]').each(function() {
                         $(this).prop('checked', true);
                     });
                 });
             } else {
-                $('tbody').find('td').each(function () {
-                    $(this).find('input[type="checkbox"]').each(function () {
+                $('tbody').find('td').each(function() {
+                    $(this).find('input[type="checkbox"]').each(function() {
                         $(this).prop('checked', false);
                     });
                     $('tbody').find(".selected-row").removeClass("selected-row");
@@ -136,18 +136,16 @@ function setCheckedAll() {
  * convert first key of string to upper case
  * PQ Huy 04.06.2021
  */
-$(document).ready(function(){
-    $("#txtFullName").keypress(function () {
+$(document).ready(function() {
+    $("#txtFullName").keypress(function() {
         $(this).val(capitalizeFirstLetter($(this).val()));
     });
 
-    $("#txtSalary").keyup(function () {
+    $("#txtSalary").keyup(function() {
         $(this).val(numberWithCommas($(this).val()));
     });
 
-    $('.checkedValue, .custom-header').on('click', function () {
-        // alert("huy");
-        // debugger
+    $('.checkedValue, .custom-header').on('click', function() {
         let check = $('tbody').find('td').find('input[type=checkbox]:checked').length;
         if (check > 0) {
             $('#btnMassDelete').show();
@@ -172,7 +170,7 @@ function capitalizeFirstLetter(string) {
  * automaticaly add comma when pe
  */
 function numberWithCommas(string) {
-    string = string.toString().replace(/,/g, '').replace(/\D/g,'').split(' ').join('');
+    string = string.toString().replace(/,/g, '').replace(/\D/g, '').split(' ').join('');
     return string.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -221,7 +219,7 @@ function showSuccessMessenger() {
         $('body').append(html);
     }
     $('.box-toast-msg').toggle();
-    setTimeout(function () {
+    setTimeout(function() {
         $('.box-toast-msg').toggle();
     }, 2000)
 
@@ -230,12 +228,12 @@ function showSuccessMessenger() {
 /**
  * set tooltip for button
  */
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip()
 })
 
-$(document).ready(function () {
-    $('.nav-item').on('click', function () {
+$(document).ready(function() {
+    $('.nav-item').on('click', function() {
         let me = this;
         resetSelectedMenu();
         $(me).addClass('selected-sub-menu');
@@ -247,7 +245,7 @@ $(document).ready(function () {
  * PQ Huy 07.06.2021
  */
 function resetSelectedMenu() {
-    $('.navbar-content').find('.nav-item').each(function () {
+    $('.navbar-content').find('.nav-item').each(function() {
         $(this).removeClass('selected-sub-menu');
     })
 }
