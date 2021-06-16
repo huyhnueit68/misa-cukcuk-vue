@@ -19,10 +19,12 @@
                 <div class="nav-item-icon nav-item-dashboard"></div>
                 <div class="nav-item-text">Mua hàng</div>
             </a>
-            <a class="nav-item">
-                <div class="nav-item-icon nav-item-dic"></div>
-                <div class="nav-item-text"><router-link to="/employee">Danh mục nhân viên</router-link></div> 
-            </a>
+            <router-link to="/employee">
+                <a class="nav-item">
+                    <div class="nav-item-icon nav-item-dic"></div>
+                    <div class="nav-item-text">Danh mục nhân viên</div> 
+                </a>
+            </router-link>
             <a class="nav-item">
                 <div class="nav-item-icon nav-item-dic"></div>
                 <div class="nav-item-text">Danh mục khách hàng</div>
