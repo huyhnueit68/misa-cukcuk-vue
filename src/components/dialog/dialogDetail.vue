@@ -432,11 +432,19 @@ export default {
         
         if(isUpdate) {
           await this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
-            
+            if(response.status == 200) {
+              this.successNotification();
+            } else {
+              this.errorNotification();
+            }
           })
         } else {
           await this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
-                        
+            if(response.status == 200) {
+              this.successNotification();
+            } else {
+              this.errorNotification();
+            }    
           })
         }
 
@@ -453,6 +461,20 @@ export default {
           // show log error
           alert("Error");
       }
+    },
+    successNotification(){
+      this.$swal({
+        title: "Thành công!",
+        text: "Thực hiện thành công!",
+        icon: "success",
+      });
+    },
+    errorNotification(){
+      this.$swal({
+        title: "Thất bại!",
+        text: "Vui lòng thử lại sau!",
+        icon: "error",
+      });
     },
     /**
      * validate data
