@@ -302,9 +302,6 @@ export default {
     
   },
   methods: {
-    accessDeleteRecord(){
-      this.closeDeleteForm();
-    },
     formatMoneyBefore(){
       this.$refs.employeeSalaryRequest.value = this.$refs.employeeSalaryRequest.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
@@ -348,6 +345,9 @@ export default {
     deleteRecord(){
       this.showDialogDelete = true; 
     },
+    accessDeleteRecord(){
+      this.closeDeleteForm();
+    },
     closeDeleteForm(){
       /**
        * close form required
@@ -356,11 +356,6 @@ export default {
       /**
        * action delete record
        */
-      this.closeAllForm();
-      /**
-       * reload data
-       */
-      this.$emit('reloadData')
     },
     closeAllForm(){
       this.closeForm();
@@ -427,18 +422,7 @@ export default {
         // format salary
         let salary = this.$refs.employeeSalaryRequest.value;
         salary ? this.employee.salary = salary.replaceAll(".", "") : ""
-
-        // check form mode
-        let isUpdate = false;
-        if(isUpdate) {
-          this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
-            console.log(response)
-          })
-        } else {
-          this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
-            console.log(response)
-          })
-        }
+        
         /**
          * close form
          */
@@ -447,7 +431,7 @@ export default {
         /**
          * reload data
          */
-        this.$emit('reloadDataTable')
+        this.$emit('reloadData')
       } else {
           // show log error
           alert("Error");
