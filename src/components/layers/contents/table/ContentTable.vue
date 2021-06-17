@@ -11,7 +11,7 @@
             <td>{{ items.Email }}</td>
             <td>{{ items.PositionId }}</td>
             <td>{{ items.DepartmentId }}</td> 
-            <td class="alight-right">{{ formatSalary(items.Salary) }}</td>
+            <td class="align-right">{{ formatSalary(items.Salary) }}</td>
             <td>{{ formatWorkStatus(items.WorkStatus) }}</td>
         </tr>
 
@@ -149,5 +149,8 @@ export default({
 
 <style>
     @import "../../../../assets/css/grid.css";
- 
+    .align-right {
+        text-align: right;
+        padding-right: 24px;
+    }
 </style>

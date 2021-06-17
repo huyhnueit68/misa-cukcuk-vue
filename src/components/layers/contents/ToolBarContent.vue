@@ -8,6 +8,8 @@
                 <option value="">Phong đào tạo công nghệ</option>
                 <option value="">Phòng Nhân sự</option>
             </select>
+            <!--  -->
+            
             <!-- btn cutom combobox -->
           <CustomCbo :listSelectPosition="listSelectPosition"/>
         </div>
@@ -20,10 +22,11 @@
 import BtnToolBarContent from './buttonFeature/BtnToolBar.vue'
 import CustomCbo from '../../customBox/CboSelect.vue'
 
+
 export default({
     components: {
         BtnToolBarContent,
-        CustomCbo
+        CustomCbo,
     },
     data(){
       return{
@@ -41,7 +44,7 @@ export default({
        */
       setReloadData(){
         this.$emit('setReloadData');
-      }
+      },
     }
 })
 

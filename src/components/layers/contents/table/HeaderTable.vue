@@ -7,7 +7,7 @@
             <th>
                 STT
             </th>
-            <th v-for="(item, index) in header" :key="index" :class="format">
+            <th v-for="(item, index) in header" :key="index" :class="applyInputStyle(item)">
                 {{ item.text }}
             </th>
         </tr>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import resource from '../../../../js/common/resource.js'
+
 export default {
     setup() {
         
@@ -30,15 +32,26 @@ export default {
                 {text: "Email"},
                 {text: "Chức vụ"},
                 {text: "Phòng ban"},
-                {text: "Mức lương cơ bản", dataType: "Salary"},
+                {text: "Mức lương cơ bản", dataType: "Number"},
                 {text: "Tình trạng công việc"},
             ],
+        }
+    },
+    methods: {
+        applyInputStyle(item){
+            if(item.dataType == resource.DataTypeColumn.Number) {
+                return ['align-right']
+            }
         }
     }
 }
 </script>
 
 <style scoped>
+    .align-right {
+        text-align: right;
+        padding-right: 24px;
+    }
     .custom-color,
     .theader-table {
         width: 100%;

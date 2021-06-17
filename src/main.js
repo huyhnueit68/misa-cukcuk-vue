@@ -8,6 +8,10 @@ import VueSwal from 'vue-swal'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import VTooltip from 'v-tooltip'
+import Autocomplete from 'v-autocomplete'
+import 'v-autocomplete/dist/v-autocomplete.css'
+ 
+Vue.use(Autocomplete)
 
 Vue.use(VTooltip)
 Vue.use(VueSweetalert2);
