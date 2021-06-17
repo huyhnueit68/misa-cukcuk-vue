@@ -41,9 +41,17 @@ export default {
     },
     props:['employeeId'],
     methods: {
+        /**
+         * close form 
+         * PQ Huy 15.06.2021
+         */
         closeDeleteForm(){
             this.$emit('closeDeleteForm')
         },
+        /**
+         * access delete 
+         * PQ Huy 15.06.2021
+         */
         async accessDelete(){
             await this.axios.delete('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId).then((response) => {
                 this.$emit('accessDeleteRecord')

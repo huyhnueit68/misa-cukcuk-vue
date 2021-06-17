@@ -45,9 +45,17 @@ export default defineComponent({
         
     },
     methods: {
+        /**
+         * close form
+         * PQ Huy 15.06.2021
+         */
         closeForm(){
             this.$emit('closeForm');
         },
+        /**
+         * access close all form
+         * PQ Huy 15.06.2021
+         */
         closeAllForm(){
             this.$emit('closeAllForm')
         }

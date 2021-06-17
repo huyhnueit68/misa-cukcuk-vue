@@ -36,6 +36,10 @@ export default({
       }
     },
     methods: {
+      /**
+       * reload data table
+       * PQ Huy 13.06.2021
+       */
       setReloadData(){
         this.$emit('setReloadData');
       }

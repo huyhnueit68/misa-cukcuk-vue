@@ -6,12 +6,12 @@
             <td>{{ items.EmployeeCode }}</td>
             <td>{{ items.FullName }}</td>
             <td>{{ formatGrender(items.Gender) }}</td>
-            <td>{{ items.DateOfBirth }}</td>
+            <td>{{ formatDate(items.DateOfBirth) }}</td>
             <td>{{ items.PhoneNumber }}</td>
             <td>{{ items.Email }}</td>
             <td>{{ items.PositionId }}</td>
             <td>{{ items.DepartmentId }}</td> 
-            <td>{{ items.Salary }}</td>
+            <td>{{ formatSalary(items.Salary) }}</td>
             <td>{{ formatWorkStatus(items.WorkStatus) }}</td>
         </tr>
 
@@ -21,6 +21,7 @@
 <script>
 import enumeration from '../../../../js/common/enumeration'
 import resource from '../../../../js/common/resource.js'
+import moment from "moment";
 
 export default({
     data(){
@@ -34,6 +35,28 @@ export default({
         this.getData();
     },
     methods: {
+        /**
+         * format salary
+         * PQ Huy 17.06.2021
+         */
+        formatSalary(item){
+            if(item) {
+                debugger
+                item = item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+            return item;
+        },
+        /**
+         * format date
+         * PQ Huy 17.06.2021
+         */
+        formatDate(value){
+            return value ? moment(String(value)).format("DD/MM/YYYY") : ''
+        },
+        /**
+         * format work status
+         * PQ Huy 17.06.2021
+         */
         formatWorkStatus(wStatus){
             let textStatus = ""
 
@@ -51,6 +74,9 @@ export default({
 
           return textStatus;
         },
+        /**
+         * format grender
+         */
         formatGrender(grender){
             let textGrender = ""
 
@@ -68,13 +94,25 @@ export default({
 
           return textGrender;
         },
+        /**
+         * select items function
+         * PQ Huy 17.06.2021
+         */
         selectedItem(items) {
             let employeeId = items.EmployeeId;
             this.$emit('showDialogEdit', employeeId);
         },
+        /**
+         * get data table 
+         * PQ Huy 17.06.2021
+         */
         getDataContentTable(){
             this.getData();
         },
+        /**
+         * get new data form api
+         * PQ Huy 17.06.2021
+         */
         getData() {
             /**
              * get data form api
@@ -89,9 +127,14 @@ export default({
                 this.stateChange();
             })
         },
+        /**
+         * set enable loading
+         * PQ Huy 17.06.2021
+         */
         stateChange() {
             this.$store.commit('EnableLoading')
-            let timerId= setInterval(() => this.$store.commit('DisableLoading'), 1000);
+            let timerId = setInterval(() => this.$store.commit('DisableLoading'), 1000);
+            console.log(timerId);
         }
     },
     watch: {

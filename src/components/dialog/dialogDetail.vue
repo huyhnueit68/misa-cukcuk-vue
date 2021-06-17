@@ -174,15 +174,18 @@
                             </div>
                             <div class="m-flex-1 mg-left-10px" @click="triggerEmployeeSalaryRequest">
                                 <div class="m-label">Mức lương cơ bản</div>
-                                <div class="m-control"><input v-model="employee.Salary"  
-                                id="txtSalary" 
-                                fieldName="Salary"
-                                @keyup="formatMoney"
-                                class="success-input"
-                                ref="employeeSalaryRequest"
-                                DataType="Number"
-                                type="text" 
-                                style="text-align:right; padding-right: 56px" /><span class="currency-for-input">(VNĐ)</span></div>
+                                <div class="m-control salary-custom">
+                                  <input v-model="formatSalary"  
+                                    id="txtSalary" 
+                                    fieldName="Salary"
+                                    @keyup="formatMoney"
+                                    class="success-input"
+                                    ref="employeeSalaryRequest"
+                                    DataType="Number"
+                                    type="text" 
+                                    style="text-align:right; padding-right: 56px" />
+                                    <span class="currency-for-input">(VNĐ)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -251,7 +254,8 @@ import DialogCancel from './dialogCancel.vue'
 import DialogDelete from './dialogDelete.vue'
 import BtnDelete from '../layers/contents/ButtonFeature/BtnDelete.vue'
 import moment from "moment";
-import DatePicker from 'vue2-datepicker';
+// import DatePicker from 'vue2-datepicker';
+const Swal = require('sweetalert2')
 // import 'vue2-datepicker/index.css';
 // import Vue from 'vue'
 
@@ -259,7 +263,6 @@ export default {
   components: {
     DialogCancel,
     DialogDelete,
-    DatePicker,
     BtnDelete
   },
   props:
@@ -270,6 +273,11 @@ export default {
     this.getEmployeeById(this.employeeId)
     this.enableBtnDelete();
   },
+  mounted() {
+    this.forcusInput();
+    this.formatMoneyBefore();
+    this.formatDate();
+  },
   data(){
     return{
       employee: {},
@@ -277,10 +285,10 @@ export default {
       showDialogDelete: false,
       showBtnDelete: false,
       formMode: null,
+      formatSalary: 0,
       momentFormat: {
         // Date to String
         stringify: (date) => {
-          let value = moment(String(date)).format("DD/MM/YYYY");
           return date ? moment(String(date)).format("DD/MM/YYYY") : ''
         },
         //[optional]  String to Date
@@ -291,17 +299,36 @@ export default {
     }
   },
   methods: {
+    /**
+     * enable btn delete
+     * PQ Huy 16.06.2021
+     */
     enableBtnDelete(){
       this.getFormMode() ? this.showBtnDelete = true : this.showBtnDelete = false 
     },
+    /**
+     * format money show form
+     * PQ Huy 14.06.2021
+     */
     formatMoneyBefore(){
-      this.$refs.employeeSalaryRequest.value = this.$refs.employeeSalaryRequest.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      let salary = this.employee.Salary;
+      this.$refs.employeeSalaryRequest.value = salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      this.formatSalary = this.$refs.employeeSalaryRequest.value;
+      return this.formatSalary
     },
+    /**
+     * format when press key
+     * PQ Huy 16.06.2021
+     */
     formatMoney() {
         let valueMoney = this.$refs.employeeSalaryRequest.value;
         valueMoney = valueMoney.replaceAll(".", "").replaceAll(",", "").trim();
         this.$refs.employeeSalaryRequest.value = valueMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
+    /**
+     * upper case full name
+     * PQ Huy 16.06.2021
+     */
     capitalizeFirstLetter() {
       let words = this.$refs.employeeNameRequest.value.split(' ');  
       let CapitalizedWords = [];
@@ -310,6 +337,10 @@ export default {
       });
       this.$refs.employeeNameRequest.value = CapitalizedWords.join(' ');
     },
+    /**
+     * format date
+     * PQ Huy 16.06.2021
+     */
     formatDate(){
       /**
        * format date of birthday
@@ -334,9 +365,17 @@ export default {
         this.employee.CreatedDate = value ? moment(String(value)).format("YYYY-MM-DD") : '';
       }
     },
+    /**
+     * enable delete record
+     * PQ Huy 16.06.2021
+     */
     deleteRecord(){
       this.showDialogDelete = true; 
     },
+    /**
+     * access delete record
+     * PQ Huy 16.06.2021
+     */
     accessDeleteRecord(){
       /**
        * close form
@@ -352,19 +391,34 @@ export default {
        */
       this.$emit('reloadData')
     },
+    /**
+     * close delete form
+     * PQ Huy 16.06.2021
+     */
     closeDeleteForm(){
       /**
        * close form required
        */
       this.showDialogDelete = false;
     },
+    /**
+     * close all form
+     * PQ Huy 16.06.2021
+     */
     closeAllForm(){
       this.closeForm();
       this.$emit('disableDialog');
     },
+    /**
+     * close form
+     */
     closeForm(){
       this.showDialogCancel = false;
     },
+    /**
+     * set class warning
+     * PQ Huy 16.06.2021
+     */
     triggerEmployeePhoneRequest(){
       this.$refs.employeePhoneRequest.className = this.$refs.employeePhoneRequest.className.replace("error-warning", "")
     },
@@ -390,6 +444,10 @@ export default {
        */
       this.showDialogCancel = true;
     },
+    /**
+     * get employee id
+     * PQ Huy 16.06.2021
+     */
     getEmployeeById(employeeId){
       if(employeeId) {
         /**
@@ -403,13 +461,19 @@ export default {
           this.formatDate();
         })
 
-      } else {
-        this.employee = {}
       }
     },
+    /**
+     * set forcus input
+     * PQ Huy 16.06.2021
+     */
     forcusInput(){
       this.$refs.employeeCodeRequest.focus()
     },
+    /**
+     * get form model
+     * PQ Huy 16.06.2021
+     */
     getFormMode(){
       return this.formMode = this.$store.state.formMode;
     },
@@ -418,19 +482,20 @@ export default {
      * PQ Huy 13.06.2021
      */
     async save(){
+      // format salary
+      this.employee.salary = this.$refs.employeeSalaryRequest.value.replaceAll(".", "");
       if(this.validateData()){
         /**
          * save data by api
          * convert data salary 
          */
         // format salary
-        let salary = this.$refs.employeeSalaryRequest.value;
-        salary ? this.employee.salary = salary.replaceAll(".", "") : ""
-
+        this.employee.salary = this.$refs.employeeSalaryRequest.value.replaceAll(".", "");
         // check form mode
         let isUpdate = this.getFormMode();
         
-        if(isUpdate) {
+        try{
+          if(isUpdate) {
           await this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
             if(response.status == 200) {
               this.successNotification();
@@ -447,6 +512,14 @@ export default {
             }    
           })
         }
+        } catch(error) {
+            console.log(error);
+            this.$swal({
+              title: "Thất bại!",
+              text: "Vui lòng thử lại sau!",
+              icon: "error",
+            });
+        }
 
         /**
          * close form
@@ -459,22 +532,54 @@ export default {
         this.$emit('reloadData')
       } else {
           // show log error
-          alert("Error");
+          
       }
     },
+    /**
+     * show popup notification success
+     * PQ Huy 17.06.2021
+     */
     successNotification(){
-      this.$swal({
-        title: "Thành công!",
-        text: "Thực hiện thành công!",
-        icon: "success",
-      });
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: "popup-success",
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Lưu dữ liệu thành công!'
+      })
     },
+    /**
+     * show popup notification error
+     * PQ Huy 17.06.2021
+     */
     errorNotification(){
-      this.$swal({
-        title: "Thất bại!",
-        text: "Vui lòng thử lại sau!",
-        icon: "error",
-      });
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: "popup-error",
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Lưu dữ liệu thất bại!'
+      })
     },
     /**
      * validate data
@@ -588,680 +693,7 @@ export default {
 </script>
 
 <style>
-
-@media screen and (max-height: 855px) {
-  .dialog-content .dialog-body {
-    height: 600px;
-  }
-  @media screen and (max-height: 850px) {
-    .dialog-content .dialog-body {
-      height: 550px;
-    }
-    @media screen and (max-height: 768px) {
-      .dialog-content .dialog-body {
-        height: 500px;
-      }
-      @media screen and (max-height: 700px) {
-        .dialog-content .dialog-body {
-          height: 400px;
-        }
-        @media screen and (max-height: 600px) {
-          .dialog-content .dialog-body {
-            height: 300px;
-          }
-        }
-      }
-    }
-  }
-}
-
-.error-warning{
-  outline: none;
-  border: 1px solid #F65454;
-}
-
-.save-icon-form {
-  background-image: url("../../../public/content/icon/save-icon.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: content;
-  width: 16px;
-  height: 16px;
-}
-
-.error-input:focus{
-  outline: none;
-  border: 1px solid #F65454;
-}
-
-.success-input:focus{
-  outline: none;
-  border: 1px solid #019160;
-}
-
-.custom-title{
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.custom-header-dialog{
-  padding: 24px 24px 0 24px;
-  text-align: left;
-  margin-bottom: 24px;
-  margin-top: 24px;
-
-}
-
-.box-dialog {
-  width: 100%;
-  height: 100%;
-  background-color: rgb(104 102 102 / 63%);
-  position: fixed;
-  top: 0;
-  z-index: 10;
-  left: 0;
-}
-#modalAction {
-  width: 800px;
-}
-
-.m-dialog .dialog-modal {
-  /* quy định độ trong suốt của nền màu nào đó. */
-  opacity: 0.5;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: black;
-  z-index: 999;
-}
-
-.m-dialog .dialog-content {
-  background-color: #ffffff;
-  z-index: 1000;
-  border-radius: 5px;
-}
-
-.m-dialog .dialog-header {
-  display: flex;
-  padding: 24px 24px 0px 24px;
-  cursor: move;
-}
-
-.m-dialog .dialog-header .dialog-header-close {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.m-dialog .dialog-header .dialog-header-close:hover {
-  border-radius: 5px;
-}
-
-.m-dialog .dialog-header .dialog-header-close button {
-  width: 40px;
-  height: 40px;
-  border-radius: 0 5px 0 0;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background-color: #ffffff;
-  background-image: url("../../../public/content/icon/x.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 20px;
-  opacity: 0.7;
-}
-
-.m-dialog .dialog-header .dialog-header-close button:hover {
-  background-color: #ccc;
-}
-
-/*Tiêu đề của dialog*/
-
-.m-dialog .dialog-header .dialog-header-title {
-  font-size: 20px;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.dialog-content .dialog-body {
-  padding: 0px 24px 24px;
-  overflow: auto;
-}
-
-.dialog-footer {
-  display: flex;
-  width: 100%;
-  height: 60px;
-  background-color: #e9ebee;
-  border-radius: 0 0 5px 5px;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 12px 24px;
-  box-sizing: border-box;
-}
-
-.dialog-footer button {
-  margin-left: 16px;
-}
-
-.notValidControl {
-  border: 2px solid red !important;
-}
-
-/* 
-  dialog cancel
-*/
-.cancel-dialog-custom .ui-dialog-titlebar {
-  padding: 24px !important;
-  font-size: 15px !important;
-  color: #000000 !important;
-}
-
-.dialog-cancel .cancel-content {
-  background-color: #ffffff;
-  z-index: 1000;
-  border-radius: 5px;
-}
-
-.cancel-content .content-body {
-  display: flex;
-  align-items: center;
-}
-
-.cancel-content .content-body .icon-notification {
-  background-image: url(../../../public/content/img/warning.png);
-  width: 35px;
-  height: 35px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  margin: 0 10px 0 24px;
-}
-
-.m-label{
-  text-align: left;
-}
-
-.hr-group-label{
-  margin-bottom: 12px;
-}
-
-.content-footer #cancel-btn-form,
-.content-footer #ctn-btn-form {
-  height: 40px;
-  padding: 0 24px 0 24px;
-}
-
-.content-footer #ctn-btn-form {
-  background-color: #e9ebee;
-  border: none;
-  color: #000000;
-}
-
-.content-footer #ctn-btn-form:hover {
-  background-color: #bbbbbb;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.content-footer #cancel-btn-form {
-  margin: 10px 24px 10px 16px;
-  background-color: #019160;
-  border-radius: 4px;
-  color: #ffffff;
-  outline: none;
-  border: none;
-}
-
-.content-footer #cancel-btn-form:hover {
-  cursor: pointer;
-  background-color: #2fbe8e;
-}
-
-.dialog-cancel .cancel-content .content-footer {
-  display: flex;
-  width: 100%;
-  height: 60px;
-  background-color: #e9ebee;
-  border-radius: 0 0 5px 5px;
-  align-items: center;
-  justify-content: flex-end;
-  box-sizing: border-box;
-}
-
-/* 
-  dialog delete
-*/
-.delete-dialog-custom .ui-dialog-titlebar {
-  padding: 24px !important;
-  font-size: 15px !important;
-  color: #000000 !important;
-}
-
-.dialog-delete .delete-content {
-  background-color: #ffffff;
-  z-index: 1000;
-  border-radius: 5px;
-}
-
-.delete-content .content-body {
-  display: flex;
-  align-items: center;
-}
-
-.delete-content .content-body .icon-notification {
-  background-image: url(../../../public/content/img/icons8-error-64.png);
-  width: 35px;
-  height: 35px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  margin: 0 10px 0 24px;
-}
-
-.content-footer #delete-btn-form,
-.content-footer #btn-delete-cancel {
-  height: 40px;
-  padding: 0 24px 0 24px;
-}
-
-.content-footer #btn-delete-cancel {
-  background-color: #e9ebee;
-  border: none;
-  color: #000000;
-}
-
-.content-footer #btn-delete-cancel:hover {
-  background-color: #bbbbbb;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.content-footer #delete-btn-form {
-  margin: 10px 24px 10px 16px;
-  background-color: #f65454;
-  border-radius: 4px;
-  color: #ffffff;
-  outline: none;
-  border: none;
-}
-
-.content-footer #delete-btn-form:hover {
-  cursor: pointer;
-  background-color: #e97878;
-}
-
-.dialog-delete {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.dialog-delete .delete-content .content-footer {
-  display: flex;
-  width: 100%;
-  height: 60px;
-  background-color: #e9ebee;
-  border-radius: 0 0 5px 5px;
-  align-items: center;
-  justify-content: flex-end;
-  box-sizing: border-box;
-}
-
-/* confix dialog*/
-
-.m-dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.el-avatar-employee {
-    padding-top: 16px;
-    padding-right: 16px;
-}
-
-.el-left {
-    width: calc(100% - 180px);
-}
-
-.el-avatar-employee .el-avatar {
-    border: 1px solid #ccc;
-    width: 160px;
-    height: 160px;
-    margin: 0 auto;
-    border-radius: 50%;
-    cursor: pointer;
-    background-image: url("../../../public/content/img/default-avatar.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
-.el-avatar-note {
-    font-size: 12px;
-}
-
-.filter-left {
-    display: flex;
-}
-
-.filter-left select {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.currency-for-input {
-    position: absolute;
-    right: 40px;
-    line-height: 40px;
-    font-style: italic;
-}
-
-#txtSearchEmployee {
-    min-width: 300px;
-}
-
-
-/*
-  custom combobox
-*/
-
-.pn-demo {
-    display: flex;
-    justify-content: center;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.container .m-cbo {
-    width: 240px;
-    border: 1px solid #bbbbbb;
-    outline: none;
-    text-overflow: ellipsis;
-}
-
-.container .input-field {
-    position: relative;
-}
-
-.container .input-field .arrow {
-    position: absolute;
-    top: 1px;
-    width: 10px;
-    right: 1px;
-    padding-left: 12px;
-    padding-right: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    background-image: url("../../../public/content/icon/arrow-down.png");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 10px;
-    height: 10px;
-    margin-top: 14px;
-
-}
-
-.container .input-field .h-line {
-    border-left: 1px #bbbbbb solid;
-    position: absolute;
-    top: 0px;
-    right: 34px;
-    bottom: 1px;
-    width: 1px;
-    height: 40px;
-}
-
-
-/* item clear text */
-
-.container .input-field .btn-clear {
-    position: absolute;
-    top: 13px;
-    right: 50px;
-    cursor: pointer;
-    color: #bbbbbb;
-}
-
-.container .input-field .btn-clear:hover {
-    color: #000000;
-}
-
-
-/* Drop down */
-
-.container .drop-down {
-    position: absolute;
-    top: 40px;
-    width: 239px;
-    left: 0px;
-    z-index: 1000;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 16px -9px #000000;
-}
-
-.container .drop-down .dr-item {
-    height: 40px;
-    display: flex;
-    cursor: pointer;
-}
-
-.container .input-field .down {
-    transform: rotate(180deg);
-}
-
-.drop-down .dr-item .icon {
-    align-items: center;
-    justify-content: center;
-    padding: 12px 10px 12px 10px;
-}
-
-.drop-down .dr-item .text {
-    align-items: center;
-    padding-top: 12px;
-    padding-left: 10px;
-    text-align: left;
-}
-
-.container .drop-down .dr-item:hover {
-    background-color: #e9ebee;
-}
-
-.container .drop-down .dr-item.active {
-    background-color: #019160;
-    color: #ffffff;
-}
-
-.container .drop-down .dr-item .icon {
-    padding: 12px 15px;
-    color: transparent;
-}
-
-.container .drop-down .dr-item.active .icon {
-    color: #ffffff;
-}
-
-.container .drop-down .dr-item .text {
-    flex: 1;
-}
-
-input::placeholder {
-    font-size: 11px !important;
-    color: #bbbbbb;
-}
-
-.m-btn {
-  display: flex;
-  align-items: center;
-  background-color: #019160;
-  border-radius: 4px;
-  height: 40px;
-  font-size: 13px;
-  color: #ffffff;
-  font-family: GoogleSans-Regular;
-  padding-left: 16px;
-  padding-right: 16px;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  min-width: 100px;
-  justify-content: center;
-}
-
-.m-btn-del {
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  height: 40px;
-  font-size: 13px;
-  color: #ffffff;
-  font-family: GoogleSans-Regular;
-  padding-left: 16px;
-  padding-right: 16px;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  min-width: 100px;
-  justify-content: center;
-}
-
-.m-btn-delete {
-  background-color: #f04a4a;
-}
-
-.m-btn:hover,
-.m-btn:focus {
-  background-color: #2fbe8e;
-}
-
-.m-btn .m-btn-icon {
-  background-position: center;
-}
-
-.m-btn .btn-text {
-  margin-left: 8px;
-}
-
-.m-second-button {
-  border: 1px solid #bbbbbb;
-  background-color: #ffffff;
-  border-radius: 4px;
-  height: 40px;
-  color: #000000;
-  padding-left: 24px;
-  padding-right: 24px;
-  text-align: center;
-  outline: none;
-  cursor: pointer;
-}
-
-.m-second-button:hover {
-  background-color: #e9ebee;
-}
-
-.m-btn-refresh {
-  background-image: url("../../../public/content/icon/refresh.png");
-  background-repeat: no-repeat;
-  width: 40px;
-  background-position: center;
-  margin: 0 5px 0 5px;
-}
-
-.m-mass-delete {
-  background-image: url("../../../public/content/icon/delete.png");
-  background-repeat: no-repeat;
-  width: 40px;
-  background-position: center;
-  background-size: center;
-}
-
-.m-btn-import {
-  background-image: url("../../../public/content/icon/import.png");
-  background-repeat: no-repeat;
-  width: 40px;
-  background-position: center;
-  background-size: 20px;
-}
-
-.m-btn-cancel {
-  color: #000000;
-  background-color: transparent;
-}
-
-.m-btn-cancel:hover,
-.m-btn-cancel:focus {
-  background-color: #bbbbbb;
-}
-
-.m-btn-delete:hover {
-  background-color: rgb(243, 127, 127);
-}
-
-.btn-pagenumber {
-  width: 30px;
-  height: 30px;
-  margin: 0 4px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  background-color: #e9ebee;
-  cursor: pointer !important;
-}
-
-.btn-pagenumber:hover {
-  background-color: #ffffff;
-}
-
-.btn-pagenumber.btn-pagenumber-selected,
-.btn-pagenumber-selected:hover {
-  background-color: #019160;
-  color: #ffffff;
-}
-
-.btn-select-page {
-  opacity: 0.7;
-  margin: 0 4px;
-  width: 30px;
-  height: 30px;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-  border-radius: 3px;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0);
-}
-.btn-select-page:hover {
-  opacity: 1;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-}
-
-.m-btn-firstpage {
-  background-image: url("../../../public/content/icon/btn-firstpage.svg");
-}
-
-.m-btn-prev-page {
-  background-image: url("../../../public/content/icon/btn-prev-page.svg");
-}
-
-.m-btn-next-page {
-  background-image: url("../../../public/content/icon/btn-next-page.svg");
-}
-
-.m-btn-lastpage {
-  background-image: url("../../../public/content/icon/btn-lastpage.svg");
-}
-
-
 @import "../../assets/css/grid.css";
+@import "../../assets/css/dialogDetail.css";
+
 </style>

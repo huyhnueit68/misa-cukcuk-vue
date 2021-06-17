@@ -22,9 +22,17 @@ export default {
     ContentTable
   }, 
   methods: {
+    /**
+     * show dialog edit
+     * PQ Huy 13.06.2021
+     */
     showDialogEdit(employeeId){
       this.$emit('showDialogEdit', employeeId)
     },
+    /**
+     * get data table content
+     * PQ Huy 13.06.2021
+     */
     getDataTableContent(){
       this.$refs.contentTable.getDataContentTable();
     }

@@ -19,6 +19,10 @@ export default defineComponent({
         
     },
     methods: {
+        /**
+         * access delete record
+         * PQ Huy 16.06.2021
+         */
         deleteRecord(){
             this.$emit('deleteRecord')
         }

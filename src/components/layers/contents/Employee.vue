@@ -43,19 +43,39 @@ export default({
       }
     },
     methods: {
+      /**
+       * get data table
+       * PQ Huy 13.06.2021
+       */
       getData(){
         this.$refs.tableContent.getDataTableContent();
       },
+      /**
+       * set reload data
+       * PQ Huy 13.06.2021
+       */
       setReloadData(){
         this.getData();
       },
+      /**
+       * enable show dialog
+       * PQ Huy 13.06.2021
+       */
       showDialog(){
         this.enableShowDialog = true;
         this.employeeId = "";
       },
+      /**
+       * is show dialog
+       * PQ Huy 13.06.2021
+       */
       isDialog(){
         this.enableShowDialog = false;
       },
+      /**
+       * show dialog edit
+       * PQ Huy 13.06.2021
+       */
       showDialogEdit(employeeId){
         this.enableShowDialog = true;
         this.employeeId = employeeId;
