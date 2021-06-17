@@ -59,6 +59,7 @@ export default({
             this.ShowDropDownArrow();
 
         },
+
         /**
          * click down disable
          * PQ Huy 16.06.2021
@@ -66,6 +67,7 @@ export default({
         clickOutSide(){
             this.isShowDropDown = false;
         },
+
         /**
          * allow drop down arrow
          * PQ Huy 16.06.2021
@@ -74,6 +76,7 @@ export default({
             // show drop down
             this.isShowDropDown = !this.isShowDropDown;
         },
+        
         /**
          * reset default
          * PQ Huy 16.06.2021

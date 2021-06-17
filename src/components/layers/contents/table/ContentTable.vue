@@ -41,7 +41,6 @@ export default({
          */
         formatSalary(item){
             if(item) {
-                debugger
                 item = item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             }
             return item;

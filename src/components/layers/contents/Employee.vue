@@ -23,8 +23,8 @@ import HeaderContent from './HeaderContent.vue'
 import ToolBarContent from './ToolBarContent.vue'
 import PagingContent from './PaddingContent.vue'
 import TableContent from './TableContent.vue'
-import DialogDetail from '../../../components/dialog/dialogDetail.vue'
-import LoaderEffect from './ButtonFeature/loaderEffect.vue'
+import DialogDetail from '../../dialog/DialogDetail.vue'
+import LoaderEffect from './buttonFeature/LoaderEffect.vue'
 
 export default({
     components: {

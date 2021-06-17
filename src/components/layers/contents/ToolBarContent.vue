@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import BtnToolBarContent from './ButtonFeature/BtnToolBar.vue'
-import CustomCbo from '../../customBox/cboSelect.vue'
+import BtnToolBarContent from './buttonFeature/BtnToolBar.vue'
+import CustomCbo from '../../customBox/CboSelect.vue'
 
 export default({
     components: {

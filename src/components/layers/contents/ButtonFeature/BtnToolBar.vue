@@ -89,6 +89,10 @@ export default defineComponent({
   display: none;
 }
 
+#btnImport{
+  display: none;
+}
+
 .filter-bar .filter-right #btnMassDelete:hover {
   cursor: pointer;
   background-color: rgb(214, 110, 110);

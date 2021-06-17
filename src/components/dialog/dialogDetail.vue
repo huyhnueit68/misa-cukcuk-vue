@@ -250,9 +250,9 @@
 </template>
 
 <script>
-import DialogCancel from './dialogCancel.vue'
-import DialogDelete from './dialogDelete.vue'
-import BtnDelete from '../layers/contents/ButtonFeature/BtnDelete.vue'
+import DialogCancel from './DialogCancel.vue'
+import DialogDelete from './DialogDelete.vue'
+import BtnDelete from '../layers/contents/buttonFeature/BtnDelete.vue'
 import moment from "moment";
 // import DatePicker from 'vue2-datepicker';
 const Swal = require('sweetalert2')
@@ -499,6 +499,7 @@ export default {
         try{
           if(isUpdate) {
           await this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
+            
             if(response.status == 200) {
               this.successNotification();
             } else {
@@ -507,6 +508,7 @@ export default {
           })
         } else {
           await this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
+            
             if(response.status == 200) {
               this.successNotification();
             } else {
@@ -695,7 +697,7 @@ export default {
 </script>
 
 <style>
-@import "../../assets/css/grid.css";
-@import "../../assets/css/dialogDetail.css";
+@import "../../assets/css/Grid.css";
+@import "../../assets/css/DialogDetail.css";
 
 </style>
