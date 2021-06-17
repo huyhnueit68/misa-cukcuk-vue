@@ -13,7 +13,11 @@
         <div class="account-info">
             <div class="account-avatar"></div>
             <div class="account-name">Phạm Quang Huy</div>
-            <div class="account-option icon-option-default-16" data-toggle="tooltip" data-placement="bottom" title="Thông tin người dùng"></div>
+            <div class="account-option icon-option-default-16" 
+            data-toggle="tooltip" 
+            data-placement="bottom"
+            v-tooltip.bottom="optionsInfo"
+            title="Thông tin người dùng"></div>
         </div>
     </div>
 </template>
@@ -25,11 +29,35 @@ export default defineComponent({
     setup() {
         
     },
+    data(){
+      return {
+        optionsInfo: {
+          content: 'Thông tin người dùng',
+          autoHide: false,
+          show: false,
+          classes: 'tooltip-info-account'
+        }
+      }
+    }
 })
 </script>
 
 
 <style>
+.account-option:hover{
+  cursor: pointer;
+}
+
+.tooltip-info-account .tooltip-inner {
+    background: #515252;
+    color: white;
+    height: 20px;
+}
+
+.tooltip-info-account .tooltip-arrow {
+    border-color: #515252;
+}
+
 .header {
   position: relative;
   display: flex;

@@ -1,16 +1,26 @@
 <template>
     <div class="filter-right" id="toolBoxEmployee">
         <button id="btnMassDelete" class="m-second-button tool-box" CommandType="MassDelete" data-toggle="tooltip"
-            data-placement="top" title="Xóa thông tin bản ghi này"><i class="fa fa-minus-circle"></i><span
-                class="btn-text">Xóa</span></button>
-        <button id="btnRefresh" 
-        class="m-second-button m-btn-refresh tool-box" 
-        data-toggle="tooltip" 
-        data-placement="top" 
-        title="Làm mới thông tin" 
-        @click="reloadData">
+          data-placement="top" 
+          title="Xóa thông tin bản ghi này">
+          <i class="fa fa-minus-circle"></i>
+          <span class="btn-text">Xóa</span>
         </button>
-        <button id="btnImport" class="m-second-button m-btn-import" CommandType="Import" data-toggle="tooltip tool-box" data-placement="top" title="Nhập khẩu dữ liệu">
+        <button id="btnRefresh" 
+          class="m-second-button m-btn-refresh tool-box" 
+          data-toggle="tooltip" 
+          data-placement="top" 
+          title="Làm mới thông tin" 
+          v-tooltip.bottom="optionsReload"
+          @click="reloadData">
+        </button>
+        <button id="btnImport" 
+          class="m-second-button m-btn-import" 
+          CommandType="Import" 
+          v-tooltip.bottom="optionsImport"
+          data-toggle="tooltip tool-box" 
+          data-placement="top" 
+          title="Nhập khẩu dữ liệu">
         </button>
     </div>
 </template>
@@ -21,6 +31,22 @@ import { defineComponent } from '@vue/composition-api'
 export default defineComponent({
   setup() {
     
+  },
+  data(){
+    return {
+      optionsReload: {
+          content: 'Làm mới dữ liệu',
+          autoHide: false,
+          show: false,
+          classes: 'tooltip-reload'
+      },
+      optionsImport: {
+          content: 'Làm mới dữ liệu',
+          autoHide: false,
+          show: false,
+          classes: 'tooltip-reload'
+      },
+    }
   },
   methods: {
     /**
@@ -37,6 +63,19 @@ export default defineComponent({
 
 
 <style>
+
+/**
+  custom tooltip
+*/
+.tooltip-reload .tooltip-inner {
+    background: #515252;
+    color: white;
+    height: 20px;
+}
+
+.tooltip-reload .tooltip-arrow {
+    border-color: #515252;
+}
     
 .filter-bar .filter-right {
   position: absolute;

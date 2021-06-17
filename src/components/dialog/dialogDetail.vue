@@ -312,8 +312,10 @@ export default {
      */
     formatMoneyBefore(){
       let salary = this.employee.Salary;
-      this.$refs.employeeSalaryRequest.value = salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      this.formatSalary = this.$refs.employeeSalaryRequest.value;
+      if(salary) {
+        this.$refs.employeeSalaryRequest.value = salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        this.formatSalary = this.$refs.employeeSalaryRequest.value; 
+      }
       return this.formatSalary
     },
     /**
