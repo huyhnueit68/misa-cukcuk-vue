@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ButtonAdd from './ButtonFeature/BtnAdd'
+import ButtonAdd from './buttonFeature/BtnAdd.vue'
 
 export default({
     components: {

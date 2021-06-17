@@ -697,7 +697,7 @@ export default {
 </script>
 
 <style>
-@import "../../assets/css/Grid.css";
-@import "../../assets/css/DialogDetail.css";
+@import "../../assets/css/grid.css";
+@import "../../assets/css/dialogDetail.css";
 
 </style>

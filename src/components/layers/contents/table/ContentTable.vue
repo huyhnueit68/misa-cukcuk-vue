@@ -11,7 +11,7 @@
             <td>{{ items.Email }}</td>
             <td>{{ items.PositionId }}</td>
             <td>{{ items.DepartmentId }}</td> 
-            <td>{{ formatSalary(items.Salary) }}</td>
+            <td class="alight-right">{{ formatSalary(items.Salary) }}</td>
             <td>{{ formatWorkStatus(items.WorkStatus) }}</td>
         </tr>
 

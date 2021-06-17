@@ -7,7 +7,7 @@
             <th>
                 STT
             </th>
-            <th v-for="(item, index) in header" :key="index">
+            <th v-for="(item, index) in header" :key="index" :class="format">
                 {{ item.text }}
             </th>
         </tr>
@@ -30,7 +30,7 @@ export default {
                 {text: "Email"},
                 {text: "Chức vụ"},
                 {text: "Phòng ban"},
-                {text: "Mức lương cơ bản"},
+                {text: "Mức lương cơ bản", dataType: "Salary"},
                 {text: "Tình trạng công việc"},
             ],
         }
