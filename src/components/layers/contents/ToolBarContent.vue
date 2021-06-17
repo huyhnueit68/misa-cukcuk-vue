@@ -20,7 +20,6 @@
 import BtnToolBarContent from './ButtonFeature/BtnToolBar.vue'
 import CustomCbo from '../../customBox/cboSelect.vue'
 
-
 export default({
     components: {
         BtnToolBarContent,

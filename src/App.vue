@@ -2,8 +2,7 @@
   <div id="app">
     <NavBar/>
     <Header/>
-    <Content/>
-    
+    <Content/>   
   </div>
 </template>
  

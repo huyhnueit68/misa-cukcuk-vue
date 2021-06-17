@@ -32,13 +32,13 @@ export default defineComponent({
     data(){
       return {
         optionsInfo: {
-          content: 'Thông tin người dùng',
-          autoHide: false,
-          show: false,
-          classes: 'tooltip-info-account'
-        }
+            content: 'Thông tin người dùng',
+            autoHide: true,
+            show: false,
+            classes: 'tooltip-info-account'
+        },
       }
-    }
+    },
 })
 </script>
 
@@ -49,13 +49,13 @@ export default defineComponent({
 }
 
 .tooltip-info-account .tooltip-inner {
-    background: #515252;
-    color: white;
-    height: 20px;
+    background: #515252 !important;
+    color: white !important;
+    height: 20px !important;
 }
 
 .tooltip-info-account .tooltip-arrow {
-    border-color: #515252;
+    border-color: #515252 !important;
 }
 
 .header {
