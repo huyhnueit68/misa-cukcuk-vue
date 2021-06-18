@@ -161,7 +161,6 @@ export default({
         stateChange() {
             this.$store.commit('EnableLoading')
             let timerId = setInterval(() => this.$store.commit('DisableLoading'), 1000);
-            console.log(timerId);
         }
     },
     watch: {

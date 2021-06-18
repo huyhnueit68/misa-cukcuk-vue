@@ -567,6 +567,8 @@ export default {
           })
         }
         } catch(error) {
+          debugger
+          console.log(this.employee);
             this.$swal({
               title: error,
               text: "Vui lòng thử lại sau!",
@@ -592,9 +594,15 @@ export default {
      * PQ Huy 18.06.2021
      */
     formatDateBeforeSave(){
-      this.employee.DateOfBirth = moment(String( this.employee.DateOfBirth)).format("YYYY-MM-DD");
-      this.employee.IdentityDate = moment(String( this.employee.IdentityDate)).format("YYYY-MM-DD");
-      this.employee.JoinDate = moment(String( this.employee.JoinDate)).format("YYYY-MM-DD");
+      if(this.employee.DateOfBirth) {
+        this.employee.DateOfBirth = moment(String( this.employee.DateOfBirth)).format("YYYY-MM-DD");
+      }
+      if(this.employee.IdentityDate) {
+        this.employee.IdentityDate = moment(String( this.employee.IdentityDate)).format("YYYY-MM-DD");
+      }
+      if(this.employee.JoinDate) {
+        this.employee.JoinDate = moment(String( this.employee.JoinDate)).format("YYYY-MM-DD");
+      }
     },
     /**
      * show popup notification success
