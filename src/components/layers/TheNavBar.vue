@@ -47,7 +47,39 @@ export default defineComponent({
     },
     data(){
         return {
-            activeItem: 'overview'
+            activeItem: '',
+            dataMenu:[
+                {
+                    index: "overview",
+                    title: "Tổng quan",
+                    iconClas: "nav-item-dashboard"
+                },
+                {
+                    index: "report",
+                    title: "Báo cáo",
+                    iconClas: "nav-item-report"
+                },
+                {
+                    index: "buy",
+                    title: "Mua hàng",
+                    iconClas: "nav-item-dashboard"
+                },
+                {
+                    index: "employee",
+                    title: "Danh mục nhân viên",
+                    iconClas: "nav-item-dic"
+                },
+                {
+                    index: "customer",
+                    title: "Danh mục khách hàng",
+                    iconClas: "nav-item-dic"
+                },
+                {
+                    index: "system",
+                    title: "Thiết lập hệ thống",
+                    iconClas: "nav-item-setting"
+                }
+            ],
         }
     },
     methods: {
@@ -55,7 +87,7 @@ export default defineComponent({
             return this.activeItem === menuItem
         },
         setActive: function (menuItem) {
-            this.activeItem = menuItem // no need for Vue.set()
+            this.activeItem = menuItem
         }
     }
 })
