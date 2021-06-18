@@ -7,29 +7,29 @@
             </div>
         </div>
         <div class="navbar-content">
-            <a class="nav-item">
+            <a class="nav-item" @click="setActive('overview')" :class="{ 'active-select': isActive('overview') }">
                 <div class="nav-item-icon nav-item-dashboard"></div>
                 <div class="nav-item-text">Tổng quan</div>
             </a>
-            <a class="nav-item">
+            <a class="nav-item" @click="setActive('report')" :class="{ 'active-select': isActive('report') }">
                 <div class="nav-item-icon nav-item-report"></div>
                 <div class="nav-item-text">Báo cáo</div>
             </a>
-            <a class="nav-item">
+            <a class="nav-item" @click="setActive('buy')" :class="{ 'active-select': isActive('buy') }">
                 <div class="nav-item-icon nav-item-dashboard"></div>
                 <div class="nav-item-text">Mua hàng</div>
             </a>
             <router-link to="/employee">
-                <a class="nav-item">
+                <a class="nav-item" @click="setActive('employee')" :class="{ 'active-select': isActive('employee') }">
                     <div class="nav-item-icon nav-item-dic"></div>
                     <div class="nav-item-text">Danh mục nhân viên</div> 
                 </a>
             </router-link>
-            <a class="nav-item">
+            <a class="nav-item" @click="setActive('customer')" :class="{ 'active-select': isActive('customer') }">
                 <div class="nav-item-icon nav-item-dic"></div>
                 <div class="nav-item-text">Danh mục khách hàng</div>
             </a>
-            <a class="nav-item">
+            <a class="nav-item" @click="setActive('system')" :class="{ 'active-select': isActive('system') }">
                 <div class="nav-item-icon nav-item-setting"></div>
                 <div class="nav-item-text">Thiết lập hệ thống</div>
             </a>
@@ -45,10 +45,28 @@ export default defineComponent({
     setup() {
         
     },
+    data(){
+        return {
+            activeItem: 'overview'
+        }
+    },
+    methods: {
+        isActive: function (menuItem) {
+            return this.activeItem === menuItem
+        },
+        setActive: function (menuItem) {
+            this.activeItem = menuItem // no need for Vue.set()
+        }
+    }
 })
 </script>
 
 <style scoped>
+    .active-select{
+        background-color: #019160;
+        color: #ffffff;
+        pointer-events: none;
+    }
     .m-navbar {
         float: left;
         width: 220px;
