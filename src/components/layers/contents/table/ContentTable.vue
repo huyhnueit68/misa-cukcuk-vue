@@ -30,7 +30,10 @@ export default({
             isReload: this.$store.state.isReload, 
         }
     }, 
-    
+    /**
+     * created for get data table
+     * PQ Huy 17.06.2021
+     */
     created() {
         this.getData();
     },
