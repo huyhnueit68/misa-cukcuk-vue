@@ -4,9 +4,13 @@
         <!-- header content -->
         <HeaderContent @isShowDialog="showDialog"/>
         <!-- filter tool bar-->
-        <ToolBarContent @setReloadData="setReloadData"/>
+        <ToolBarContent @setReloadData="setReloadData" @dataFilter="dataFilter"/>
         <!-- table content -->
-        <TableContent @showDialogEdit="showDialogEdit" ref="tableContent"/>
+        <TableContent @showDialogEdit="showDialogEdit"
+         ref="tableContent"
+         @reloadData="setReloadData"
+         :employeeDataFilter="employeeDataFilter"
+         />
         <!-- padding bar show list  -->
         <PagingContent/>
         <!-- dialog detail -->
@@ -39,10 +43,19 @@ export default({
       return  {
         enableShowDialog: false,
         isShowLoader: false,
-        employeeId: null
+        employeeId: null,
+        employeeDataFilter: {}
       }
     },
     methods: {
+      /**
+       * get data filter
+       * PQ Huy 18.06.2021
+       */
+      dataFilter(employeeDataFilter){
+        this.employeeDataFilter = employeeDataFilter;
+        this.$refs.tableContent.getDataFilter(this.employeeDataFilter);
+      },
       /**
        * get data table
        * PQ Huy 13.06.2021

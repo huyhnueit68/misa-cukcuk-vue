@@ -11,6 +11,7 @@ import NavBar from './components/layers/TheNavBar.vue'
 import Header from './components/layers/TheHeader.vue'
 import Content from './components/layers/contents/TheContent.vue'
 
+
 export default {
   name: 'App',
   components: {

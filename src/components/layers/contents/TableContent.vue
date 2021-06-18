@@ -6,10 +6,9 @@
          <!-- header table  -->
           <HeaderTable/>
          <!-- content table -->
-          <ContentTable @showDialogEdit="showDialogEdit" ref="contentTable"/>
+          <ContentTable @showDialogEdit="showDialogEdit" ref="contentTable" @reloadData="reloadData"/>
         </table>
     </div>
-    
 </template>
 
 <script>
@@ -20,8 +19,18 @@ export default {
   components: {
     HeaderTable,
     ContentTable
-  }, 
+  },
   methods: {
+    reloadData(){
+      this.$emit('reloadData');
+    },
+    /**
+     * get data filter
+     * PQ Huy 18.06.2021
+     */
+    getDataFilter(employeeDataFilter){
+      this.$refs.contentTable.getDataFilter(employeeDataFilter);
+    },
     /**
      * show dialog edit
      * PQ Huy 13.06.2021

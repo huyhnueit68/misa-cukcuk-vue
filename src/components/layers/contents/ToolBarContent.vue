@@ -1,15 +1,18 @@
 <template>
     <div class="filter-bar">
         <div class="filter-left">
-            <input id="txtSearchEmployee" class="icon-search input-search" type="text" placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại" />
+            <input id="txtSearchEmployee" 
+            class="icon-search input-search" 
+            ref="searchToolBar"
+            @keyup="searchData"
+            type="text" 
+            placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại" />
             <select id="cbxDepartment" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="" class="m-control">
                 <option value="">Tất cả phòng ban</option>
                 <option value="">Văn phòng Tổng công ty</option>
                 <option value="">Phong đào tạo công nghệ</option>
                 <option value="">Phòng Nhân sự</option>
-            </select>
-            <!--  -->
-            
+            </select>            
             <!-- btn cutom combobox -->
           <CustomCbo :listSelectPosition="listSelectPosition"/>
         </div>
@@ -21,7 +24,7 @@
 <script>
 import BtnToolBarContent from './buttonFeature/BtnToolBar.vue'
 import CustomCbo from '../../customBox/CboSelect.vue'
-
+const COMPLETE_SEARCH = 13;
 
 export default({
     components: {
@@ -35,6 +38,7 @@ export default({
           2: "Giám  Đốc",
           3: "Trưởng phòng",
         },
+        employee: {}
       }
     },
     methods: {
@@ -45,6 +49,25 @@ export default({
       setReloadData(){
         this.$emit('setReloadData');
       },
+      /**
+       * search method
+       * PQ Huy 18.06.2021
+       */
+      searchData(e){
+        let fullName = this.$refs.searchToolBar.value;
+        /**
+         * check if enter for complete search
+         */
+        if(e.keyCode == COMPLETE_SEARCH) {
+          // call api search with name
+          this.axios.get('http://cukcuk.manhnv.net/v1/Employees/Filter?pageSize=5&pageNumber=1&fullName=' + fullName).then((response) => {
+            this.employee = response.data.Data;
+            this.$emit('dataFilter', this.employee);
+          }).catch((error) => {
+            console.log(error);
+          })
+        }
+      }
     }
 })
 

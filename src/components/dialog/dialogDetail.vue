@@ -22,21 +22,25 @@
                         <hr class="hr-group-label" />
                         <div class="m-row mg-top-0 m-flex">
                             <div class="m-col m-flex-1">
-                                <div class="m-label">Mã nhân viên (<span class="label-required">*</span>)</div>
+                                <div class="m-label">Mã nhân viên (<span class="label-required">*</span>)
+                                <span class="label-required" v-if="enableNullCode">Vui lòng điền thông tin</span>
+                                </div>
                                 <div class="m-control">
                                   <input v-model="employee.EmployeeCode" 
                                   :class="[
                                     applyInputStyle(employee.EmployeeCode)
                                   ]" 
-                                  id="txtEmployeeCode" required 
+                                  id="txtEmployeeCode" 
                                   class="input-required"
                                   ref="employeeCodeRequest"
                                   tabindex="0"
-                                  type="text" />
+                                  type="text">
                                   </div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
-                                <div class="m-label">Họ và tên (<span class="label-required">*</span>)</div>
+                                <div class="m-label">Họ và tên (<span class="label-required">*</span>)
+                                <span class="label-required" v-if="enableNullName">Vui lòng điền thông tin</span>
+                                </div>
                                 <div class="m-control">
                                     <input id="txtFullName" 
                                     v-model="employee.FullName" 
@@ -52,15 +56,11 @@
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Ngày sinh</div>
-                                <input type="date" 
-                                id="DateOfBirth" 
-                                class="success-input"
-                                :formatter="momentFormat"
-                                v-model="employee.DateOfBirth" 
-                                name="birthday"
-                                fieldName="DateOfBirth" DataType="Date">
                                 <!-- date time picker -->
-                                <!-- <date-picker v-model="employee.DateOfBirth" :formatter="momentFormat" ref="dateOfBirth"></date-picker> -->
+                                <date-picker class="custom-date-picker" 
+                                v-model="employee.DateOfBirth" 
+                                :formatter="momentFormat" 
+                                ref="dateOfBirth"></date-picker>
                             </div>
 
                             <div class="m-flex-1 mg-left-10px">
@@ -77,7 +77,9 @@
                         </div>
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
-                                <div class="m-label" title="Số chứng minh thư nhân dân hoặc căn cước công dân">Số CMTND/ Căn cước (<span class="label-required">*</span>)</div>
+                                <div class="m-label" title="Số chứng minh thư nhân dân hoặc căn cước công dân">Số CMTND/ Căn cước (<span class="label-required">*</span>)
+                                <span class="label-required" v-if="enableNullIdentity">Vui lòng điền thông tin</span>
+                                </div>
                                 <div class="m-control"><input v-model="employee.IdentityNumber" 
                                 id="txtIdentityNumber"
                                 :class="applyInputStyle(employee.IdentityNumber)"
@@ -87,12 +89,7 @@
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Ngày cấp</div>
-                                <input type="date"
-                                id="dateOfIndentity"
-                                class="success-input"
-                                v-model="employee.IdentityDate"
-                                name="indentityDate" 
-                                fieldName="IdentityDate" DataType="Date">
+                                <date-picker class="custom-date-picker" v-model="employee.IdentityDate" :formatter="momentFormat" ref="dateOfBirth"></date-picker>
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -109,18 +106,24 @@
                         </div>
                         <div class="m-row m-flex">
                             <div class="m-col m-flex-1">
-                                <div class="m-label">Email (<span class="label-required">*</span>)</div>
+                                <div class="m-label">Email (<span class="label-required">*</span>)
+                                <span class="label-required" v-if="enableNullEmail">Vui lòng điền thông tin</span>
+                                <span class="label-required" v-if="showValidateEmail">Vui lòng điền đúng email</span>
+                                </div>
                                 <div class="m-control"><input v-model="employee.Email" 
                                 id="txtEmail" 
                                 fieldName="Email"
                                 class="success-input"
                                 type="email" 
                                 ref="employeeEmailRequest"
-                                :class="applyInputStyle(employee.Email)" 
+                                :class="applyInputStyle(employee.Email)"
                                 required placeholder="example@domain.com" /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
-                                <div class="m-label">Số điện thoại (<span class="label-required">*</span>)</div>
+                                <div class="m-label">Số điện thoại (<span class="label-required">*</span>)
+                                <span class="label-required" v-if="enableNullPhone">Vui lòng điền thông tin</span>
+                                <span class="label-required" v-if="enablePhoneFormat">Không đúng số điện thoại</span>
+                                </div>
                                 <div class="m-control" @click="triggerEmployeePhoneRequest">
                                     <input v-model="employee.PhoneNumber" 
                                     id="txtPhoneNumber" 
@@ -173,7 +176,9 @@
                                 type="text" /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px" @click="triggerEmployeeSalaryRequest">
-                                <div class="m-label">Mức lương cơ bản</div>
+                                <div class="m-label">Mức lương cơ bản
+                                <span class="label-required" v-if="enableSalaryFormat">&nbsp&nbsp Không đúng số lương</span>
+                                </div>
                                 <div class="m-control salary-custom">
                                   <input v-model="formatSalary"  
                                     id="txtSalary" 
@@ -191,13 +196,11 @@
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Ngày gia nhập</div>
-                                <input v-model="employee.CreatedDate"  
-                                type="date" 
-                                id="dtDateJoin" 
-                                name="birthdaytime"
-                                class="success-input"
-                                 DataType="Date" 
-                                 fieldName="CreatedDate">
+                                 <!-- date time picker -->
+                                <date-picker class="custom-date-picker" 
+                                v-model="employee.JoinDate"
+                                :formatter="momentFormat" 
+                                ref="dateOfBirth"></date-picker>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Tình trạng công việc</div>
@@ -254,16 +257,25 @@ import DialogCancel from './DialogCancel.vue'
 import DialogDelete from './DialogDelete.vue'
 import BtnDelete from '../layers/contents/buttonFeature/BtnDelete.vue'
 import moment from "moment";
-// import DatePicker from 'vue2-datepicker';
+import DatePicker from 'vue2-datepicker';
 const Swal = require('sweetalert2')
-// import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/index.css';
+import Datepicker from 'vuejs-datepicker';
 // import Vue from 'vue'
+/**
+ * define status responses
+ */
+const RESPONSES_SUCCESS = 200;
+const RESPONSES_CREATED = 201;
+const RESPONSES_ACCEPTED = 202;
 
 export default {
   components: {
     DialogCancel,
     DialogDelete,
-    BtnDelete
+    BtnDelete,
+    DatePicker,
+    Datepicker
   },
   props:
   {
@@ -286,16 +298,32 @@ export default {
       showBtnDelete: false,
       formMode: null,
       formatSalary: 0,
+      enableNull: true,
+      /**
+       * define validate
+       */
+      enableNullCode: false,
+      enableNullName: false,
+      enableNullEmail: false,
+      enableNullIdentity: false,
+      enableNullPhone: false,
+      showValidateEmail: false,
+      enablePhoneFormat: false,
+      enableSalaryFormat: false,
       momentFormat: {
-        // Date to String
         stringify: (date) => {
           return date ? moment(String(date)).format("DD/MM/YYYY") : ''
         },
-        //[optional]  String to Date
         parse: (value) => {
           return value ? moment(value, 'LL').toDate() : null
         },
-      }
+      },
+      optionsCheckNull: {
+          content: "Vui lòng điền thông tin",
+          autoHide: true,
+          show: true,
+          classes: 'tooltip-checknull'
+      },
     }
   },
   methods: {
@@ -347,24 +375,23 @@ export default {
       /**
        * format date of birthday
        */
-      let value = this.employee.DateOfBirth;
-      if(value) {
-        this.employee.DateOfBirth = value ? moment(String(value)).format("YYYY-MM-DD") : '';
-        console.log(this.employee.DateOfBirth)
+      let valueDateOfBirth = this.employee.DateOfBirth;
+      if(valueDateOfBirth) {
+        this.employee.DateOfBirth = valueDateOfBirth ? new Date(moment(String(valueDateOfBirth)).format("YYYY-MM-DD")) : '';
       }
       /**
        * format Identity Date
        */
-      value = this.employee.IdentityDate;
-      if(value) {
-        this.employee.IdentityDate = value ? moment(String(value)).format("YYYY-MM-DD") : '';
+      let valueIdentityDate = this.employee.IdentityDate;
+      if(valueIdentityDate) {
+        this.employee.IdentityDate = valueIdentityDate ? new Date(moment(String(valueIdentityDate)).format("YYYY-MM-DD")) : '';
       }
       /**
        * format Created Date
        */
-      value = this.employee.CreatedDate;
-      if(value) {
-        this.employee.CreatedDate = value ? moment(String(value)).format("YYYY-MM-DD") : '';
+      let valueCreateDate = this.employee.JoinDate;
+      if(valueCreateDate) {
+        this.employee.JoinDate = valueCreateDate ? new Date(moment(String(valueCreateDate)).format("YYYY-MM-DD")) : '';
       }
     },
     /**
@@ -450,19 +477,39 @@ export default {
      * get employee id
      * PQ Huy 16.06.2021
      */
-    getEmployeeById(employeeId){
+    async getEmployeeById(employeeId){
+       var me = this;
       if(employeeId) {
         /**
          * get by id
          */
-        var me = this;
-        this.axios.get('http://cukcuk.manhnv.net/v1/employees/'+employeeId).then((response) => {
-          me.employee = response.data;
-          this.forcusInput();
-          this.formatMoneyBefore();
-          this.formatDate();
-        })
-
+        await this.axios.get('http://cukcuk.manhnv.net/v1/employees/'+ employeeId).then((response) => {
+            me.employee = response.data;
+            this.forcusInput();
+            this.formatMoneyBefore();
+            this.formatDate();
+          }).catch((error) => {
+            this.$swal({
+              title: error,
+              text: "Vui lòng thử lại sau!",
+              icon: "error",
+            });
+          })
+      } else {
+        /**
+         * binding new code
+         */
+        await this.axios.get('http://cukcuk.manhnv.net/v1/Employees/NewEmployeeCode').then((response) => {
+            me.employee.EmployeeCode = response.data;
+            this.$refs.employeeCodeRequest.value = response.data;
+            this.forcusInput();
+          }).catch((error) => {
+            this.$swal({
+              title: error,
+              text: "Vui lòng thử lại sau!",
+              icon: "error",
+            });
+          })
       }
     },
     /**
@@ -486,6 +533,7 @@ export default {
     async save(){
       // format salary
       this.employee.salary = this.$refs.employeeSalaryRequest.value.replaceAll(".", "");
+      // format date
       if(this.validateData()){
         /**
          * save data by api
@@ -497,10 +545,13 @@ export default {
         let isUpdate = this.getFormMode();
         
         try{
+          /**
+           * format date before save
+           */
+          this.formatDateBeforeSave();
           if(isUpdate) {
           await this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
-            
-            if(response.status == 200) {
+            if(response.status == RESPONSES_SUCCESS || response.status == RESPONSES_CREATED || response.status == RESPONSES_ACCEPTED) {
               this.successNotification();
             } else {
               this.errorNotification();
@@ -508,23 +559,20 @@ export default {
           })
         } else {
           await this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
-            
-            if(response.status == 200) {
+            if(response.status == RESPONSES_SUCCESS || response.status == RESPONSES_CREATED || response.status == RESPONSES_ACCEPTED) {
               this.successNotification();
             } else {
               this.errorNotification();
-            }    
+            }
           })
         }
         } catch(error) {
-            console.log(error);
             this.$swal({
-              title: "Thất bại!",
+              title: error,
               text: "Vui lòng thử lại sau!",
               icon: "error",
             });
         }
-
         /**
          * close form
          */
@@ -538,6 +586,15 @@ export default {
           // show log error
           
       }
+    },
+    /**
+     * format date before save
+     * PQ Huy 18.06.2021
+     */
+    formatDateBeforeSave(){
+      this.employee.DateOfBirth = moment(String( this.employee.DateOfBirth)).format("YYYY-MM-DD");
+      this.employee.IdentityDate = moment(String( this.employee.IdentityDate)).format("YYYY-MM-DD");
+      this.employee.JoinDate = moment(String( this.employee.JoinDate)).format("YYYY-MM-DD");
     },
     /**
      * show popup notification success
@@ -625,10 +682,12 @@ export default {
       const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if(!re.test(this.employee.Email)) {
         this.$refs.employeeEmailRequest.className = this.$refs.employeeEmailRequest.className + " error-warning";
-        alert("Vui lòng điền đúng email")
+        this.showValidateEmail = true;
         return false;
+      } else {
+        this.showValidateEmail = false;
+        return true;
       }
-      return true;
     },
     /**
      * validate duplicate code
@@ -647,49 +706,75 @@ export default {
 
         if(!this.employee.EmployeeCode) {
           this.$refs.employeeCodeRequest.className = this.$refs.employeeCodeRequest.className + " error-warning";
+          this.enableNullCode = true;
           checked = false;
+        } else {
+          this.enableNullCode = false;
         }
 
         if(!this.employee.FullName) {
           this.$refs.employeeNameRequest.className = this.$refs.employeeNameRequest.className + " error-warning";
+          this.enableNullName = true;
           checked = false;
+        } else {
+          this.enableNullName = false;
         }
 
         if(!this.employee.IdentityNumber) {
           this.$refs.employeeIdentityRequest.className = this.$refs.employeeIdentityRequest.className + " error-warning";
+          this.enableNullIdentity = true;
           checked = false;
+        } else {
+          this.enableNullIdentity = false;
         }
 
         if(!this.employee.Email) {
           this.$refs.employeeEmailRequest.className = this.$refs.employeeEmailRequest.className + " error-warning";
+          this.enableNullEmail = true;
           checked = false;
+        } else {
+          this.enableNullEmail = false;
         }
 
         if(!this.employee.PhoneNumber) {
           this.$refs.employeePhoneRequest.className = this.$refs.employeePhoneRequest.className + " error-warning";
+          this.enableNullPhone = true;
           checked = false;
+        } else {
+          this.enableNullPhone = false;
         }
 
         if(!checked) {
-          alert("Điền đẩy đủ thông tin");
+          // alert("Điền đẩy đủ thông tin");
         }
         return checked;
     },
+    /**
+     * validate number
+     * PQ Huy 07.06.2021
+     */
     validateNumber(){
       if(!/^[0-9,.]*$/.test(this.employee.PhoneNumber)) {
         this.$refs.employeePhoneRequest.className = this.$refs.employeePhoneRequest.className + " error-warning";
-        alert("Vui lòng điền đúng số điện thoại");
+        this.enablePhoneFormat = true;
         return false;
+      } else {
+        this.$refs.employeePhoneRequest.className = this.$refs.employeePhoneRequest.className.replace("error-warning", "")
+        this.enablePhoneFormat = false;
       }
+
       let salary =  this.$refs.employeeSalaryRequest.value;
+
       salary = salary.replaceAll(".", "")
       if(!/^[0-9,.]*$/.test(salary)) {
         this.$refs.employeeSalaryRequest.className = this.$refs.employeeSalaryRequest.className + " error-warning";
-        alert("Vùi lòng nhận đúng số lương");
+        this.enableSalaryFormat = true;
         return false;
       } else {
         this.$refs.employeeSalaryRequest.className = this.$refs.employeeSalaryRequest.className.replace("error-warning", "")
+        this.enableSalaryFormat = false;
       }
+
       return true;
     },
   },
@@ -697,6 +782,39 @@ export default {
 </script>
 
 <style>
+.custom-date-picker {
+  width: 100%;
+  height: 40px;
+}
+.custom-date-picker .mx-input-wrapper{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.custom-date-picker .mx-input-wrapper .mx-input{
+  height: 100%;
+  color: #000 !important;
+}
+
+.mx-datepicker-popup .mx-datepicker-content .active{
+  background-color: #019160 !important;
+}
+
+.custom-date-picker .mx-input-wrapper .mx-input:hover,
+.custom-date-picker .mx-input-wrapper .mx-input:focus {
+  border: 1px solid #019160;
+}
+
+.tooltip-checknull .tooltip-inner {
+    background: rgb(224, 47, 47);
+    color: white;
+    height: 20px;
+}
+
+.tooltip-checknull .tooltip-arrow {
+    border-color: rgb(224, 47, 47);
+}
+
 @import "../../assets/css/grid.css";
 @import "../../assets/css/dialogDetail.css";
 

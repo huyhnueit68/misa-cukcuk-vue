@@ -29,12 +29,40 @@ export default({
             employeeData: {},
             isReload: this.$store.state.isReload, 
         }
-    },
+    }, 
     
     created() {
         this.getData();
     },
     methods: {
+        /**
+         * get data filter
+         * PQ Huy 18.06.2021
+         */
+        getDataFilter(employeeDataFilter){
+            if(employeeDataFilter) {
+                if(employeeDataFilter.length) {
+                    this.employeeData = employeeDataFilter
+                }
+            } else {
+                /**
+                 * no record select
+                 */
+                this.employeeData = {}
+                /**
+                 * alert notification for client
+                 */
+                this.$swal({
+                    title: "Thông báo",
+                    text: "Không tồn tại bản ghi nào!",
+                    icon: "info",
+                });
+                /**
+                 * reload data
+                 */
+                this.$emit('reloadData');
+            }
+        },
         /**
          * format salary
          * PQ Huy 17.06.2021
