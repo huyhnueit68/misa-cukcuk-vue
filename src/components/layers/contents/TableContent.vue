@@ -125,8 +125,7 @@ table > thead > tr > th {
 }
 
 .grid-employee {
-  margin-top: 10px;
-  height: calc(100vh - 234px);
+  height: calc(100vh - 245px);
 }
 
 .custom-tbody {

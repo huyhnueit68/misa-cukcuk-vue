@@ -10,11 +10,10 @@
             <td>{{ items.PhoneNumber }}</td>
             <td>{{ items.Email }}</td>
             <td>{{ items.PositionId }}</td>
-            <td>{{ items.DepartmentId }}</td> 
+            <td>{{ items.DepartmentCode }}</td> 
             <td class="align-right">{{ formatSalary(items.Salary) }}</td>
             <td>{{ formatWorkStatus(items.WorkStatus) }}</td>
         </tr>
-
     </tbody>
 </template>
 

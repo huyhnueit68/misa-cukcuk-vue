@@ -59,9 +59,9 @@ export default {
     
     .custom-input,
     .checkedValue {
-    margin: 0;
-    width: 50px;
-    height: 16px;
+        margin: 0;
+        width: 50px;
+        height: 16px;
     }
 
     .custom-header .custom-color {

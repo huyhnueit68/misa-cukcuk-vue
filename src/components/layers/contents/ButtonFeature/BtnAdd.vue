@@ -44,7 +44,7 @@ export default {
 
 
 .tooltip-add-record .tooltip-inner {
-    height: 20px !important;
+    height: 30px !important;
 }
 
 .toolBarBtn:hover{

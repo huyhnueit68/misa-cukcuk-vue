@@ -1,6 +1,6 @@
 <template>
     <!-- pop up detail -->
-    <div class="box-dialog">
+    <div class="box-dialog" data-app>
       <!-- pop up detail -->
       <div class="m-dialog dialog-detail" title="" id="modalAction">
         <div class="dialog-content" ShowForm="true">
@@ -65,14 +65,18 @@
 
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Giới tính</div>
-                                <select id="cbxGender"
-                                 FieldName="Gender"
-                                 class="success-input"
-                                 DataType="Enum" EnumName="Gender" v-model="employee.Gender">
-                                    <option value="0">Nữ</option>
-                                    <option value="1">Nam</option>
-                                    <option value="2">Khác</option>
-                                </select>
+                                <v-autocomplete
+                                  id="cbxGrender"
+                                  v-model="employee.Gender"
+                                  placeholder="Chọn/Nhập giới tính"
+                                  class="cbo-detail"
+                                  dense
+                                  outlined
+                                  :items="grender"
+                                  item-text="value"
+                                  item-value="key"
+                                  clearable
+                                ></v-autocomplete> 
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -83,7 +87,7 @@
                                 <div class="m-control"><input v-model="employee.IdentityNumber" 
                                 id="txtIdentityNumber"
                                 :class="applyInputStyle(employee.IdentityNumber)"
-                                class="success-input"
+                                class="success-input input-required"
                                 ref="employeeIdentityRequest"
                                 fieldName="IdentityNumber" type="text" required /></div>
                             </div>
@@ -113,7 +117,7 @@
                                 <div class="m-control"><input v-model="employee.Email" 
                                 id="txtEmail" 
                                 fieldName="Email"
-                                class="success-input"
+                                class="success-input input-required"
                                 type="email" 
                                 ref="employeeEmailRequest"
                                 :class="applyInputStyle(employee.Email)"
@@ -144,26 +148,33 @@
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label">Vị trí</div>
-                                <select v-model="employee.PositionCode" 
-                                id="cbxPosition" fieldName="PositionCode" 
-                                fieldValue="CustomerGroupId"
-                                api="" 
-                                class="m-control success-input">
-                                    <option value="0">Giám đốc</option>
-                                    <option value="1">Nhân viên</option>
-                                </select>
+                                <v-autocomplete
+                                  id="cbxPosition"
+                                  v-model="employee.PositionCode"
+                                  placeholder="Chọn/Nhập vị trí"
+                                  class="cbo-detail"
+                                  dense
+                                  outlined
+                                  :items="position"
+                                  item-text="value"
+                                  item-value="key"
+                                  clearable
+                                ></v-autocomplete> 
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Phòng ban</div>
-                                <select v-model="employee.DepartmentId" 
-                                id="cbnDepartment" 
-                                fieldName="DepartmentCode"
-                                fieldValue="CustomerGroupId"
-                                api="" 
-                                class="m-control success-input">
-                                    <option value="0">Phòng nhân sự</option>
-                                    <option value="1">Phòng đào tạo</option>
-                                </select>
+                                <v-autocomplete
+                                  id="cbnDepartment"
+                                  v-model="employee.DepartmentCode"
+                                  placeholder="Chọn/Nhập phòng ban"
+                                  class="cbo-detail"
+                                  dense
+                                  outlined
+                                  :items="department"
+                                  item-text="value"
+                                  item-value="key"
+                                  clearable
+                                ></v-autocomplete>
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -172,7 +183,7 @@
                                 <div class="m-control"><input v-model="employee.IdentityId" 
                                 id="txtAddress" 
                                 fieldName="Address"
-                                class="success-input"
+                                class="success-input input-required"
                                 type="text" /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px" @click="triggerEmployeeSalaryRequest">
@@ -184,7 +195,7 @@
                                     id="txtSalary" 
                                     fieldName="Salary"
                                     @keyup="formatMoney"
-                                    class="success-input"
+                                    class="success-input input-required"
                                     ref="employeeSalaryRequest"
                                     DataType="Number"
                                     type="text" 
@@ -204,15 +215,18 @@
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Tình trạng công việc</div>
-                                <select  v-model="employee.WorkStatus" 
-                                id="cboWorkStatus" fieldName="WorkStatus" 
-                                fieldValue="CustomerGroupId"
-                                api="" 
-                                class="m-control success-input">
-                                    <option value="1">Đang làm việc</option>
-                                    <option value="0">Đang thử việc</option>
-                                    <option value="2">Nghỉ việc</option>
-                                </select>
+                                <v-autocomplete
+                                  id="cboWorkStatus"
+                                  v-model="employee.WorkStatus"
+                                  placeholder="Chọn/Nhập trạng thái làm việc"
+                                  class="cbo-detail"
+                                  dense
+                                  outlined
+                                  :items="workStatus"
+                                  item-text="value"
+                                  item-value="key"
+                                  clearable
+                                ></v-autocomplete>
                             </div>
                         </div>
                     </div>
@@ -261,6 +275,8 @@ import DatePicker from 'vue2-datepicker';
 const Swal = require('sweetalert2')
 import 'vue2-datepicker/index.css';
 import Datepicker from 'vuejs-datepicker';
+import resource from '../../js/common/resource.js'
+import enumeration from '../../js/common/enumeration.js'
 // import Vue from 'vue'
 /**
  * define status responses
@@ -310,6 +326,66 @@ export default {
       showValidateEmail: false,
       enablePhoneFormat: false,
       enableSalaryFormat: false,
+      grender: [
+        {
+          key: enumeration.Grender.Male,
+          value: resource.Grender.Male
+        },
+        {
+          key: enumeration.Grender.Female,
+          value: resource.Grender.Female
+        },
+        {
+          key: enumeration.Grender.Other,
+          value: resource.Grender.Other
+        },
+      ],
+      position: [
+        {
+          key: enumeration.Position.Manager,
+          value: resource.Position.Manager
+        },
+        {
+          key: enumeration.Position.Cashier,
+          value: resource.Position.Cashier
+        },
+        {
+          key: enumeration.Position.Marketer,
+          value: resource.Position.Marketer
+        },
+        {
+          key: enumeration.Position.ITer,
+          value: resource.Position.ITer
+        },
+      ],
+      department: [
+        {
+          key: 0,
+          value: "Văn phòng tổng công ty"
+        },
+        {
+          key: 1,
+          value: "Phòng đào tạo công nghệ"
+        },
+        {
+          key: 2,
+          value: "Phòng nhân sự"
+        },
+      ],
+      workStatus: [
+        {
+          key: enumeration.WorkStatus.Probation,
+          value: resource.WorkStatus.Probation
+        },
+        {
+          key: enumeration.WorkStatus.Working,
+          value: resource.WorkStatus.Working
+        },
+        {
+          key: enumeration.WorkStatus.Retired,
+          value: resource.WorkStatus.Retired
+        },
+      ],
       momentFormat: {
         stringify: (date) => {
           return date ? moment(String(date)).format("DD/MM/YYYY") : ''
@@ -790,6 +866,20 @@ export default {
 </script>
 
 <style>
+
+.cbo-detail .v-input__control .v-input__slot {
+  border: 1px solid #bbb;
+}
+
+.cbo-detail .v-input__control .v-input__slot fieldset{
+  border: none;
+}
+
+.input-required {
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
 .custom-date-picker {
   width: 100%;
   height: 40px;

@@ -2,718 +2,708 @@
     custom toop tips
 */
 
-
 /** 
   custom dialog success
 */
 
 .popup-success .swal2-header .swal2-success-line-tip,
 .popup-success .swal2-header .swal2-success-line-long {
-    z-index: 15;
+  z-index: 15;
 }
 
 .popup-success .swal2-header .swal2-success-ring,
 .popup-success .swal2-timer-progress-bar-container .swal2-timer-progress-bar {
-    background-color: #019160 !important;
+  background-color: #019160 !important;
 }
 
 .popup-error .swal2-header .swal2-icon-show {
-    background-image: url("../../../public/content/img/warning32.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    border: 0;
+  background-image: url("../../../public/content/img/warning32.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 0;
 }
 
 .popup-error .swal2-timer-progress-bar-container .swal2-timer-progress-bar {
-    background-color: #eb5757 !important;
+  background-color: #eb5757 !important;
 }
 
 .popup-error .swal2-header .swal2-icon-show .swal2-x-mark {
-    display: none;
+  display: none;
 }
 
 @media screen and (max-height: 855px) {
+  .dialog-content .dialog-body {
+    height: 600px;
+  }
+  @media screen and (max-height: 850px) {
     .dialog-content .dialog-body {
-        height: 600px;
+      height: 550px;
     }
-    @media screen and (max-height: 850px) {
+    @media screen and (max-height: 768px) {
+      .dialog-content .dialog-body {
+        height: 500px;
+      }
+      @media screen and (max-height: 700px) {
         .dialog-content .dialog-body {
-            height: 550px;
+          height: 400px;
         }
-        @media screen and (max-height: 768px) {
-            .dialog-content .dialog-body {
-                height: 500px;
-            }
-            @media screen and (max-height: 700px) {
-                .dialog-content .dialog-body {
-                    height: 400px;
-                }
-                @media screen and (max-height: 600px) {
-                    .dialog-content .dialog-body {
-                        height: 300px;
-                    }
-                }
-            }
+        @media screen and (max-height: 600px) {
+          .dialog-content .dialog-body {
+            height: 300px;
+          }
         }
+      }
     }
+  }
 }
 
 .error-warning {
-    outline: none;
-    border: 1px solid #F65454;
+  outline: none;
+  border: 1px solid #f65454;
 }
 
 .save-icon-form {
-    background-image: url("../../../public/content/icon/save-icon.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: content;
-    width: 16px;
-    height: 16px;
+  background-image: url("../../../public/content/icon/save-icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: content;
+  width: 16px;
+  height: 16px;
 }
 
 .error-input:focus {
-    outline: none;
-    border: 1px solid #F65454;
+  outline: none;
+  border: 1px solid #f65454;
 }
 
 .success-input:focus {
-    outline: none;
-    border: 1px solid #019160;
+  outline: none;
+  border: 1px solid #019160;
 }
 
 .custom-title {
-    font-size: 22px;
-    font-weight: bold;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .custom-header-dialog {
-    padding: 24px 24px 0 24px;
-    text-align: left;
-    margin-bottom: 24px;
-    margin-top: 24px;
+  padding: 24px 24px 0 24px;
+  text-align: left;
 }
 
 .box-dialog {
-    width: 100%;
-    height: 100%;
-    background-color: rgb(104 102 102 / 63%);
-    position: fixed;
-    top: 0;
-    z-index: 10;
-    left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(104 102 102 / 63%);
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  left: 0;
 }
 
 #modalAction {
-    width: 800px;
+  width: 800px;
 }
 
 .m-dialog .dialog-modal {
-    /* quy định độ trong suốt của nền màu nào đó. */
-    opacity: 0.5;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: black;
-    z-index: 999;
+  /* quy định độ trong suốt của nền màu nào đó. */
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: black;
+  z-index: 999;
 }
 
 .m-dialog .dialog-content {
-    background-color: #ffffff;
-    z-index: 1000;
-    border-radius: 5px;
+  background-color: #ffffff;
+  z-index: 1000;
+  border-radius: 5px;
 }
 
 .m-dialog .dialog-header {
-    display: flex;
-    padding: 24px 24px 0px 24px;
-    cursor: move;
+  display: flex;
+  padding: 24px 24px 0px 24px;
+  cursor: move;
 }
 
 .m-dialog .dialog-header .dialog-header-close {
-    position: absolute;
-    right: 0;
-    top: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .m-dialog .dialog-header .dialog-header-close:hover {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .m-dialog .dialog-header .dialog-header-close button {
-    width: 40px;
-    height: 40px;
-    border-radius: 0 5px 0 0;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    background-color: #ffffff;
-    background-image: url("../../../public/content/icon/x.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20px;
-    opacity: 0.7;
+  width: 40px;
+  height: 40px;
+  border-radius: 0 5px 0 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #ffffff;
+  background-image: url("../../../public/content/icon/x.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  opacity: 0.7;
 }
 
 .m-dialog .dialog-header .dialog-header-close button:hover {
-    background-color: #ccc;
+  background-color: #ccc;
 }
-
 
 /*Tiêu đề của dialog*/
 
 .m-dialog .dialog-header .dialog-header-title {
-    font-size: 20px;
-    text-transform: uppercase;
-    font-weight: bold;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .dialog-content .dialog-body {
-    padding: 0px 24px 24px;
-    overflow: auto;
+  padding: 0px 24px 24px;
+  overflow: auto;
 }
 
 .dialog-footer {
-    display: flex;
-    width: 100%;
-    height: 60px;
-    background-color: #e9ebee;
-    border-radius: 0 0 5px 5px;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 12px 24px;
-    box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  background-color: #e9ebee;
+  border-radius: 0 0 5px 5px;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 24px;
+  box-sizing: border-box;
 }
 
 .dialog-footer button {
-    margin-left: 16px;
+  margin-left: 16px;
 }
 
 .notValidControl {
-    border: 2px solid red !important;
+  border: 2px solid red !important;
 }
-
 
 /* 
   dialog cancel
 */
 
 .cancel-dialog-custom .ui-dialog-titlebar {
-    padding: 24px !important;
-    font-size: 15px !important;
-    color: #000000 !important;
+  padding: 24px !important;
+  font-size: 15px !important;
+  color: #000000 !important;
 }
 
 .dialog-cancel .cancel-content {
-    background-color: #ffffff;
-    z-index: 1000;
-    border-radius: 5px;
+  background-color: #ffffff;
+  z-index: 1000;
+  border-radius: 5px;
 }
 
 .cancel-content .content-body {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .cancel-content .content-body .icon-notification {
-    background-image: url(../../../public/content/img/warning.png);
-    width: 35px;
-    height: 35px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin: 0 10px 0 24px;
+  background-image: url(../../../public/content/img/warning.png);
+  width: 35px;
+  height: 35px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 10px 0 24px;
 }
 
 .m-label {
-    text-align: left;
+  text-align: left;
 }
 
 .hr-group-label {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .content-footer #cancel-btn-form,
 .content-footer #ctn-btn-form {
-    height: 40px;
-    padding: 0 24px 0 24px;
+  height: 40px;
+  padding: 0 24px 0 24px;
 }
 
 .content-footer #ctn-btn-form {
-    background-color: #e9ebee;
-    border: none;
-    color: #000000;
+  background-color: #e9ebee;
+  border: none;
+  color: #000000;
 }
 
 .content-footer #ctn-btn-form:hover {
-    background-color: #bbbbbb;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #bbbbbb;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .content-footer #cancel-btn-form {
-    margin: 10px 24px 10px 16px;
-    background-color: #019160;
-    border-radius: 4px;
-    color: #ffffff;
-    outline: none;
-    border: none;
+  margin: 10px 24px 10px 16px;
+  background-color: #019160;
+  border-radius: 4px;
+  color: #ffffff;
+  outline: none;
+  border: none;
 }
 
 .content-footer #cancel-btn-form:hover {
-    cursor: pointer;
-    background-color: #2fbe8e;
+  cursor: pointer;
+  background-color: #2fbe8e;
 }
 
 .salary-custom {
-    position: relative;
+  position: relative;
 }
 
 .dialog-cancel .cancel-content .content-footer {
-    display: flex;
-    width: 100%;
-    height: 60px;
-    background-color: #e9ebee;
-    border-radius: 0 0 5px 5px;
-    align-items: center;
-    justify-content: flex-end;
-    box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  background-color: #e9ebee;
+  border-radius: 0 0 5px 5px;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
 }
-
 
 /* 
   dialog delete
 */
 
 .delete-dialog-custom .ui-dialog-titlebar {
-    padding: 24px !important;
-    font-size: 15px !important;
-    color: #000000 !important;
+  padding: 24px !important;
+  font-size: 15px !important;
+  color: #000000 !important;
 }
 
 .dialog-delete .delete-content {
-    background-color: #ffffff;
-    z-index: 1000;
-    border-radius: 5px;
+  background-color: #ffffff;
+  z-index: 1000;
+  border-radius: 5px;
 }
 
 .delete-content .content-body {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .delete-content .content-body .icon-notification {
-    background-image: url(../../../public/content/img/icons8-error-64.png);
-    width: 35px;
-    height: 35px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin: 0 10px 0 24px;
+  background-image: url(../../../public/content/img/icons8-error-64.png);
+  width: 35px;
+  height: 35px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 10px 0 24px;
 }
 
 .content-footer #delete-btn-form,
 .content-footer #btn-delete-cancel {
-    height: 40px;
-    padding: 0 24px 0 24px;
+  height: 40px;
+  padding: 0 24px 0 24px;
 }
 
 .content-footer #btn-delete-cancel {
-    background-color: #e9ebee;
-    border: none;
-    color: #000000;
+  background-color: #e9ebee;
+  border: none;
+  color: #000000;
 }
 
 .content-footer #btn-delete-cancel:hover {
-    background-color: #bbbbbb;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #bbbbbb;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .content-footer #delete-btn-form {
-    margin: 10px 24px 10px 16px;
-    background-color: #f65454;
-    border-radius: 4px;
-    color: #ffffff;
-    outline: none;
-    border: none;
+  margin: 10px 24px 10px 16px;
+  background-color: #f65454;
+  border-radius: 4px;
+  color: #ffffff;
+  outline: none;
+  border: none;
 }
 
 .content-footer #delete-btn-form:hover {
-    cursor: pointer;
-    background-color: #e97878;
+  cursor: pointer;
+  background-color: #e97878;
 }
 
 .dialog-delete {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .dialog-delete .delete-content .content-footer {
-    display: flex;
-    width: 100%;
-    height: 60px;
-    background-color: #e9ebee;
-    border-radius: 0 0 5px 5px;
-    align-items: center;
-    justify-content: flex-end;
-    box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  background-color: #e9ebee;
+  border-radius: 0 0 5px 5px;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
 }
-
 
 /* confix dialog*/
 
 .m-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .el-avatar-employee {
-    padding-top: 16px;
-    padding-right: 16px;
+  padding-top: 16px;
+  padding-right: 16px;
 }
 
 .el-left {
-    width: calc(100% - 180px);
+  width: calc(100% - 180px);
 }
 
 .el-avatar-employee .el-avatar {
-    border: 1px solid #ccc;
-    width: 160px;
-    height: 160px;
-    margin: 0 auto;
-    border-radius: 50%;
-    cursor: pointer;
-    background-image: url("../../../public/content/img/default-avatar.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+  border: 1px solid #ccc;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  border-radius: 50%;
+  cursor: pointer;
+  background-image: url("../../../public/content/img/default-avatar.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .el-avatar-note {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .filter-left {
-    display: flex;
+  display: flex;
 }
 
 .filter-left select {
-    margin-left: 10px;
-    margin-right: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .currency-for-input {
-    position: absolute;
-    right: 40px;
-    right: 24px;
-    line-height: 40px;
-    right: 10px;
-    font-style: italic;
+  position: absolute;
+  right: 40px;
+  right: 24px;
+  line-height: 40px;
+  right: 10px;
+  font-style: italic;
 }
 
 #txtSearchEmployee {
-    min-width: 300px;
+  min-width: 300px;
 }
-
 
 /*
   custom combobox
 */
 
 .pn-demo {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .container .m-cbo {
-    width: 240px;
-    border: 1px solid #bbbbbb;
-    outline: none;
-    text-overflow: ellipsis;
+  width: 240px;
+  border: 1px solid #bbbbbb;
+  outline: none;
+  text-overflow: ellipsis;
 }
 
 .container .input-field {
-    position: relative;
+  position: relative;
 }
 
 .container .input-field .arrow {
-    position: absolute;
-    top: 1px;
-    width: 10px;
-    right: 1px;
-    padding-left: 12px;
-    padding-right: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    background-image: url("../../../public/content/icon/arrow-down.png");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 10px;
-    height: 10px;
-    margin-top: 14px;
+  position: absolute;
+  top: 1px;
+  width: 10px;
+  right: 1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-image: url("../../../public/content/icon/arrow-down.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 10px;
+  margin-top: 14px;
 }
 
 .container .input-field .h-line {
-    border-left: 1px #bbbbbb solid;
-    position: absolute;
-    top: 0px;
-    right: 34px;
-    bottom: 1px;
-    width: 1px;
-    height: 40px;
+  border-left: 1px #bbbbbb solid;
+  position: absolute;
+  top: 0px;
+  right: 34px;
+  bottom: 1px;
+  width: 1px;
+  height: 40px;
 }
-
 
 /* item clear text */
 
 .container .input-field .btn-clear {
-    position: absolute;
-    top: 13px;
-    right: 50px;
-    cursor: pointer;
-    color: #bbbbbb;
+  position: absolute;
+  top: 13px;
+  right: 50px;
+  cursor: pointer;
+  color: #bbbbbb;
 }
 
 .container .input-field .btn-clear:hover {
-    color: #000000;
+  color: #000000;
 }
-
 
 /* Drop down */
 
 .container .drop-down {
-    position: absolute;
-    top: 40px;
-    width: 239px;
-    left: 0px;
-    z-index: 1000;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 16px -9px #000000;
+  position: absolute;
+  top: 40px;
+  width: 239px;
+  left: 0px;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 16px -9px #000000;
 }
 
 .container .drop-down .dr-item {
-    height: 40px;
-    display: flex;
-    cursor: pointer;
+  height: 40px;
+  display: flex;
+  cursor: pointer;
 }
 
 .container .input-field .down {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .drop-down .dr-item .icon {
-    align-items: center;
-    justify-content: center;
-    padding: 12px 10px 12px 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px 12px 10px;
 }
 
 .drop-down .dr-item .text {
-    align-items: center;
-    padding-top: 12px;
-    padding-left: 10px;
-    text-align: left;
+  align-items: center;
+  padding-top: 12px;
+  padding-left: 10px;
+  text-align: left;
 }
 
 .container .drop-down .dr-item:hover {
-    background-color: #e9ebee;
+  background-color: #e9ebee;
 }
 
 .container .drop-down .dr-item.active {
-    background-color: #019160;
-    color: #ffffff;
+  background-color: #019160;
+  color: #ffffff;
 }
 
 .container .drop-down .dr-item .icon {
-    padding: 12px 15px;
-    color: transparent;
+  padding: 12px 15px;
+  color: transparent;
 }
 
 .container .drop-down .dr-item.active .icon {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .container .drop-down .dr-item .text {
-    flex: 1;
+  flex: 1;
 }
 
 input::placeholder {
-    font-size: 11px !important;
-    color: #bbbbbb;
+  font-size: 11px !important;
+  color: #bbbbbb;
 }
 
 .m-btn {
-    display: flex;
-    align-items: center;
-    background-color: #019160;
-    border-radius: 4px;
-    height: 40px;
-    font-size: 13px;
-    color: #ffffff;
-    font-family: GoogleSans-Regular;
-    padding-left: 16px;
-    padding-right: 16px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    min-width: 100px;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #019160;
+  border-radius: 4px;
+  height: 40px;
+  font-size: 13px;
+  color: #ffffff;
+  font-family: GoogleSans-Regular;
+  padding-left: 16px;
+  padding-right: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+  justify-content: center;
 }
 
 .m-btn-del {
-    display: flex;
-    align-items: center;
-    border-radius: 4px;
-    height: 40px;
-    font-size: 13px;
-    color: #ffffff;
-    font-family: GoogleSans-Regular;
-    padding-left: 16px;
-    padding-right: 16px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    min-width: 100px;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  height: 40px;
+  font-size: 13px;
+  color: #ffffff;
+  font-family: GoogleSans-Regular;
+  padding-left: 16px;
+  padding-right: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+  justify-content: center;
 }
 
 .m-btn-delete {
-    background-color: #f04a4a;
+  background-color: #f04a4a;
 }
 
 .m-btn:hover,
 .m-btn:focus {
-    background-color: #2fbe8e;
+  background-color: #2fbe8e;
 }
 
 .m-btn .m-btn-icon {
-    background-position: center;
+  background-position: center;
 }
 
 .m-btn .btn-text {
-    margin-left: 8px;
+  margin-left: 8px;
 }
 
 .m-second-button {
-    border: 1px solid #bbbbbb;
-    background-color: #ffffff;
-    border-radius: 4px;
-    height: 40px;
-    color: #000000;
-    padding-left: 24px;
-    padding-right: 24px;
-    text-align: center;
-    outline: none;
-    cursor: pointer;
+  border: 1px solid #bbbbbb;
+  background-color: #ffffff;
+  border-radius: 4px;
+  height: 40px;
+  color: #000000;
+  padding-left: 24px;
+  padding-right: 24px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
 }
 
 .m-second-button:hover {
-    background-color: #e9ebee;
+  background-color: #e9ebee;
 }
 
 .m-btn-refresh {
-    background-image: url("../../../public/content/icon/refresh.png");
-    background-repeat: no-repeat;
-    width: 40px;
-    background-position: center;
-    margin: 0 5px 0 5px;
+  background-image: url("../../../public/content/icon/refresh.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  background-position: center;
+  margin: 0 5px 0 5px;
 }
 
 .m-mass-delete {
-    background-image: url("../../../public/content/icon/delete.png");
-    background-repeat: no-repeat;
-    width: 40px;
-    background-position: center;
-    background-size: center;
+  background-image: url("../../../public/content/icon/delete.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  background-position: center;
+  background-size: center;
 }
 
 .m-btn-import {
-    background-image: url("../../../public/content/icon/import.png");
-    background-repeat: no-repeat;
-    width: 40px;
-    background-position: center;
-    background-size: 20px;
+  background-image: url("../../../public/content/icon/import.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  background-position: center;
+  background-size: 20px;
 }
 
 .m-btn-cancel {
-    color: #000000;
-    background-color: transparent;
+  color: #000000;
+  background-color: transparent;
 }
 
 .m-btn-cancel:hover,
 .m-btn-cancel:focus {
-    background-color: #bbbbbb;
+  background-color: #bbbbbb;
 }
 
 .m-btn-delete:hover {
-    background-color: rgb(243, 127, 127);
+  background-color: rgb(243, 127, 127);
 }
 
 .btn-pagenumber {
-    width: 30px;
-    height: 30px;
-    margin: 0 4px;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    background-color: #e9ebee;
-    cursor: pointer !important;
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  background-color: #e9ebee;
+  cursor: pointer !important;
 }
 
 .btn-pagenumber:hover {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .btn-pagenumber.btn-pagenumber-selected,
 .btn-pagenumber-selected:hover {
-    background-color: #019160;
-    color: #ffffff;
+  background-color: #019160;
+  color: #ffffff;
 }
 
 .btn-select-page {
-    opacity: 0.7;
-    margin: 0 4px;
-    width: 30px;
-    height: 30px;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    border-radius: 3px;
-    cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0);
+  opacity: 0.7;
+  margin: 0 4px;
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .btn-select-page:hover {
-    opacity: 1;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
+  opacity: 1;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
 }
 
 .m-btn-firstpage {
-    background-image: url("../../../public/content/icon/btn-firstpage.svg");
+  background-image: url("../../../public/content/icon/btn-firstpage.svg");
 }
 
 .m-btn-prev-page {
-    background-image: url("../../../public/content/icon/btn-prev-page.svg");
+  background-image: url("../../../public/content/icon/btn-prev-page.svg");
 }
 
 .m-btn-next-page {
-    background-image: url("../../../public/content/icon/btn-next-page.svg");
+  background-image: url("../../../public/content/icon/btn-next-page.svg");
 }
 
 .m-btn-lastpage {
-    background-image: url("../../../public/content/icon/btn-lastpage.svg");
+  background-image: url("../../../public/content/icon/btn-lastpage.svg");
 }

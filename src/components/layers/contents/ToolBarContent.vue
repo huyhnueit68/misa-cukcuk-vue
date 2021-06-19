@@ -1,5 +1,5 @@
 <template>
-    <div class="filter-bar">
+    <div class="filter-bar" data-app>
         <div class="filter-left">
             <input id="txtSearchEmployee" 
             class="icon-search input-search" 
@@ -7,14 +7,30 @@
             @keyup="searchData"
             type="text" 
             placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại" />
-            <select id="cbxDepartment" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="" class="m-control">
-                <option value="">Tất cả phòng ban</option>
-                <option value="">Văn phòng Tổng công ty</option>
-                <option value="">Phong đào tạo công nghệ</option>
-                <option value="">Phòng Nhân sự</option>
-            </select>            
+            <v-autocomplete
+            id="cbxDepartment"
+            placeholder="Chọn/Nhập thông tin phòng ban"
+            class="cbo-department"
+            dense
+            auto-select-first="true"
+            outlined
+            v-model="valuesDepartment"
+            :items="dataDepartment"
+            clearable
+            ></v-autocomplete>  
             <!-- btn cutom combobox -->
-          <CustomCbo :listSelectPosition="listSelectPosition"/>
+            <v-autocomplete
+              id="cbxDepartment"
+              placeholder="Chọn/Nhập thông tin vị trí"
+              class="cbo-department"
+              dense
+              auto-select-first="true"
+              outlined
+              v-model="valuesPosition"
+              :items="dataPosition"
+              clearable
+            ></v-autocomplete>  
+          <!-- <CustomCbo :listSelectPosition="listSelectPosition"/> -->
         </div>
         <!-- sub tool bar in content huy-->
         <BtnToolBarContent @setReloadData="setReloadData"/>
@@ -38,6 +54,10 @@ export default({
           2: "Giám  Đốc",
           3: "Trưởng phòng",
         },
+        dataDepartment: ['Tất cả phòng ban', 'Văn phòng tổng công ty', 'Phòng đào tạo công nghệ', 'Phòng nhân sự'],
+        valuesDepartment: ['all', 'company', 'training', 'human'],
+        dataPosition: ['Tất cả phòng ban', 'Văn phòng tổng công ty', 'Phòng đào tạo công nghệ', 'Phòng nhân sự'],
+        valuesPosition: ['all', 'company', 'training', 'human'],
         employee: {}
       }
     },
@@ -75,11 +95,38 @@ export default({
 
 
 <style>
-    .filter-bar {
+.cbo-department {
+  padding-left: 10px !important;
+}
+.cbo-department,
+.cbo-department .v-input__control,
+.cbo-department .v-input__control .v-input__slot
+{
+  height: 40px;
+}
+
+.v-list-item--active {
+  background-color: #019160;
+  color: #ffffff !important;
+}
+.cbo-department .v-input__control .v-input__slot {
+  border: 1px solid #bbb;
+}
+
+#cbxDepartment {
+  font-size: 13px;
+  width: 150px;
+}
+.cbo-department .v-input__control .v-input__slot fieldset{
+  border: none;
+}
+
+.filter-bar {
   width: 100%;
   display: flex;
   align-items: center;
   height: 40px;
+  margin-bottom: 24px;
 }
 
 .filter-bar .filter-right {
@@ -156,6 +203,8 @@ input::placeholder {
 
 .input-search {
   padding-left: 40px;
+  border: 1px solid #bbbbbb;
+  border-radius: 4px;
 }
 
 

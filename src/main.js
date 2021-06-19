@@ -10,7 +10,8 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import VTooltip from 'v-tooltip'
 import Autocomplete from 'v-autocomplete'
 import 'v-autocomplete/dist/v-autocomplete.css'
- 
+import vuetify from './plugins/vuetify'
+
 Vue.use(Autocomplete)
 
 Vue.use(VTooltip)
@@ -23,5 +24,6 @@ new Vue({
     router,
     store,
     VueSweetalert2,
+    vuetify,
     render: h => h(App)
 }).$mount('#app')

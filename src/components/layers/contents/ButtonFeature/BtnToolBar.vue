@@ -70,7 +70,7 @@ export default defineComponent({
 .tooltip-reload .tooltip-inner {
     background: #515252;
     color: white;
-    height: 20px;
+    height: 30px;
 }
 
 .tooltip-reload .tooltip-arrow {

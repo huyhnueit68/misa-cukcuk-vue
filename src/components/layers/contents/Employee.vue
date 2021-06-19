@@ -98,11 +98,11 @@ export default({
 </script>
 
 <style>
-    .content {
+.content {
   position: absolute;
-  top: 61px;
-  left: 221px;
-  width: calc(100% - 253px);
+  top: 60px;
+  left: 220px;
+  width: calc(100% - 221px);
   background-color: #ffffff;
   padding: 16px 16px 0 16px;
 }
