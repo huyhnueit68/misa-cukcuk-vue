@@ -17,6 +17,14 @@ export default new Vuex.Store({
          * is reload data
          */
         isReloading: false,
+        /**
+         * is enable mass delete row
+         */
+        isMassDeleteRow: false,
+        /**
+         * number total mass delete
+         */
+        totalMassDelete: 0
     },
     mutations: {
         FormStateEdit(state) {
@@ -36,6 +44,15 @@ export default new Vuex.Store({
         },
         EnableReloading(state) {
             state.isReloading = true;
+        },
+        DisableMassDelete(state) {
+            state.isMassDeleteRow = false;
+        },
+        EnableMassDelete(state) {
+            state.isMassDeleteRow = true;
+        },
+        SetTotalDelete(state, newTotal) {
+            state.totalMassDelete = newTotal;
         }
     },
     actions: {},

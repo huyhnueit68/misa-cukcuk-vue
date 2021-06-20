@@ -3,7 +3,7 @@
         <button id="btnAdd" 
         class="m-btn m-btn-default" 
         data-toggle="tooltip" 
-        data-placement="top" 
+        data-placement="top"
         title="Thêm thông tin" >
             <div class="m-btn-icon icon-add"></div>
             <div class="btn-text" @click="enableShowDialog">{{ titleBtn }}</div>

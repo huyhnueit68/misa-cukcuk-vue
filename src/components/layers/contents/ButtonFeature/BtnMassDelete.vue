@@ -4,8 +4,8 @@
         Command="Delete" 
         data-toggle="tooltip" 
         data-placement="top"
-        @click="deleteRecord"
-        title="Xóa thông tin bản ghi này">
+        @click="massDelete"
+        title="Xóa thông tin bản ghi">
         <i class="icon-delete-detail"></i>
         <span class="btn-text">{{title}}</span>
     </button>
@@ -18,13 +18,16 @@ export default defineComponent({
     props: {
         title: String,
     },
+    setup() {
+        
+    },
     methods: {
         /**
          * access delete record
          * PQ Huy 16.06.2021
          */
-        deleteRecord(){
-            this.$emit('deleteRecord')
+        massDelete(){
+            this.$emit('massDelete');
         }
     }
 })

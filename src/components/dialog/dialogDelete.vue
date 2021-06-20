@@ -71,51 +71,51 @@ export default {
             })
         },
         /**
-     * show popup notification success
-     * PQ Huy 17.06.2021
-     */
-    successNotification(){
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'bottom-end',
-        showConfirmButton: false,
-        timer: 3000,
-        customClass: "popup-success",
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
+         * show popup notification success
+         * PQ Huy 17.06.2021
+         */
+        successNotification(){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000,
+            customClass: "popup-success",
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-      Toast.fire({
-        icon: 'success',
-        title: 'Xóa dữ liệu thành công!'
-      })
-    },
-    /**
-     * show popup notification error
-     * PQ Huy 17.06.2021
-     */
-    errorNotification(){
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'bottom-end',
-        showConfirmButton: false,
-        timer: 3000,
-        customClass: "popup-error",
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
+        Toast.fire({
+            icon: 'success',
+            title: 'Xóa dữ liệu thành công!'
+        })
+        },
+        /**
+         * show popup notification error
+         * PQ Huy 17.06.2021
+         */
+        errorNotification(){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000,
+            customClass: "popup-error",
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-      Toast.fire({
-        icon: 'error',
-        title: 'Xóa dữ liệu thất bại!'
-      })
-    },
+        Toast.fire({
+            icon: 'error',
+            title: 'Xóa dữ liệu thất bại!'
+        })
+        },
     }
 }
 </script>

@@ -2,13 +2,14 @@
     <!-- content chính -->
     <div class="content">
         <!-- header content -->
-        <HeaderContent @isShowDialog="showDialog"/>
+        <HeaderContent @isShowDialog="showDialog" @accessMassDelete="accessMassDelete" ref="headerContent"/>
         <!-- filter tool bar-->
         <ToolBarContent @setReloadData="setReloadData" @dataFilter="dataFilter"/>
         <!-- table content -->
         <TableContent @showDialogEdit="showDialogEdit"
          ref="tableContent"
          @reloadData="setReloadData"
+         @successMassDelete="successMassDelete"
          :employeeDataFilter="employeeDataFilter"
          />
         <!-- padding bar show list  -->
@@ -48,6 +49,23 @@ export default({
       }
     },
     methods: {
+      /**
+       * function close form mass delete
+       * PQ Huy 20.06.2021
+       */
+      async successMassDelete(){
+        // close form
+        await this.$refs.headerContent.successMassDelete();
+        // reload data
+        this.setReloadData();
+      },
+      /**
+       * action access mass delete
+       * PQ Huy 20.06.2021
+       */
+      accessMassDelete(){
+        this.$refs.tableContent.accessMassDelete();
+      },
       /**
        * get data filter
        * PQ Huy 18.06.2021

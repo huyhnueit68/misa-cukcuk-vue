@@ -51,7 +51,7 @@ export default defineComponent({
 .tooltip-info-account .tooltip-inner {
     background: #515252 !important;
     color: white !important;
-    height: 20px !important;
+    height: 30px !important;
 }
 
 .tooltip-info-account .tooltip-arrow {

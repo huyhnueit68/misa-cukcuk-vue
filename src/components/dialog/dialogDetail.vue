@@ -241,7 +241,7 @@
                   data-placement="top"
                   title="Hủy tiến trình">Hủy
                 </button>
-                <BtnDelete v-if="showBtnDelete" @deleteRecord = "deleteRecord"/>
+                <BtnDelete v-if="showBtnDelete" @deleteRecord = "deleteRecord" :title="titleDel"/>
                 <button @click="save"
                   id="btnSave"
                   class="m-btn m-btn-default action-form"
@@ -308,6 +308,7 @@ export default {
   },
   data(){
     return{
+      titleDel: "Xóa",
       employee: {},
       showDialogCancel: false,
       showDialogDelete: false,

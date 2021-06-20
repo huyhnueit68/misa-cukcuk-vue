@@ -6,7 +6,7 @@
          <!-- header table  -->
           <HeaderTable/>
          <!-- content table -->
-          <ContentTable @showDialogEdit="showDialogEdit" ref="contentTable" @reloadData="reloadData"/>
+          <ContentTable @showDialogEdit="showDialogEdit" ref="contentTable" @reloadData="reloadData" @successMassDelete="successMassDelete"/>
         </table>
     </div>
 </template>
@@ -21,6 +21,24 @@ export default {
     ContentTable
   },
   methods: {
+    /**
+     * function close form mass delete
+     * PQ Huy 20.06.2021
+     */
+    successMassDelete(){
+      this.$emit('successMassDelete');
+    },
+    /**
+     * function mass delete table
+     * PQ Huy 20.06.2021
+     */
+    accessMassDelete(){
+      this.$refs.contentTable.accessMassDelete();
+    },
+    /**
+     * function reload data table
+     * PQ Huy 19.06.2021
+     */
     reloadData(){
       this.$emit('reloadData');
     },
