@@ -83,9 +83,17 @@ export default defineComponent({
         }
     },
     methods: {
+        /**
+         * check active menu
+         * PQ Huy 20.06.2021
+         */
         isActive: function (menuItem) {
             return this.activeItem === menuItem
         },
+        /**
+         * set active menu
+         * PQ Huy 20.06.2021
+         */
         setActive: function (menuItem) {
             this.activeItem = menuItem
         }

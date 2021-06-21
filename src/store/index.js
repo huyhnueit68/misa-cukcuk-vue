@@ -24,7 +24,19 @@ export default new Vuex.Store({
         /**
          * number total mass delete
          */
-        totalMassDelete: 0
+        totalMassDelete: 0,
+        /**
+         * is Paging 
+         */
+        isPaging: false,
+        /**
+         * page Size
+         */
+        pageSize: 0,
+        /**
+         * number record
+         */
+        totalRecord: 0
     },
     mutations: {
         FormStateEdit(state) {
@@ -53,6 +65,12 @@ export default new Vuex.Store({
         },
         SetTotalDelete(state, newTotal) {
             state.totalMassDelete = newTotal;
+        },
+        EnablePaging(state) {
+            state.isPaging = true;
+        },
+        DisablePaging(state) {
+            state.isPaging = false;
         }
     },
     actions: {},

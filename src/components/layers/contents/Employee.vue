@@ -13,7 +13,7 @@
          :employeeDataFilter="employeeDataFilter"
          />
         <!-- padding bar show list  -->
-        <PagingContent/>
+        <PagingContent @changePage="changePage"/>
         <!-- dialog detail -->
         <DialogDetail @reloadData="setReloadData" 
                       v-if="enableShowDialog" 
@@ -50,6 +50,13 @@ export default({
     },
     methods: {
       /**
+       * change page number
+       * PQ Huy 21.06.2021
+       */
+      changePage(pageNumber){
+        this.$refs.tableContent.changePage(pageNumber);
+      },
+      /**
        * function close form mass delete
        * PQ Huy 20.06.2021
        */
@@ -57,6 +64,7 @@ export default({
         // close form
         await this.$refs.headerContent.successMassDelete();
         // reload data
+        debugger
         this.setReloadData();
       },
       /**

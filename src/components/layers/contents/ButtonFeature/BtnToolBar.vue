@@ -50,11 +50,12 @@ export default defineComponent({
   },
   methods: {
     /**
-     * set reload 
+     * set reload
      * PQ Huy 16.06.2021
      */
     reloadData(){
       this.$store.commit('EnableReloading');
+      this.$store.commit('DisablePaging');
       this.$emit('setReloadData');
     }
   }

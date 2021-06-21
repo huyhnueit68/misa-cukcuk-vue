@@ -23,14 +23,14 @@
                         <div class="m-row mg-top-0 m-flex">
                             <div class="m-col m-flex-1">
                                 <div class="m-label">Mã nhân viên (<span class="label-required">*</span>)
-                                <span class="label-required" v-if="enableNullCode">Vui lòng điền thông tin</span>
                                 </div>
-                                <div class="m-control">
-                                  <input v-model="employee.EmployeeCode" 
-                                  :class="[
-                                    applyInputStyle(employee.EmployeeCode)
-                                  ]" 
+                                <div class="m-control m-tooltip">
+                                  <span class="tooltiptext" v-show="enableNullCode">Vui lòng điền thông tin</span>
+                                  <input v-model="employee.EmployeeCode"
+                                  :class="applyInputStyle(employee.EmployeeCode)"
                                   id="txtEmployeeCode" 
+                                  @focus="isShowCode"
+                                  @blur="isShowCodeBlur"
                                   class="input-required"
                                   ref="employeeCodeRequest"
                                   tabindex="0"
@@ -39,12 +39,14 @@
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Họ và tên (<span class="label-required">*</span>)
-                                <span class="label-required" v-if="enableNullName">Vui lòng điền thông tin</span>
                                 </div>
-                                <div class="m-control">
+                                <div class="m-control m-tooltip">
+                                    <span class="tooltiptext" v-show="enableNullName">Vui lòng điền thông tin</span>
                                     <input id="txtFullName" 
                                     v-model="employee.FullName" 
                                     fieldName="FullName" 
+                                    @focus="isShowName"
+                                    @blur="isShowNameBlur"
                                     @keyup="capitalizeFirstLetter"
                                     :class="applyInputStyle(employee.FullName)" 
                                     ref="employeeNameRequest"
@@ -82,14 +84,18 @@
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
                                 <div class="m-label" title="Số chứng minh thư nhân dân hoặc căn cước công dân">Số CMTND/ Căn cước (<span class="label-required">*</span>)
-                                <span class="label-required" v-if="enableNullIdentity">Vui lòng điền thông tin</span>
                                 </div>
-                                <div class="m-control"><input v-model="employee.IdentityNumber" 
-                                id="txtIdentityNumber"
-                                :class="applyInputStyle(employee.IdentityNumber)"
-                                class="success-input input-required"
-                                ref="employeeIdentityRequest"
-                                fieldName="IdentityNumber" type="text" required /></div>
+                                <div class="m-control m-tooltip">
+                                  <span class="tooltiptext" v-show="enableNullIdentity">Vui lòng điền thông tin</span>
+                                  <input v-model="employee.IdentityNumber"
+                                  id="txtIdentityNumber"
+                                  @focus="isShowIdentity"
+                                  @blur="isShowIdentityBlur"
+                                  :class="applyInputStyle(employee.IdentityNumber)"
+                                  class="success-input input-required"
+                                  ref="employeeIdentityRequest"
+                                  fieldName="IdentityNumber" type="text" required />
+                                  </div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Ngày cấp</div>
@@ -111,26 +117,30 @@
                         <div class="m-row m-flex">
                             <div class="m-col m-flex-1">
                                 <div class="m-label">Email (<span class="label-required">*</span>)
-                                <span class="label-required" v-if="enableNullEmail">Vui lòng điền thông tin</span>
-                                <span class="label-required" v-if="showValidateEmail">Vui lòng điền đúng email</span>
                                 </div>
-                                <div class="m-control"><input v-model="employee.Email" 
-                                id="txtEmail" 
-                                fieldName="Email"
-                                class="success-input input-required"
-                                type="email" 
-                                ref="employeeEmailRequest"
-                                :class="applyInputStyle(employee.Email)"
-                                required placeholder="example@domain.com" /></div>
+                                <div class="m-control m-tooltip">
+                                  <span class="tooltiptext" v-show="enableNullEmail">Vui lòng điền thông tin</span>
+                                  <span class="tooltiptext" v-if="showValidateEmail">Vui lòng điền đúng email</span>
+                                  <input v-model="employee.Email" 
+                                  id="txtEmail"
+                                  @focus="isShowEmail"
+                                  @blur="isShowEmailBlur"
+                                  class="success-input input-required"
+                                  type="email"
+                                  ref="employeeEmailRequest"
+                                  :class="applyInputStyle(employee.Email)"
+                                  required placeholder="example@domain.com" /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Số điện thoại (<span class="label-required">*</span>)
-                                <span class="label-required" v-if="enableNullPhone">Vui lòng điền thông tin</span>
-                                <span class="label-required" v-if="enablePhoneFormat">Không đúng số điện thoại</span>
                                 </div>
-                                <div class="m-control" @click="triggerEmployeePhoneRequest">
+                                <div class="m-control m-tooltip" @click="triggerEmployeePhoneRequest">
+                                    <span class="tooltiptext" v-show="enableNullPhone">Vui lòng điền thông tin</span>
+                                    <span class="tooltiptext" v-if="enablePhoneFormat">Không đúng số điện thoại</span>
                                     <input v-model="employee.PhoneNumber" 
-                                    id="txtPhoneNumber" 
+                                    id="txtPhoneNumber"
+                                    @focus="isShowPhone"
+                                    @blur="isShowPhoneBlur"
                                     fieldName="PhoneNumber" 
                                     DataType="PhoneNumber" 
                                     maxlength="100"
@@ -405,6 +415,106 @@ export default {
   },
   methods: {
     /**
+     * is blur tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowPhoneBlur(){
+      if(this.$refs.employeePhoneRequest.value != "") {
+        this.enableNullPhone = false;
+        if(this.validateNumber()) {
+          this.enablePhoneFormat = false;
+        }
+      } else {
+        this.enableNullPhone = true;
+        this.enablePhoneFormat = true;
+      }
+    },
+    /**
+     * is show tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowPhone(){
+      this.enableNullPhone = false;
+      this.enablePhoneFormat = false;
+    },
+    /**
+     * is blur tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowEmailBlur(){
+      if(this.$refs.employeeEmailRequest.value != "") {
+        this.enableNullEmail = false;
+        if(this.validateEmail()) {
+          this.showValidateEmail = false;
+        }
+      } else {
+        this.enableNullEmail = true;
+        this.showValidateEmail = true;
+      }
+    },
+    /**
+     * is show tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowEmail(){
+      this.enableNullEmail = false;
+      this.showValidateEmail = false;
+    },
+    /**
+     * is blur tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowIdentityBlur(){
+      if(this.$refs.employeeIdentityRequest.value != "") {
+        this.enableNullIdentity = false;
+      } else {
+        this.enableNullIdentity = true;
+      }
+    },
+    /**
+     * is show tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowIdentity(){
+      this.enableNullIdentity = false;
+    },
+    /**
+     * is blur tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowNameBlur(){
+      if(this.$refs.employeeNameRequest.value != "") {
+        this.enableNullName = false;
+      } else {
+        this.enableNullName = true;
+      }
+    },
+    /**
+     * is show tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowName(){
+      this.enableNullName = false;
+    },
+    /**
+     * is blur tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowCodeBlur(){
+      if(this.$refs.employeeCodeRequest.value != "") {
+        this.enableNullCode = false;
+      } else {
+        this.enableNullCode = true;
+      }
+    },
+    /**
+     * is show tooltip
+     * PQ Huy 21.06.2021
+     */
+    isShowCode(){
+      this.enableNullCode = false;
+    },
+    /**
      * enable btn delete
      * PQ Huy 16.06.2021
      */
@@ -525,9 +635,20 @@ export default {
      * set class warning
      * PQ Huy 16.06.2021
      */
+    triggerEmployeeEmailRequest(){
+      this.$refs.employeeEmailRequest.className = this.$refs.employeeEmailRequest.className.replace("error-warning", "")
+    },
+    /**
+     * set class warning
+     * PQ Huy 16.06.2021
+     */
     triggerEmployeePhoneRequest(){
       this.$refs.employeePhoneRequest.className = this.$refs.employeePhoneRequest.className.replace("error-warning", "")
     },
+    /**
+     * set class warning
+     * PQ Huy 16.06.2021
+     */
     triggerEmployeeSalaryRequest(){
       this.$refs.employeeSalaryRequest.className = this.$refs.employeeSalaryRequest.className.replace("error-warning", "")
     },
@@ -768,9 +889,11 @@ export default {
       if(!re.test(this.employee.Email)) {
         this.$refs.employeeEmailRequest.className = this.$refs.employeeEmailRequest.className + " error-warning";
         this.showValidateEmail = true;
+        this.$refs.employeeEmailRequest.className = Array.from(new Set(this.$refs.employeeEmailRequest.className.split(','))).toString();
         return false;
       } else {
         this.showValidateEmail = false;
+        this.$refs.employeeEmailRequest.className = this.$refs.employeeEmailRequest.className.replace("error-warning", "")
         return true;
       }
     },
@@ -841,6 +964,7 @@ export default {
     validateNumber(){
       if(!/^[0-9,.]*$/.test(this.employee.PhoneNumber)) {
         this.$refs.employeePhoneRequest.className = this.$refs.employeePhoneRequest.className + " error-warning";
+        this.$refs.employeePhoneRequest.className = Array.from(new Set(this.$refs.employeePhoneRequest.className.split(','))).toString();
         this.enablePhoneFormat = true;
         return false;
       } else {
@@ -853,6 +977,7 @@ export default {
       salary = salary.replaceAll(".", "")
       if(!/^[0-9,.]*$/.test(salary)) {
         this.$refs.employeeSalaryRequest.className = this.$refs.employeeSalaryRequest.className + " error-warning";
+        this.$refs.employeeSalaryRequest.className = Array.from(new Set(this.$refs.employeeSalaryRequest.className.split(','))).toString();
         this.enableSalaryFormat = true;
         return false;
       } else {
@@ -904,14 +1029,38 @@ export default {
   border: 1px solid #019160;
 }
 
-.tooltip-checknull .tooltip-inner {
-    background: rgb(224, 47, 47);
-    color: white;
-    height: 20px;
+/** 
+  custom tool tip
+*/
+
+.m-tooltip {
+  position: relative;
 }
 
-.tooltip-checknull .tooltip-arrow {
-    border-color: rgb(224, 47, 47);
+.m-tooltip .tooltiptext {
+  visibility: visible;
+  width: 150px;
+  background-color: #eb5757;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 113%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.m-tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #eb5757 transparent transparent transparent;
 }
 
 @import "../../assets/css/grid.css";

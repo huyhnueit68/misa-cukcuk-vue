@@ -1,25 +1,148 @@
 <template>
     <div class="paging-bar">
         <div class="paging-record-info">
-            Hiển thị <b>1-10/1000</b> nhân viên
+            Hiển thị <b>1-10/{{this.$store.totalRecord}}</b> nhân viên
         </div>
         <div class="paging-option">
-            <div class="btn-select-page m-btn-firstpage"></div>
-            <div class="btn-select-page m-btn-prev-page"></div>
-            <div class="m-btn-list-page">
-                <button class="btn-pagenumber btn-pagenumber-selected">1</button>
-                <button class="btn-pagenumber">2</button>
-                <button class="btn-pagenumber">3</button>
-                <button class="btn-pagenumber">4</button>
+            <div class="btn-select-page m-btn-firstpage" @click="firstPage"></div>
+            <div class="btn-select-page m-btn-prev-page" @click="prevPage"></div>
+            <div class="m-btn-list-page" v-for="index in totalPageNumber" :key="index">
+                <button class="btn-pagenumber"
+                :class="{ 'btn-pagenumber-selected': isActive(index) }"
+                :pageNumber="index"
+                @click="changePage(index), setActive(index)">{{index}}</button>
             </div>
-            <div class="btn-select-page m-btn-next-page"></div>
-            <div class="btn-select-page m-btn-lastpage"></div>
+            <div class="btn-select-page m-btn-next-page" @click="nextPage"></div>
+            <div class="btn-select-page m-btn-lastpage" @click="lastPage"></div>
         </div>
         <div class="paging-record-option">
             <b>10</b> nhân viên/trang
         </div>
     </div>
 </template>
+
+<script>
+import { defineComponent } from '@vue/composition-api'
+const PAGE_SIZE = 5
+
+export default defineComponent({
+  setup() {
+    
+  },
+  created() {
+    this.getNumberRecord();
+  },
+  data(){
+    return{
+      totalPageNumber: 1,
+      activeItem: 1,
+    }
+  },
+  methods: {
+    /**
+     * redirect last page
+     * PQ Huy 21.06.2021
+     */
+    lastPage(){
+      if(this.$store.state.pageNumber != this.totalPageNumber){
+        this.changePage(this.totalPageNumber);
+        this.setActive(this.totalPageNumber)
+      }
+    },
+    /**
+     * redirect first page
+     * PQ Huy 21.06.2021
+     */
+    firstPage(){
+      if(this.$store.state.pageNumber != 1){
+        this.changePage(1);
+        this.setActive(1)
+      }
+    },
+    /**
+     * set prev page
+     * PQ Huy 21.06.2021
+     */   
+    prevPage(){
+      // set change page
+      if(this.$store.state.pageNumber != 1){
+        this.changePage(--this.$store.state.pageNumber);
+        this.setActive(this.$store.state.pageNumber)
+      }
+    },
+    /**
+     * set next page
+     * PQ Huy 21.06.2021
+     */   
+    nextPage(){
+      // set change page
+      if(this.$store.state.pageNumber != this.totalPageNumber){
+        this.changePage(++this.$store.state.pageNumber);
+        this.setActive(this.$store.state.pageNumber);
+      }
+    },
+    /**
+     * check active menu
+     * PQ Huy 21.06.2021
+     */
+    isActive: function (pageNumber) {
+        return this.activeItem === pageNumber
+    },
+    /**
+     * set active menu
+     * PQ Huy 21.06.2021
+     */
+    setActive: function (pageNumber) {
+        this.activeItem = pageNumber
+    },
+    /**
+     * function query data
+     * PQ Huy 21.06.2021
+     */
+    getAllData(){
+      
+    },
+    /**
+     * check decimal number
+     * PQ Huy 21.06.2021
+     */
+    hasDecimal (num) {
+      return !!(num % 1);
+    },
+    /**
+     * get total number recode
+     * PQ Huy 21.06.2021
+     */
+    async getNumberRecord(){
+      // get data size
+      let data = [],
+        totalPage = 1;
+
+      await this.axios.get('http://cukcuk.manhnv.net/v1/employees').then((response) => {
+        data = response.data.length;
+      }).catch((error) => {
+        console.log(error);
+      });
+      
+      if(data <= PAGE_SIZE) {
+        return totalPage;
+      } else {
+        totalPage = data / PAGE_SIZE;
+        if(this.hasDecimal(totalPage)) {
+          totalPage++;
+        }
+        
+      }
+      this.totalPageNumber = parseInt(totalPage);
+    },
+    changePage(pageNumber){
+      this.$emit('changePage', pageNumber);
+      this.$store.commit('EnablePaging');
+      this.$store.state.pageNumber = pageNumber;
+    }
+  }
+})
+</script>
 
 <style>
 

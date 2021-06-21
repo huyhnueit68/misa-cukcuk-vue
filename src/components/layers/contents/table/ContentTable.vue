@@ -28,6 +28,8 @@ import enumeration from '../../../../js/common/enumeration'
 import resource from '../../../../js/common/resource.js'
 import moment from "moment";
 const Swal = require('sweetalert2')
+const PAGE_SIZE = 5
+const QUERY_FILTER  = 'N'
 
 export default({
     data(){
@@ -46,6 +48,26 @@ export default({
     },
     methods: {
         /**
+         * change page data
+         * PQ Huy 21.06.2021
+         */
+        async changePage(pageNumber){
+            /**
+             * get data page form api
+             */
+            var me = this;
+            let queryString = 'http://cukcuk.manhnv.net/v1/Employees/Filter?pageSize='+PAGE_SIZE+'&pageNumber='+pageNumber+'&fullName='+QUERY_FILTER+'';
+
+            await this.axios.get(queryString).then((response) => {
+                me.employeeData = response.data.Data
+                /**
+                 * enable reload UI
+                 */
+                //debugger  // eslint-disable-line no-debugger
+                this.stateChange();
+            })
+        },
+        /**
          * access mass delete
          * PQ Huy 20.06.2021
          */
@@ -57,6 +79,7 @@ export default({
             await rows.forEach(element => {
                 this.deleteEmployeebyId(element.getAttribute("employeeID")) ? countSuccess ++ : countSuccess += 0;
             });
+            debugger
             this.successNotification(countSuccess);
 
             // close form and refresh data
@@ -255,7 +278,7 @@ export default({
             this.$emit('showDialogEdit', employeeId);
         },
         /**
-         * get data table 
+         * get data table
          * PQ Huy 17.06.2021
          */
         getDataContentTable(){
@@ -266,18 +289,21 @@ export default({
          * PQ Huy 17.06.2021
          */
         getData() {
-            /**
-             * get data form api
-             */
             var me = this;
-            this.axios.get('http://cukcuk.manhnv.net/v1/employees').then((response) => {
-                me.employeeData = response.data
-                /**
-                 * enable reload UI
-                 */
-                //debugger  // eslint-disable-line no-debugger
-                this.stateChange();
-            })
+
+            if(this.$store.state.isPaging) {
+                this.changePage(this.$store.state.pageNumber);
+            } else {
+                this.axios.get('http://cukcuk.manhnv.net/v1/employees').then((response) => {
+                    me.employeeData = response.data
+                    this.$store.totalRecord = response.data.length
+                    /**
+                     * enable reload UI
+                     */
+                    this.stateChange();
+                })
+            }
+            
         },
         /**
          * set enable loading

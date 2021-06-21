@@ -22,6 +22,13 @@ export default {
   },
   methods: {
     /**
+     * change page
+     * PQ Huy 21.06.2021
+     */
+    changePage(pageNumber){
+      this.$refs.contentTable.changePage(pageNumber);
+    },
+    /**
      * function close form mass delete
      * PQ Huy 20.06.2021
      */
