@@ -26,6 +26,7 @@
                                 </div>
                                 <div class="m-control m-tooltip">
                                   <span class="tooltiptext" v-show="enableNullCode">Vui lòng điền thông tin</span>
+                                  <span class="tooltiptext" v-show="enableDupliCode">Trùng mã nhân viên</span>
                                   <input v-model="employee.EmployeeCode"
                                   :class="applyInputStyle(employee.EmployeeCode)"
                                   id="txtEmployeeCode" 
@@ -310,6 +311,7 @@ export default {
   created() {
     this.getEmployeeById(this.employeeId)
     this.enableBtnDelete();
+    this.getAllData();
   },
   mounted() {
     this.forcusInput();
@@ -324,6 +326,7 @@ export default {
       showDialogDelete: false,
       showBtnDelete: false,
       formMode: null,
+      dataTable: {},
       formatSalary: 0,
       enableNull: true,
       /**
@@ -331,12 +334,14 @@ export default {
        */
       enableNullCode: false,
       enableNullName: false,
+      enableDupliCode: false,
       enableNullEmail: false,
       enableNullIdentity: false,
       enableNullPhone: false,
       showValidateEmail: false,
       enablePhoneFormat: false,
       enableSalaryFormat: false,
+      oldEmployeeCode: "",
       grender: [
         {
           key: enumeration.Grender.Male,
@@ -414,6 +419,17 @@ export default {
     }
   },
   methods: {
+    getAllData(){
+      this.axios.get('http://cukcuk.manhnv.net/v1/employees').then((response) => {
+          this.dataTable = response.data
+      }).catch((error) => {
+        this.$swal({
+          title: error,
+          text: "Vui lòng thử lại sau!",
+          icon: "error",
+        });
+      })
+    },
     /**
      * is blur tooltip
      * PQ Huy 21.06.2021
@@ -503,6 +519,9 @@ export default {
     isShowCodeBlur(){
       if(this.$refs.employeeCodeRequest.value != "") {
         this.enableNullCode = false;
+        if(this.validateEmployeeCode()) {
+          this.enableDupliCode = false;
+        }
       } else {
         this.enableNullCode = true;
       }
@@ -513,6 +532,7 @@ export default {
      */
     isShowCode(){
       this.enableNullCode = false;
+      this.enableDupliCode = false;
     },
     /**
      * enable btn delete
@@ -675,6 +695,23 @@ export default {
      * get employee id
      * PQ Huy 16.06.2021
      */
+    getOldEmployeeCode(employeeId){
+      this.axios.get('http://cukcuk.manhnv.net/v1/employees/'+ employeeId).then((response) => {
+        this.oldEmployeeCode = response.data.EmployeeCode
+        return response.data.EmployeeCode;
+      }).catch((error) => {
+        this.$swal({
+          title: error,
+          text: "Vui lòng thử lại sau!",
+          icon: "error",
+        });
+        return null;
+      })
+    },
+    /**
+     * get employee id
+     * PQ Huy 16.06.2021
+     */
     async getEmployeeById(employeeId){
        var me = this;
       if(employeeId) {
@@ -683,6 +720,7 @@ export default {
          */
         await this.axios.get('http://cukcuk.manhnv.net/v1/employees/'+ employeeId).then((response) => {
             me.employee = response.data;
+            this.oldEmployeeCode = response.data.EmployeeCode;
             this.forcusInput();
             this.formatMoneyBefore();
             this.formatDate();
@@ -728,11 +766,12 @@ export default {
      * save function
      * PQ Huy 13.06.2021
      */
-    async save(){
+    save(){
       // format salary
       this.employee.salary = this.$refs.employeeSalaryRequest.value.replaceAll(".", "");
       // format date
       if(this.validateData()){
+        debugger
         /**
          * save data by api
          * convert data salary 
@@ -748,7 +787,7 @@ export default {
            */
           this.formatDateBeforeSave();
           if(isUpdate) {
-          await this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
+          this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
             if(response.status == RESPONSES_SUCCESS || response.status == RESPONSES_CREATED || response.status == RESPONSES_ACCEPTED) {
               this.successNotification();
             } else {
@@ -756,7 +795,7 @@ export default {
             }
           })
         } else {
-          await this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
+          this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
             if(response.status == RESPONSES_SUCCESS || response.status == RESPONSES_CREATED || response.status == RESPONSES_ACCEPTED) {
               this.successNotification();
             } else {
@@ -857,12 +896,14 @@ export default {
       /**
        * validate not null
        */
+      debugger
       if(!this.validateNotNull()){
         return false;
       }
       /**
        * validate employee code
        */
+      debugger
       if(!this.validateEmployeeCode()){
         return false;
       }
@@ -902,8 +943,44 @@ export default {
      * PQ Huy 13.06.2021
      */
     validateEmployeeCode(){
-      let checked = true;
+      let checked = true,
+          me = this,
+          employeeCode = this.$refs.employeeCodeRequest.value;
+      if(!this.$store.state.formMode) {
+        checked = this.validateAddNewRecord(employeeCode, this.dataTable);
+      } else {
+        if(this.oldEmployeeCode) {
+          if(employeeCode != this.oldEmployeeCode) {
+            checked = this.validateAddNewRecord(employeeCode, this.dataTable);
+          }
+        }
+      }
+
+      if(!checked) {
+        this.enableDupliCode = true;
+        checked = false;
+      } else {
+        this.enableDupliCode = false;
+      }
+      
       return checked;
+    },
+    /**
+     * validate add new record
+     * PQ Huy 22.06.2021
+     */
+    validateAddNewRecord(employeeCode, data){
+      let checked = true;
+      if(data.length > 0) {
+        data.filter(val => {
+          if(val.EmployeeCode == employeeCode) {
+            checked = false
+          }
+        });
+      }
+    
+      return checked;
+
     },
     /**
      * function validate not null

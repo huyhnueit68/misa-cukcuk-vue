@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         /**
          * set form model for action api
+         * false: add, true: edit
          */
         formMode: false,
         /**
