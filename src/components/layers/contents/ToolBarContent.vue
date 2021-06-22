@@ -17,7 +17,7 @@
           <v-list>
             <v-list-item class="custom-selected">
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <v-icon class="m-icon-check" v-text="item.icon"></v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 {{item.text}}
@@ -37,7 +37,21 @@
         v-model="valuesPosition"
         :items="dataPosition"
         clearable
-      ></v-autocomplete>
+      >
+        <template #item="{item}">
+          <v-list>
+            <v-list-item class="custom-selected">
+              <v-list-item-icon>
+                <v-icon class="m-icon-check" v-text="item.icon"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                {{item.text}}
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </template>
+      </v-autocomplete>
+      </v-autocomplete>
       <!-- <CustomCbo :listSelectPosition="listSelectPosition"/> -->
     </div>
     <!-- sub tool bar in content huy-->
@@ -64,16 +78,16 @@ export default {
       },
       dataDepartment: [
         {text: "Tất cả phòng ban", icon: 'mdi-check'},
-        {text:"Văn phòng tổng công ty", icon: 'mdi-check'},
+        {text:"Tổng công ty", icon: 'mdi-check'},
         {text:"Phòng đào tạo công nghệ", icon: 'mdi-check'},
         {text: "Phòng nhân sự", icon: 'mdi-check'},
       ],
       valuesDepartment: ["all", "company", "training", "human"],
       dataPosition: [
-        "Tất cả phòng ban",
-        "Văn phòng tổng công ty",
-        "Phòng đào tạo công nghệ",
-        "Phòng nhân sự",
+        {text: "Nhân viên", icon: 'mdi-check'},
+        {text:"Lập trình", icon: 'mdi-check'},
+        {text:"Thực tập", icon: 'mdi-check'},
+        {text: "DevOps", icon: 'mdi-check'},
       ],
       valuesPosition: ["all", "company", "training", "human"],
       employee: {},
@@ -113,6 +127,14 @@ export default {
 
 
 <style>
+
+.m-icon-check {
+  opacity: 0;
+}
+
+.v-list-item--active .v-list .custom-selected .v-list-item__icon .m-icon-check{
+  opacity: 1 !important;
+}
 
 .v-list-item{
   padding-left: 8px !important;

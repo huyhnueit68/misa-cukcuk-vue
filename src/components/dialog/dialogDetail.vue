@@ -944,7 +944,6 @@ export default {
      */
     validateEmployeeCode(){
       let checked = true,
-          me = this,
           employeeCode = this.$refs.employeeCodeRequest.value;
       if(!this.$store.state.formMode) {
         checked = this.validateAddNewRecord(employeeCode, this.dataTable);
@@ -1072,6 +1071,10 @@ export default {
 
 .cbo-detail .v-input__control .v-input__slot {
   border: 1px solid #bbb;
+}
+
+.v-list-item__icon {
+  padding-right: 8px;
 }
 
 .cbo-detail .v-input__control .v-input__slot fieldset{
