@@ -37,7 +37,11 @@ export default new Vuex.Store({
         /**
          * number record
          */
-        totalRecord: 0
+        totalRecord: 0,
+        /**
+         * curent page number
+         */
+        pageNumber: 1,
     },
     mutations: {
         FormStateEdit(state) {

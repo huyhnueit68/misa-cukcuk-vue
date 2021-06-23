@@ -1,29 +1,30 @@
 <template>
     <div class="paging-bar">
         <div class="paging-record-info">
-            Hiển thị <b>1-10/{{this.$store.totalRecord}}</b> nhân viên
+            Hiển thị <b>1-{{this.pageSize}}/{{this.$store.totalRecord}}</b> nhân viên
         </div>
         <div class="paging-option">
             <div class="btn-select-page m-btn-firstpage" @click="firstPage"></div>
             <div class="btn-select-page m-btn-prev-page" @click="prevPage"></div>
-            <div class="m-btn-list-page" v-for="index in totalPageNumber" :key="index">
+            <div class="icon-more" v-show="morePageLeft"></div>
+            <div class="m-btn-list-page" v-for="index in countPageDisplay" :key="index">
                 <button class="btn-pagenumber"
                 :class="{ 'btn-pagenumber-selected': isActive(index) }"
                 :pageNumber="index"
-                @click="changePage(index), setActive(index)">{{index}}</button>
+                @click="changePageByIndex(index), setActive(index)">{{index}}</button>
             </div>
+            <div class="icon-more" v-show="morePageRight"></div>
             <div class="btn-select-page m-btn-next-page" @click="nextPage"></div>
             <div class="btn-select-page m-btn-lastpage" @click="lastPage"></div>
         </div>
         <div class="paging-record-option">
-            <b>10</b> nhân viên/trang
+            <b>{{this.pageSize}}</b> nhân viên/trang
         </div>
     </div>
 </template>
 
 <script>
 import { defineComponent } from '@vue/composition-api'
-const PAGE_SIZE = 5
 
 export default defineComponent({
   setup() {
@@ -34,9 +35,44 @@ export default defineComponent({
   },
   data(){
     return{
+      morePageLeft: false,
+      morePageRight: false,
+      pageSize: 2,
       totalPageNumber: 1,
       activeItem: 1,
     }
+  },
+  computed: {
+    countPageDisplay(){
+      let pageDisplay = [],
+          currentPage = this.$store.state.pageNumber;
+
+      // set number page display
+      if(this.totalPageNumber < 4) {
+        pageDisplay = [1];
+      } else {
+        if(currentPage <= 2) {
+          pageDisplay = [1, 2, 3];
+          this.morePageRight = true;
+        } else {
+          this.morePageLeft = false;
+        }
+        if(currentPage > 2 && currentPage < this.totalPageNumber) {
+          pageDisplay = [currentPage - 1 , currentPage, currentPage + 1];
+          this.morePageLeft = true;
+          this.morePageRight = true;
+        } else {
+          this.morePageLeft = false;
+        }
+        if(currentPage >= this.totalPageNumber - 1) {
+          pageDisplay = [this.totalPageNumber - 2 , this.totalPageNumber - 1, this.totalPageNumber];
+          this.morePageRight = false;
+          this.morePageLeft = true;
+        }
+      }
+debugger
+      return pageDisplay;
+    },
   },
   methods: {
     /**
@@ -123,15 +159,15 @@ export default defineComponent({
       }).catch((error) => {
         console.log(error);
       });
-      
-      if(data <= PAGE_SIZE) {
+      debugger
+      if(data <= this.pageSize) {
         return totalPage;
       } else {
-        totalPage = data / PAGE_SIZE;
+        totalPage = data / this.pageSize;
         if(this.hasDecimal(totalPage)) {
           totalPage++;
         }
-        
+        debugger
       }
       this.totalPageNumber = parseInt(totalPage);
     },
@@ -139,6 +175,11 @@ export default defineComponent({
       this.$emit('changePage', pageNumber);
       this.$store.commit('EnablePaging');
       this.$store.state.pageNumber = pageNumber;
+    },
+    changePageByIndex(pageNumber){
+      if(pageNumber != this.$store.state.pageNumber) {
+        this.changePage(pageNumber);
+      }
     }
   }
 })
@@ -236,6 +277,19 @@ export default defineComponent({
   opacity: 1;
   background-color: #ffffff;
   border: 1px solid #ccc;
+}
+
+.icon-more {
+  padding-top: 0px;
+  margin-top: 10px;
+  margin-right: 8px;
+  margin-left: 8px;
+  width: 20px;
+  height: 20px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../../../../public/content/icon/more.png")
 }
 
 .m-btn-firstpage {

@@ -28,12 +28,12 @@ import enumeration from '../../../../js/common/enumeration'
 import resource from '../../../../js/common/resource.js'
 import moment from "moment";
 const Swal = require('sweetalert2')
-const PAGE_SIZE = 5
 const QUERY_FILTER  = 'N'
 
 export default({
     data(){
         return {
+            pageSize: 2,
             employeeData: {},
             isReload: this.$store.state.isReload, 
             saveSelectedRow: [],
@@ -56,7 +56,7 @@ export default({
              * get data page form api
              */
             var me = this;
-            let queryString = 'http://cukcuk.manhnv.net/v1/Employees/Filter?pageSize='+PAGE_SIZE+'&pageNumber='+pageNumber+'&fullName='+QUERY_FILTER+'';
+            let queryString = 'http://cukcuk.manhnv.net/v1/Employees/Filter?pageSize='+this.pageSize+'&pageNumber='+pageNumber+'&fullName='+QUERY_FILTER+'';
 
             await this.axios.get(queryString).then((response) => {
                 me.employeeData = response.data.Data
@@ -74,13 +74,11 @@ export default({
         async accessMassDelete(){
             let rows = this.$refs.tbody.querySelectorAll('.selected-row'),
                 countSuccess = 0;
-                
             // get list id and delete
             await rows.forEach(element => {
                 this.deleteEmployeebyId(element.getAttribute("employeeID")) ? countSuccess ++ : countSuccess += 0;
             });
-            debugger
-            this.successNotification(countSuccess);
+            await this.successNotification(countSuccess);
 
             // close form and refresh data
             this.$emit('successMassDelete');
@@ -90,16 +88,18 @@ export default({
          * PQ Huy 17.06.2021
          */
         successNotification(countSuccess){
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'bottom-end',
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: "popup-success",
-            timerProgressBar: true,
-            didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            // close form and refresh data
+            this.$emit('successMassDelete');
+                const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 3000,
+                customClass: "popup-success",
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
 

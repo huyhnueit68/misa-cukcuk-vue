@@ -28,30 +28,62 @@
     display: none;
 }
 
-@media screen and (max-height: 855px) {
+@media screen and (max-height: 1920px) {
     .dialog-content .dialog-body {
-        height: 600px;
+        height: 750px;
     }
-    @media screen and (max-height: 850px) {
+    @media screen and (max-height: 855px) {
         .dialog-content .dialog-body {
-            height: 550px;
+            height: 600px;
         }
-        @media screen and (max-height: 768px) {
+        @media screen and (max-height: 850px) {
             .dialog-content .dialog-body {
-                height: 500px;
+                height: 550px;
             }
-            @media screen and (max-height: 700px) {
+            @media screen and (max-height: 768px) {
                 .dialog-content .dialog-body {
-                    height: 400px;
+                    height: 500px;
                 }
-                @media screen and (max-height: 600px) {
+                @media screen and (max-height: 700px) {
                     .dialog-content .dialog-body {
-                        height: 300px;
+                        height: 400px;
+                    }
+                    @media screen and (max-height: 600px) {
+                        .dialog-content .dialog-body {
+                            height: 300px;
+                        }
                     }
                 }
             }
         }
     }
+}
+
+
+/* custom icon clearn autocomplete combobox */
+
+.cbo-detail button.mdi-close {
+    font-size: 12px;
+    border-radius: 50%;
+    background-color: #f3f3f3;
+    padding: 2px;
+    margin-left: 10px;
+}
+
+.cbo-detail button.mdi-close:hover {
+    background-color: #e5e5e5;
+}
+
+.cbo-detail .v-input__control .v-input__slot {
+    border: 1px solid #bbb;
+}
+
+.cbo-detail .v-input__control .v-input__slot:hover {
+    border: 1px solid #019160;
+}
+
+.cbo-detail .v-input__slot {
+    padding: 0 0 0 16px !important;
 }
 
 .error-warning {
@@ -84,7 +116,7 @@
 }
 
 .custom-header-dialog {
-    padding: 24px 24px 0 24px;
+    padding: 24px;
     text-align: left;
 }
 

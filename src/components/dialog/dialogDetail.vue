@@ -44,8 +44,8 @@
                                 <div class="m-control m-tooltip">
                                     <span class="tooltiptext" v-show="enableNullName">Vui lòng điền thông tin</span>
                                     <input id="txtFullName" 
-                                    v-model="employee.FullName" 
-                                    fieldName="FullName" 
+                                    v-model="employee.FullName"
+                                    fieldName="FullName"
                                     @focus="isShowName"
                                     @blur="isShowNameBlur"
                                     @keyup="capitalizeFirstLetter"
@@ -72,14 +72,27 @@
                                   id="cbxGrender"
                                   v-model="employee.Gender"
                                   placeholder="Chọn/Nhập giới tính"
-                                  class="cbo-detail"
+                                  class="cbo-detail m-custom-cbo"
                                   dense
                                   outlined
                                   :items="grender"
                                   item-text="value"
                                   item-value="key"
                                   clearable
-                                ></v-autocomplete> 
+                                >
+                                <template #item="{item}">
+                                  <v-list>
+                                    <v-list-item class="custom-selected">
+                                      <v-list-item-icon>
+                                        <v-icon class="m-icon-check" v-text="item.icon"></v-icon>
+                                      </v-list-item-icon>
+                                      <v-list-item-content>
+                                        {{item.text}}
+                                      </v-list-item-content>
+                                    </v-list-item>
+                                  </v-list>
+                                </template>
+                                </v-autocomplete> 
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -170,7 +183,20 @@
                                   item-text="value"
                                   item-value="key"
                                   clearable
-                                ></v-autocomplete> 
+                                >
+                                <template #item="{item}">
+                                  <v-list>
+                                    <v-list-item class="custom-selected">
+                                      <v-list-item-icon>
+                                        <v-icon class="m-icon-check" v-text="item.icon"></v-icon>
+                                      </v-list-item-icon>
+                                      <v-list-item-content>
+                                        {{item.text}}
+                                      </v-list-item-content>
+                                    </v-list-item>
+                                  </v-list>
+                                </template>
+                                </v-autocomplete> 
                             </div>
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Phòng ban</div>
@@ -185,7 +211,20 @@
                                   item-text="value"
                                   item-value="key"
                                   clearable
-                                ></v-autocomplete>
+                                >
+                                <template #item="{item}">
+                                  <v-list>
+                                    <v-list-item class="custom-selected">
+                                      <v-list-item-icon>
+                                        <v-icon class="m-icon-check" v-text="item.icon"></v-icon>
+                                      </v-list-item-icon>
+                                      <v-list-item-content>
+                                        {{item.text}}
+                                      </v-list-item-content>
+                                    </v-list-item>
+                                  </v-list>
+                                </template>
+                                </v-autocomplete>
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -237,7 +276,20 @@
                                   item-text="value"
                                   item-value="key"
                                   clearable
-                                ></v-autocomplete>
+                                >
+                                <template #item="{item}">
+                                  <v-list>
+                                    <v-list-item class="custom-selected">
+                                      <v-list-item-icon>
+                                        <v-icon class="m-icon-check" v-text="item.icon"></v-icon>
+                                      </v-list-item-icon>
+                                      <v-list-item-content>
+                                        {{item.text}}
+                                      </v-list-item-content>
+                                    </v-list-item>
+                                  </v-list>
+                                </template>
+                                </v-autocomplete>
                             </div>
                         </div>
                     </div>
@@ -344,60 +396,73 @@ export default {
       oldEmployeeCode: "",
       grender: [
         {
+          text: resource.Grender.Male, icon: 'mdi-check',
           key: enumeration.Grender.Male,
           value: resource.Grender.Male
         },
         {
+          text: resource.Grender.Female, icon: 'mdi-check',
           key: enumeration.Grender.Female,
           value: resource.Grender.Female
         },
         {
+          text: resource.Grender.Other, icon: 'mdi-check',
           key: enumeration.Grender.Other,
           value: resource.Grender.Other
         },
       ],
       position: [
         {
+          text: resource.Position.Manager, icon: 'mdi-check',
           key: enumeration.Position.Manager,
           value: resource.Position.Manager
         },
         {
+          text: resource.Position.Cashier, icon: 'mdi-check',
           key: enumeration.Position.Cashier,
           value: resource.Position.Cashier
         },
         {
+          text: resource.Position.Marketer, icon: 'mdi-check',
           key: enumeration.Position.Marketer,
           value: resource.Position.Marketer
         },
         {
+          text: resource.Position.ITer, icon: 'mdi-check',
           key: enumeration.Position.ITer,
           value: resource.Position.ITer
         },
       ],
       department: [
         {
+          text: "Văn phòng tổng công ty", icon: 'mdi-check',
           key: 0,
           value: "Văn phòng tổng công ty"
         },
         {
+          text: "Phòng đào tạo công nghệ", icon: 'mdi-check',
           key: 1,
           value: "Phòng đào tạo công nghệ"
         },
         {
+          text: "Phòng nhân sự", icon: 'mdi-check',
           key: 2,
           value: "Phòng nhân sự"
         },
       ],
       workStatus: [
         {
+          text: resource.WorkStatus.Probation, icon: 'mdi-check',
           key: enumeration.WorkStatus.Probation,
           value: resource.WorkStatus.Probation
         },
         {
+          text: resource.WorkStatus.Working, icon: 'mdi-check',
           key: enumeration.WorkStatus.Working,
           value: resource.WorkStatus.Working
         },
         {
+          text: resource.WorkStatus.Retired, icon: 'mdi-check',
           key: enumeration.WorkStatus.Retired,
           value: resource.WorkStatus.Retired
         },
@@ -766,12 +831,11 @@ export default {
      * save function
      * PQ Huy 13.06.2021
      */
-    save(){
+    async save(){
       // format salary
       this.employee.salary = this.$refs.employeeSalaryRequest.value.replaceAll(".", "");
       // format date
       if(this.validateData()){
-        debugger
         /**
          * save data by api
          * convert data salary 
@@ -787,7 +851,7 @@ export default {
            */
           this.formatDateBeforeSave();
           if(isUpdate) {
-          this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
+          await this.axios.put('http://cukcuk.manhnv.net/v1/employees/'+this.employeeId, this.employee).then((response) => {
             if(response.status == RESPONSES_SUCCESS || response.status == RESPONSES_CREATED || response.status == RESPONSES_ACCEPTED) {
               this.successNotification();
             } else {
@@ -795,7 +859,7 @@ export default {
             }
           })
         } else {
-          this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
+          await this.axios.post('http://cukcuk.manhnv.net/v1/employees', this.employee).then((response) => {
             if(response.status == RESPONSES_SUCCESS || response.status == RESPONSES_CREATED || response.status == RESPONSES_ACCEPTED) {
               this.successNotification();
             } else {
@@ -804,7 +868,6 @@ export default {
           })
         }
         } catch(error) {
-          debugger
           console.log(this.employee);
             this.$swal({
               title: error,

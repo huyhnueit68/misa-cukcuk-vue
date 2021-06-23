@@ -10,7 +10,7 @@
         placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại"
       />
       <v-autocomplete id="cbxDepartment" placeholder="Chọn/Nhập thông tin phòng ban"
-        class="cbo-department" dense
+        class="cbo-department m-custom-cbo" dense
         outlined v-model="valuesDepartment" :items="dataDepartment" clearable
       >
         <template #item="{item}">
@@ -30,9 +30,8 @@
       <v-autocomplete
         id="cbxDepartment"
         placeholder="Chọn/Nhập thông tin vị trí"
-        class="cbo-department"
+        class="cbo-department m-custom-cbo"
         dense
-        auto-select-first="true"
         outlined
         v-model="valuesPosition"
         :items="dataPosition"
@@ -51,8 +50,6 @@
           </v-list>
         </template>
       </v-autocomplete>
-      </v-autocomplete>
-      <!-- <CustomCbo :listSelectPosition="listSelectPosition"/> -->
     </div>
     <!-- sub tool bar in content huy-->
     <BtnToolBarContent @setReloadData="setReloadData" />
@@ -112,8 +109,7 @@ export default {
        */
       if (e.keyCode == COMPLETE_SEARCH) {
         // call api search with name
-        this.axios
-          .get("http://cukcuk.manhnv.net/v1/Employees/Filter?pageSize=5&pageNumber=1&fullName=" + fullName).then((response) => {
+        this.axios.get("http://cukcuk.manhnv.net/v1/Employees/Filter?pageSize=5&pageNumber=1&fullName=" + fullName).then((response) => {
             this.employee = response.data.Data;
             this.$emit("dataFilter", this.employee);
           }).catch((error) => {
@@ -125,15 +121,51 @@ export default {
 };
 </script>
 
-
 <style>
+/* custom autocomplete focurs */
 
+.v-input__icon--clear {
+    padding-right: 8px;
+    padding-top: 15px;
+}
+.v-input__icon.v-input__icon--append {
+    height: 38px !important;
+    padding: 0 12px 0 12px !important;
+    border-left: 1px solid #bbbbbb;
+}
+.v-input__append-inner {
+    width: 34px !important;
+    height: 38px !important;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+}
+.cbo-department .v-input__slot {
+  padding: 0 0 0 16px !important; 
+}
+/* custom icon clearn autocomplete combobox */
+.cbo-department button.mdi-close {
+  font-size: 12px;
+  border-radius: 50%;
+  background-color: #f3f3f3;
+  padding: 2px;
+  margin-left: 10px;
+}
+
+.cbo-department button.mdi-close:hover {
+  background-color: #e5e5e5;
+}
+
+/* custom icon checked in autocomplete */
 .m-icon-check {
   opacity: 0;
 }
 
 .v-list-item--active .v-list .custom-selected .v-list-item__icon .m-icon-check{
   opacity: 1 !important;
+}
+
+.m-custom-cbo:focus {
+  border: 1px solid rgb(175, 8, 8);
 }
 
 .v-list-item{
@@ -155,9 +187,13 @@ export default {
     color: #ffffff !important;
 }
 
+.v-list-item--link:before {
+  background-color: #019160 !important;
+}
 
 .v-list-item--active .custom-selected{
-  background-color: #1f9e73;
+  z-index: 2;
+  color: inherit !important;
   color: #ffffff !important;
 }
 
@@ -165,18 +201,31 @@ i.v-icon.mdi-check {
   color: #fff !important;
 } 
 
-.v-list-item--active {
-  background-color: #019160;
+.theme--light.v-list-item--active:hover::before, .theme--light.v-list-item--active::before {
+    opacity: 1 !important;
+}
+
+.theme--light.v-list-item.v-list-item--highlighted::before {
+    opacity: 1;
+}
+
+.v-list-item--active:before {
+  z-index: 1;
   color: #ffffff !important;
+  color: inherit !important;
 }
 .cbo-department .v-input__control .v-input__slot {
   border: 1px solid #bbb;
+}
+.cbo-department .v-input__control .v-input__slot:hover{
+  border: 1px solid #019160;
 }
 
 #cbxDepartment {
   font-size: 13px;
   width: 150px;
 }
+
 .cbo-department .v-input__control .v-input__slot fieldset {
   border: none;
 }
